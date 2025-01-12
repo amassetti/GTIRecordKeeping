@@ -1,0 +1,14 @@
+edu/gti/asd/ariel/recordkeeping/model/User.class
+edu/gti/asd/ariel/recordkeeping/gui/GTILoginForm$1.class
+edu/gti/asd/ariel/recordkeeping/gui/GTILoginForm.class
+edu/gti/asd/ariel/recordkeeping/model/Role.class
+edu/gti/asd/ariel/recordkeeping/GTIRecordKeepingApp.class
+edu/gti/asd/ariel/recordkeeping/gui/GTILoginForm$2.class
+edu/gti/asd/ariel/recordkeeping/gui/GTIAdminForm.class
+edu/gti/asd/ariel/recordkeeping/service/UserServiceImpl.class
+edu/gti/asd/ariel/recordkeeping/mappers/UserMapper.class
+edu/gti/asd/ariel/recordkeeping/gui/GTITeachersForm.class
+edu/gti/asd/ariel/recordkeeping/gui/GTIAdminForm$1.class
+edu/gti/asd/ariel/recordkeeping/gui/GTITeachersForm$1.class
+edu/gti/asd/ariel/recordkeeping/service/UserService.class
+edu/gti/asd/ariel/recordkeeping/dao/UserDao.class
