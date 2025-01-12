@@ -4,6 +4,8 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui;
 
+import edu.gti.asd.ariel.recordkeeping.gui.teacher.GTITeachersForm;
+import edu.gti.asd.ariel.recordkeeping.gui.admin.GTIAdminForm;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
 import edu.gti.asd.ariel.recordkeeping.service.UserServiceImpl;
