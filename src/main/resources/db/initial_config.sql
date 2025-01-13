@@ -39,3 +39,8 @@ INSERT INTO `gti_record_keeping`.`user` (`user_id`, `username`, `password`, `tea
 
 INSERT INTO `gti_record_keeping`.`user` (`user_id`, `username`, `password`, `admin_id`, `role_id`) VALUES ('2', 'amassetti', 'asd123', '1', '1');
 INSERT INTO `gti_record_keeping`.`user` (`user_id`, `username`, `password`, `admin_id`, `role_id`) VALUES ('3', 'pmantel', 'password', '2', '1');
+
+# DEPARTMENTS
+INSERT INTO `gti_record_keeping`.`department` (`department_id`, `name`, `description`) VALUES ('1', 'IT & Computing', 'Information Technologies ....');
+INSERT INTO `gti_record_keeping`.`department` (`department_id`, `name`, `description`) VALUES ('2', 'Sports', 'Sports ....');
+INSERT INTO `gti_record_keeping`.`department` (`department_id`, `name`, `description`) VALUES ('3', 'Arts', 'Arts ....');
