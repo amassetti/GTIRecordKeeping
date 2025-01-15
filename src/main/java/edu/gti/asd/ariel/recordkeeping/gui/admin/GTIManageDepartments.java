@@ -8,9 +8,16 @@ import edu.gti.asd.ariel.recordkeeping.gui.GTILoginForm;
 import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentService;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentServiceImpl;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 
 /**
  *
@@ -20,6 +27,8 @@ public class GTIManageDepartments extends javax.swing.JFrame {
     private ClassPathXmlApplicationContext ctx;
     private DepartmentService departmentService;
     private Logger log = Logger.getLogger(GTIManageDepartments.class.getName());
+    
+    private List<Department> departments = new ArrayList();
 
     /**
      * Creates new form GTIManageDepartments
@@ -28,7 +37,8 @@ public class GTIManageDepartments extends javax.swing.JFrame {
         initComponents();
         this.ctx = ctx;
         initBeans();
-        populateDepartmentsTable();
+        populateDepartmentsData();
+        updateJTable();
     }
 
     /**
@@ -40,34 +50,57 @@ public class GTIManageDepartments extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldDepartment = new javax.swing.JTextField();
+        jTableDepartments = new javax.swing.JTable();
         jButtonExit = new javax.swing.JButton();
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jLabel2 = new javax.swing.JLabel();
+        jButtonAdd = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldDepartmentName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaDescription = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        jTextFieldID = new javax.swing.JTextField();
+        jButtonUpdateDept = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDepartments.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Name", "Description"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        jLabel1.setText("Department: ");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableDepartments.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                jTableDepartmentsComponentAdded(evt);
+            }
+        });
+        jTableDepartments.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDepartmentsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableDepartments);
 
         jButtonExit.setText("Exit");
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
@@ -76,40 +109,112 @@ public class GTIManageDepartments extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Departments");
+
+        jButtonAdd.setText("Add");
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Name:");
+
+        jTextFieldDepartmentName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDepartmentNameActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Description:");
+
+        jTextAreaDescription.setColumns(20);
+        jTextAreaDescription.setRows(5);
+        jScrollPane3.setViewportView(jTextAreaDescription);
+
+        jLabel4.setText("ID");
+
+        jTextFieldID.setEditable(false);
+
+        jButtonUpdateDept.setText("Update");
+        jButtonUpdateDept.setEnabled(false);
+        jButtonUpdateDept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateDeptActionPerformed(evt);
+            }
+        });
+
+        jButtonDelete.setText("Delete");
+        jButtonDelete.setEnabled(false);
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonExit)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jTextFieldDepartmentName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButtonUpdateDept)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonDelete)
+                                    .addGap(26, 26, 26)
+                                    .addComponent(jButtonAdd)))
+                            .addComponent(jLabel4))
+                        .addGap(33, 33, 33)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25))
             .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                        .addComponent(jButtonExit)
-                        .addGap(34, 34, 34))))
+                .addGap(79, 79, 79)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextFieldDepartment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExit)
-                        .addGap(28, 28, 28))))
+                        .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldDepartmentName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonAdd)
+                            .addComponent(jButtonUpdateDept)
+                            .addComponent(jButtonDelete))))
+                .addGap(68, 68, 68)
+                .addComponent(jButtonExit)
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -119,23 +224,154 @@ public class GTIManageDepartments extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonExitActionPerformed
 
+    private void cleanInputs() {
+        jTextFieldID.setText("");
+        jTextFieldDepartmentName.setText("");
+        jTextAreaDescription.setText("");
+        jTextFieldDepartmentName.requestFocus();
+    }
+    
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        String name = jTextFieldDepartmentName.getText();
+        String description = jTextAreaDescription.getText();
+        
+        if (name == null || name.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Department name is required");
+            jTextFieldDepartmentName.requestFocus();
+            return;
+        }
+        
+        if (description == null || description.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Department description is required");
+            jTextAreaDescription.requestFocus();
+            return;
+        }
+        
+        Department department = new Department();
+        department.setName(name);
+        department.setDescription(description);
+
+        departmentService.insertDepartment(department);
+        
+        populateDepartmentsData();
+        updateJTable();
+        cleanInputs();
+        
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jTableDepartmentsComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTableDepartmentsComponentAdded
+        JOptionPane.showMessageDialog(this, "ComponentAdded");
+    }//GEN-LAST:event_jTableDepartmentsComponentAdded
+
+    public void setEditDeleteMode() {
+        jButtonUpdateDept.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonAdd.setEnabled(false);
+    }
+    
+    public void setAddMode() {
+        jButtonUpdateDept.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonAdd.setEnabled(true);
+    }
+    
+    private void jTableDepartmentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDepartmentsMouseClicked
+        
+        // Double click
+        if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+            DefaultTableModel tableModel = (DefaultTableModel)jTableDepartments.getModel();
+            int index = jTableDepartments.getSelectedRow();
+            jTextFieldID.setText(tableModel.getValueAt(index, 0).toString());
+            jTextFieldDepartmentName.setText(tableModel.getValueAt(index, 1).toString());
+            jTextAreaDescription.setText(tableModel.getValueAt(index, 2).toString());
+            setEditDeleteMode();
+        }
+        
+    }//GEN-LAST:event_jTableDepartmentsMouseClicked
+
+    private void jTextFieldDepartmentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDepartmentNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDepartmentNameActionPerformed
+
+    private void jButtonUpdateDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateDeptActionPerformed
+        Integer id = Integer.parseInt(jTextFieldID.getText());
+        String name = jTextFieldDepartmentName.getText();
+        String description = jTextAreaDescription.getText();
+        
+        Department deptToUpdate = new Department();
+        deptToUpdate.setDepartmentId(id);
+        deptToUpdate.setName(name);
+        deptToUpdate.setDescription(description);
+        
+        departmentService.updateDepartment(deptToUpdate);
+        
+        populateDepartmentsData();
+        updateJTable();
+        cleanInputs();
+        setAddMode();
+        
+    }//GEN-LAST:event_jButtonUpdateDeptActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        Integer id = Integer.parseInt(jTextFieldID.getText());
+        String name = jTextFieldDepartmentName.getText();
+        
+        int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete department " + name, "Delete Department", 0);
+       
+        if (option == JOptionPane.YES_OPTION) {
+            departmentService.deleteDepartment(id);
+            populateDepartmentsData();
+            updateJTable();
+            cleanInputs();
+            setAddMode();
+        }
+        
+
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonExit;
+    private javax.swing.JButton jButtonUpdateDept;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextFieldDepartment;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTableDepartments;
+    private javax.swing.JTextArea jTextAreaDescription;
+    private javax.swing.JTextField jTextFieldDepartmentName;
+    private javax.swing.JTextField jTextFieldID;
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
         this.departmentService = ctx.getBean(DepartmentServiceImpl.class);
     }
 
-    private void populateDepartmentsTable() {
-        List<Department> departments = departmentService.getDepartments();
+    private void updateJTable() {
+        DefaultTableModel tableModel = (DefaultTableModel) jTableDepartments.getModel();
+        
+        // Clean table
+        tableModel.getDataVector().removeAllElements();
+        tableModel.fireTableDataChanged();
+        
+        // Populate table
+        for (Department dept : departments) {
+            Vector row = new Vector();
+            row.add(dept.getDepartmentId());
+            row.add(dept.getName());
+            row.add(dept.getDescription());
+            tableModel.addRow(row);
+        }
+        
+    }
+    
+    private void populateDepartmentsData() {
+        departments = departmentService.getDepartments();
         log.info("Departments: " + departments);
+        
     }
 }

@@ -27,12 +27,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void insertDepartment(Department department) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        departmentDao.insertDepartment(department);
     }
 
     @Override
     public void updateDepartment(Department department) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        departmentDao.updateDepartment(department);
+    }
+
+    @Override
+    public void deleteDepartment(Integer departmentId) {
+        departmentDao.deleteDepartment(departmentId);
     }
     
 }

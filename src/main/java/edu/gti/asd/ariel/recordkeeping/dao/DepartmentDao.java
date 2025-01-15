@@ -25,7 +25,46 @@ public class DepartmentDao {
     }
     
     public List<Department> getDepartments() {
+        log.info("Getting all departments from db...");
         String sql = "SELECT * FROM department";
         return jdbcTemplate.query(sql, new DepartmentMapper());
+    }
+    
+    public void insertDepartment(Department department) {
+        log.info("Inserting department " + department);
+        String sql = "INSERT INTO department (name, description) values (?, ?)";
+        
+        Object[] args = {
+            department.getName(),
+            department.getDescription()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+    
+    
+    public void updateDepartment(Department department) {
+        log.info("Updating department " + department);
+        String sql = "UPDATE department SET name = ?, description = ? WHERE department_id = ?";
+        
+        Object[] args = {
+            department.getName(),
+            department.getDescription(),
+            department.getDepartmentId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+    
+    public void deleteDepartment(Integer departmentId) {
+        log.info("Deleting department " + departmentId);
+        String sql = "DELETE FROM department WHERE department_id = ?";
+        
+        Object[] args = {
+            departmentId
+        };
+        
+        jdbcTemplate.update(sql, args);
+        
     }
 }
