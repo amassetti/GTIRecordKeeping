@@ -31,20 +31,21 @@ public class GTIAdminForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jButtonRegisterTeacher = new javax.swing.JButton();
         jButtonRegisterStudent = new javax.swing.JButton();
         jButtonReports = new javax.swing.JButton();
         jButtonDepartments = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonCities = new javax.swing.JButton();
         jButtonRegisterStudentInCourse = new javax.swing.JButton();
         jButtonRegisterTeacherInSubject = new javax.swing.JButton();
+        jButtonRegisterCourse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrator menu");
         setResizable(false);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/teacher3.png"))); // NOI18N
-        jButton1.setToolTipText("Register Teacher");
+        jButtonRegisterTeacher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/teacher3.png"))); // NOI18N
+        jButtonRegisterTeacher.setToolTipText("Register Teacher");
 
         jButtonRegisterStudent.setIcon(new javax.swing.ImageIcon("/home/ariel/Desktop/GTI/GTIRecordKeeping/student3.png")); // NOI18N
         jButtonRegisterStudent.setToolTipText("Register Student");
@@ -60,14 +61,21 @@ public class GTIAdminForm extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/city.png"))); // NOI18N
-        jButton2.setToolTipText("Cities / Towns");
+        jButtonCities.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/city.png"))); // NOI18N
+        jButtonCities.setToolTipText("Cities / Towns");
 
         jButtonRegisterStudentInCourse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/registerStudent.png"))); // NOI18N
         jButtonRegisterStudentInCourse.setToolTipText("Register Student in Course");
 
         jButtonRegisterTeacherInSubject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/registerTeacher.png"))); // NOI18N
         jButtonRegisterTeacherInSubject.setToolTipText("Register Teacher in Subject");
+
+        jButtonRegisterCourse.setText("Register Course");
+        jButtonRegisterCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterCourseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,34 +84,38 @@ public class GTIAdminForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addComponent(jButtonRegisterTeacher, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                     .addComponent(jButtonRegisterTeacherInSubject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonRegisterStudentInCourse, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                     .addComponent(jButtonRegisterStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(jButtonReports, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonRegisterCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(jButtonDepartments, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCities, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonReports, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(78, 78, 78)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .addComponent(jButtonDepartments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonRegisterStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonRegisterCourse, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButtonCities, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                        .addComponent(jButtonDepartments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRegisterStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                        .addComponent(jButtonRegisterTeacher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonRegisterStudentInCourse, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(jButtonRegisterTeacherInSubject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonRegisterTeacherInSubject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(243, Short.MAX_VALUE))
         );
 
@@ -115,12 +127,18 @@ public class GTIAdminForm extends javax.swing.JFrame {
         departmentsForm.setVisible(true);
     }//GEN-LAST:event_jButtonDepartmentsActionPerformed
 
+    private void jButtonRegisterCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterCourseActionPerformed
+        GTIManageCoursesForm coursesForm = new GTIManageCoursesForm(ctx);
+        coursesForm.setVisible(true);
+    }//GEN-LAST:event_jButtonRegisterCourseActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonCities;
     private javax.swing.JButton jButtonDepartments;
+    private javax.swing.JButton jButtonRegisterCourse;
     private javax.swing.JButton jButtonRegisterStudent;
     private javax.swing.JButton jButtonRegisterStudentInCourse;
+    private javax.swing.JButton jButtonRegisterTeacher;
     private javax.swing.JButton jButtonRegisterTeacherInSubject;
     private javax.swing.JButton jButtonReports;
     // End of variables declaration//GEN-END:variables

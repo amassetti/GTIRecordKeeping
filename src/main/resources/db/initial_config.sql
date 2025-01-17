@@ -44,3 +44,10 @@ INSERT INTO `gti_record_keeping`.`user` (`user_id`, `username`, `password`, `adm
 INSERT INTO `gti_record_keeping`.`department` (`department_id`, `name`, `description`) VALUES ('1', 'IT & Computing', 'Information Technologies ....');
 INSERT INTO `gti_record_keeping`.`department` (`department_id`, `name`, `description`) VALUES ('2', 'Sports', 'Sports ....');
 INSERT INTO `gti_record_keeping`.`department` (`department_id`, `name`, `description`) VALUES ('3', 'Arts', 'Arts ....');
+
+# COURSE TYPES
+INSERT INTO `gti_record_keeping`.`course_type` (`course_type_id`, `description`) VALUES ('1', 'Full Time');
+INSERT INTO `gti_record_keeping`.`course_type` (`course_type_id`, `description`) VALUES ('2', 'Part Time');
+
+# COURSE
+INSERT INTO `gti_record_keeping`.`course` (`course_id`, `department_id`, `course_type_id`, `course_code`, `name`, `description`, `certification`) VALUES ('1', '1', '1', 'ACSD', 'Advance Certificate in Software Development', 'Advance Certificate in Software Development', '6');

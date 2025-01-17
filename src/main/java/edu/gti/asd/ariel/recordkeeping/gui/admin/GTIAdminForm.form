@@ -28,7 +28,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButton1" pref="132" max="32767" attributes="0"/>
+                  <Component id="jButtonRegisterTeacher" pref="132" max="32767" attributes="0"/>
                   <Component id="jButtonRegisterTeacherInSubject" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
@@ -36,13 +36,16 @@
                   <Component id="jButtonRegisterStudentInCourse" pref="130" max="32767" attributes="0"/>
                   <Component id="jButtonRegisterStudent" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="68" max="32767" attributes="0"/>
-              <Component id="jButtonReports" min="-2" pref="134" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jButtonRegisterCourse" min="-2" pref="137" max="-2" attributes="0"/>
+              <EmptySpace pref="76" max="32767" attributes="0"/>
               <Component id="jButtonDepartments" min="-2" pref="136" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="130" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jButtonCities" min="-2" pref="130" max="-2" attributes="0"/>
+                  <Component id="jButtonReports" min="-2" pref="134" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,16 +54,19 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButton2" pref="128" max="32767" attributes="0"/>
-                  <Component id="jButtonDepartments" max="32767" attributes="0"/>
-                  <Component id="jButtonReports" max="32767" attributes="0"/>
-                  <Component id="jButtonRegisterStudent" pref="128" max="32767" attributes="0"/>
-                  <Component id="jButton1" max="32767" attributes="0"/>
+                  <Component id="jButtonRegisterCourse" pref="128" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jButtonCities" pref="128" max="32767" attributes="0"/>
+                      <Component id="jButtonDepartments" max="32767" attributes="0"/>
+                      <Component id="jButtonRegisterStudent" pref="128" max="32767" attributes="0"/>
+                      <Component id="jButtonRegisterTeacher" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jButtonRegisterStudentInCourse" pref="121" max="32767" attributes="0"/>
                   <Component id="jButtonRegisterTeacherInSubject" max="32767" attributes="0"/>
+                  <Component id="jButtonReports" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="243" max="32767" attributes="0"/>
           </Group>
@@ -68,7 +74,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jButtonRegisterTeacher">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/teacher3.png"/>
@@ -103,7 +109,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDepartmentsActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="jButtonCities">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/city.png"/>
@@ -126,6 +132,14 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Register Teacher in Subject"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRegisterCourse">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Register Course"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegisterCourseActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
