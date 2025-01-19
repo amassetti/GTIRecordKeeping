@@ -5,13 +5,19 @@
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.Course;
+import edu.gti.asd.ariel.recordkeeping.model.CourseType;
+import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentService;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.CourseService;
 import edu.gti.asd.ariel.recordkeeping.service.CourseServiceImpl;
+import edu.gti.asd.ariel.recordkeeping.service.CourseTypeService;
+import edu.gti.asd.ariel.recordkeeping.service.CourseTypeServiceImpl;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -25,7 +31,12 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     private ClassPathXmlApplicationContext ctx;
     private CourseService courseService;
     private DepartmentService departmentService;
+    private CourseTypeService courseTypeService;
+    
+    // Data
     private List<Course> courses;
+    private List<Department> departments;
+    private List<CourseType> courseTypes;
     
     /**
      * Creates new form GTIManageCoursesForm
@@ -36,6 +47,8 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         initBeans();
         populateCoursesData();
         updateJTable();
+        updateDepartmentsCombo();
+        updateCourseTypesCombo();
     }
 
     /**
@@ -57,6 +70,8 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         jTextAreaDescription = new javax.swing.JTextArea();
         jComboBoxCertification = new javax.swing.JComboBox<>();
         jButtonAdd = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,16 +86,19 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPane1.setViewportView(jTableCourses);
-
-        jComboBoxDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBoxCourseType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jTextAreaDescription.setColumns(20);
         jTextAreaDescription.setRows(5);
@@ -89,13 +107,23 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         jComboBoxCertification.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "6" }));
 
         jButtonAdd.setText("Add >>");
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel1.setText("Courses");
+
+        jTextFieldID.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jComboBoxDepartment, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -104,20 +132,24 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
                         .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxCertification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAdd))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                    .addComponent(jButtonAdd)
+                    .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(496, 496, 496)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
+                        .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jComboBoxDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jComboBoxCourseType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,35 +162,70 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jComboBoxCertification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(jButtonAdd)))
-                .addContainerGap(162, Short.MAX_VALUE))
+                        .addComponent(jButtonAdd))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(54, 54, 54)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        Course course = new Course();
+        
+        Department department = (Department)jComboBoxDepartment.getSelectedItem();
+        CourseType courseType = (CourseType)jComboBoxCourseType.getSelectedItem();
+        
+        Integer departmentId = department.getDepartmentId();
+        Integer courseTypeId = courseType.getCourseTypeId();
+        String courseName = jTextFieldName.getText();
+        String courseDescription = jTextAreaDescription.getText();
+        Integer certification = Integer.parseInt(jComboBoxCertification.getSelectedItem().toString());
+        
+        // TODO Validations
+        
+        course.setDepartmentId(departmentId);
+        course.setCourseTypeId(courseTypeId);
+        course.setName(courseName);
+        course.setDescription(courseDescription);
+        course.setCertification(certification);
+        
+        courseService.insertCourse(course);
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JComboBox<String> jComboBoxCertification;
-    private javax.swing.JComboBox<String> jComboBoxCourseType;
-    private javax.swing.JComboBox<String> jComboBoxDepartment;
+    private javax.swing.JComboBox<CourseType> jComboBoxCourseType;
+    private javax.swing.JComboBox<Department> jComboBoxDepartment;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableCourses;
     private javax.swing.JTextArea jTextAreaDescription;
     private javax.swing.JTextField jTextFieldCourseCode;
+    private javax.swing.JTextField jTextFieldID;
     private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
         this.courseService = ctx.getBean(CourseServiceImpl.class);
         this.departmentService = ctx.getBean(DepartmentServiceImpl.class);
+        this.courseTypeService = ctx.getBean(CourseTypeServiceImpl.class);
     }
 
     private void populateCoursesData() {
         log.info("Getting courses from db...");
         courses = courseService.getAllCourses();
         
+        log.info("Getting departments from db...");
+        departments = departmentService.getDepartments();
+        
+        log.info("Getting course types from db...");
+        courseTypes = courseTypeService.getCourseTypes();
         
     }
 
@@ -183,6 +250,20 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
             tableModel.addRow(row);
         }
         
-        
     }
+
+    private void updateDepartmentsCombo() {
+        DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxDepartment.getModel();
+        cbModel.addElement(new Department("Select one...", -1));
+        cbModel.addAll(departments);
+
+    }
+
+    private void updateCourseTypesCombo() {
+        DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxCourseType.getModel();
+        cbModel.addElement(new CourseType(-1, "Select one..."));
+        cbModel.addAll(courseTypes);
+    }
+    
+    
 }

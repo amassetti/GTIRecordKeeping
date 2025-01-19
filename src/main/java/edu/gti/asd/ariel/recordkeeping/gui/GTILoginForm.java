@@ -31,6 +31,7 @@ public class GTILoginForm extends javax.swing.JFrame {
         this.ctx = ctx;
         initComponents();
         initSpringBeans();
+        jTextFieldUsername.requestFocus();
     }
     
     private void initSpringBeans() {

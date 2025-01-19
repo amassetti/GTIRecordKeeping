@@ -15,6 +15,11 @@ public class Department {
 
     public Department() {
     }
+    
+    public Department(String name, Integer id) {
+        this.name = name;
+        this.departmentId = id;
+    }
 
     public Integer getDepartmentId() {
         return departmentId;
@@ -42,7 +47,7 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" + "departmentId=" + departmentId + ", name=" + name + ", description=" + description + '}';
+        return getName();
     }
     
     
