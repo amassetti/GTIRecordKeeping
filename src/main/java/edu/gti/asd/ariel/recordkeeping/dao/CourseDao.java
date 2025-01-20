@@ -37,7 +37,20 @@ public class CourseDao {
     }
 
     public void insertCourse(Course course) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO course (department_id, course_type_id, course_code, name, description, certification)\n" +
+                     "VALUES (?,?,?,?,?,?)";
+        
+        Object[] args = {
+            course.getDepartmentId(),
+            course.getCourseTypeId(),
+            course.getCode(),
+            course.getName(),
+            course.getDescription(),
+            course.getCertification()
+        };
+        
+        jdbcTemplate.update(sql, args);
+        
     }
 
     public void updateCourse(Course course) {

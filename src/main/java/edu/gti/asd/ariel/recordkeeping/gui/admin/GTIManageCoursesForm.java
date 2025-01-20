@@ -13,7 +13,10 @@ import edu.gti.asd.ariel.recordkeeping.service.CourseService;
 import edu.gti.asd.ariel.recordkeeping.service.CourseServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.CourseTypeService;
 import edu.gti.asd.ariel.recordkeeping.service.CourseTypeServiceImpl;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
@@ -37,6 +40,7 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     private List<Course> courses;
     private List<Department> departments;
     private List<CourseType> courseTypes;
+    private List<Integer> certifications;
     
     /**
      * Creates new form GTIManageCoursesForm
@@ -46,9 +50,11 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         this.ctx = ctx;
         initBeans();
         populateCoursesData();
+        populateCombosData();
         updateJTable();
         updateDepartmentsCombo();
         updateCourseTypesCombo();
+        updateCertificationsCombo();
     }
 
     /**
@@ -98,13 +104,16 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableCourses.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCoursesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCourses);
 
         jTextAreaDescription.setColumns(20);
         jTextAreaDescription.setRows(5);
         jScrollPane2.setViewportView(jTextAreaDescription);
-
-        jComboBoxCertification.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "6" }));
 
         jButtonAdd.setText("Add >>");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +142,7 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxCertification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAdd)
-                    .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
@@ -181,6 +190,7 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         
         Integer departmentId = department.getDepartmentId();
         Integer courseTypeId = courseType.getCourseTypeId();
+        String courseCode = jTextFieldCourseCode.getText();
         String courseName = jTextFieldName.getText();
         String courseDescription = jTextAreaDescription.getText();
         Integer certification = Integer.parseInt(jComboBoxCertification.getSelectedItem().toString());
@@ -189,16 +199,61 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         
         course.setDepartmentId(departmentId);
         course.setCourseTypeId(courseTypeId);
+        course.setCode(courseCode);
         course.setName(courseName);
         course.setDescription(courseDescription);
         course.setCertification(certification);
         
         courseService.insertCourse(course);
+        
+        populateCoursesData();
+        updateJTable();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
+    private void jTableCoursesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCoursesMouseClicked
+        // Double click
+        if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+            DefaultTableModel tableModel = (DefaultTableModel)jTableCourses.getModel();
+            int index = jTableCourses.getSelectedRow();
+            
+            Course course = courses.get(index);
+            
+            // Set fields
+            jTextFieldID.setText(course.getCourseId().toString());
+            
+            jTextAreaDescription.setText(course.getDescription());
+            
+            jTextFieldCourseCode.setText(course.getCode());
+            
+            jTextFieldName.setText(course.getName());
+            
+            Optional<Department> department = departments.stream().filter(d -> d.getDepartmentId().equals(course.getDepartmentId())).findFirst();
+            jComboBoxDepartment.setSelectedItem(department.get());
+            
+            Optional<CourseType> courseType = courseTypes.stream().filter(ct -> ct.getCourseTypeId().equals(course.getCourseTypeId())).findFirst();
+            jComboBoxCourseType.setSelectedItem(courseType.get());
+            
+            Optional<Integer> certification = certifications.stream().filter(ct -> ct.equals(course.getCertification())).findFirst();
+            jComboBoxCertification.setSelectedItem(certification.get());
+            
+            jTextAreaDescription.setText(tableModel.getValueAt(index, 2).toString());
+            //setEditDeleteMode();
+        }
+    }//GEN-LAST:event_jTableCoursesMouseClicked
+
+    private void cleanInputs() {
+        jTextFieldID.setText("");
+        jTextFieldCourseCode.setText("");
+        jTextFieldName.setText("");
+        jTextAreaDescription.setText("");
+        jComboBoxCertification.setSelectedIndex(0);
+        jComboBoxCourseType.setSelectedIndex(0);
+        jComboBoxDepartment.setSelectedIndex(0);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
-    private javax.swing.JComboBox<String> jComboBoxCertification;
+    private javax.swing.JComboBox<Integer> jComboBoxCertification;
     private javax.swing.JComboBox<CourseType> jComboBoxCourseType;
     private javax.swing.JComboBox<Department> jComboBoxDepartment;
     private javax.swing.JLabel jLabel1;
@@ -219,14 +274,20 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
 
     private void populateCoursesData() {
         log.info("Getting courses from db...");
-        courses = courseService.getAllCourses();
-        
+        courses = courseService.getAllCourses();       
+    }
+    
+    private void populateCombosData() {
         log.info("Getting departments from db...");
         departments = departmentService.getDepartments();
         
         log.info("Getting course types from db...");
         courseTypes = courseTypeService.getCourseTypes();
         
+        certifications = Arrays.asList(
+                Integer.valueOf(5),
+                Integer.valueOf(6)
+        );
     }
 
     private void updateJTable() {
@@ -256,13 +317,17 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxDepartment.getModel();
         cbModel.addElement(new Department("Select one...", -1));
         cbModel.addAll(departments);
-
     }
 
     private void updateCourseTypesCombo() {
         DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxCourseType.getModel();
         cbModel.addElement(new CourseType(-1, "Select one..."));
         cbModel.addAll(courseTypes);
+    }
+    
+    private void updateCertificationsCombo() {
+        DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxCertification.getModel();
+        cbModel.addAll(certifications);
     }
     
     
