@@ -8,7 +8,7 @@ package edu.gti.asd.ariel.recordkeeping.model;
  *
  * @author ariel
  */
-public class CourseType {
+public class CourseType implements IComboElement {
     private Integer courseTypeId;
     private String description;
 
@@ -38,6 +38,16 @@ public class CourseType {
 
     @Override
     public String toString() {
+        return getDescription();
+    }
+
+    @Override
+    public Integer getComboElementId() {
+        return getCourseTypeId();
+    }
+
+    @Override
+    public String getComboElementDescription() {
         return getDescription();
     }
     

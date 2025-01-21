@@ -54,11 +54,39 @@ public class CourseDao {
     }
 
     public void updateCourse(Course course) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE course\n" +
+                        "SET\n" +
+                        "department_id = ?,\n" +
+                        "course_type_id = ?,\n" +
+                        "course_code = ?,\n" +
+                        "name = ?,\n" +
+                        "description = ?,\n" +
+                        "certification = ?\n" +
+                        "WHERE course_id = ?";
+        
+        Object[] args = {
+            course.getDepartmentId(),
+            course.getCourseTypeId(),
+            course.getCode(),
+            course.getName(),
+            course.getDescription(),
+            course.getCertification(),
+            course.getCourseId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+        
     }
 
     public void deleteCourse(Integer courseId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM course WHERE course_id = ?";
+        
+        Object[] args = {
+            courseId
+        };
+        
+        jdbcTemplate.update(sql, args);
+        
     }
     
 }

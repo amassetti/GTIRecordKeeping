@@ -8,7 +8,7 @@ package edu.gti.asd.ariel.recordkeeping.model;
  *
  * @author ariel
  */
-public class Department {
+public class Department implements IComboElement {
     Integer departmentId;
     String name;
     String description;
@@ -49,7 +49,15 @@ public class Department {
     public String toString() {
         return getName();
     }
-    
-    
+
+    @Override
+    public Integer getComboElementId() {
+        return getDepartmentId();
+    }
+
+    @Override
+    public String getComboElementDescription() {
+        return getName();
+    }   
     
 }
