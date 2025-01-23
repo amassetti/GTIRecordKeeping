@@ -87,6 +87,8 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButtonExit = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jTextFieldFilter = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -167,6 +169,14 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Filter:");
+
+        jTextFieldFilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldFilterKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,20 +215,28 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
                                     .addComponent(jComboBoxCertification, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(39, 39, 39))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1)
-                        .addGap(54, 54, 54)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jTextFieldFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,7 +263,7 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
                             .addComponent(jButtonAdd)
                             .addComponent(jButtonUpdate)
                             .addComponent(jButtonDelete))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addComponent(jButtonExit)
                 .addGap(35, 35, 35))
         );
@@ -254,13 +272,13 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        Course course = new Course();
         
-        Department department = (Department)jComboBoxDepartment.getSelectedItem();
-        CourseType courseType = (CourseType)jComboBoxCourseType.getSelectedItem();
+        // Values retrieveal and Validations
+        Integer departmentId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxDepartment, "department");
+        if (departmentId.equals(-1)) return;
         
-        Integer departmentId = department.getDepartmentId();
-        Integer courseTypeId = courseType.getCourseTypeId();
+        Integer courseTypeId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxCourseType, "course type");
+        if (courseTypeId.equals(-1)) return;
 
         String courseCode = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldCourseCode, "course code");
         if (courseCode.isEmpty()) return;
@@ -272,22 +290,9 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         if (courseDescription.isEmpty()) return;
         
         Integer certification = Integer.parseInt(jComboBoxCertification.getSelectedItem().toString());
-        
-        // Validations
-        FieldsUtils.validateComboWithIdSelected(this, jComboBoxDepartment, "department");
-//        if (departmentId.equals(Integer.valueOf(-1))) {
-//            JOptionPane.showMessageDialog(this, "Must select a valid department");
-//            return;
-//        }
-        
-        FieldsUtils.validateComboWithIdSelected(this, jComboBoxCourseType, "course type");
-//        if (courseTypeId.equals(Integer.valueOf(-1))) {
-//            JOptionPane.showMessageDialog(this, "Must select a valid course type");
-//            return;
-//        }
-        
 
-        
+        // Model Object cration
+        Course course = new Course();        
         course.setDepartmentId(departmentId);
         course.setCourseTypeId(courseTypeId);
         course.setCode(courseCode);
@@ -295,8 +300,10 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         course.setDescription(courseDescription);
         course.setCertification(certification);
         
+        // Service layer Insert
         courseService.insertCourse(course);
         
+        // Cleanup
         cleanInputs();
         populateCoursesData();
         updateJTable();
@@ -313,11 +320,8 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
             
             // Set fields
             jTextFieldID.setText(course.getCourseId().toString());
-            
             jTextAreaDescription.setText(course.getDescription());
-            
             jTextFieldCourseCode.setText(course.getCode());
-            
             jTextFieldName.setText(course.getName());
             
             Optional<Department> department = departments.stream().filter(d -> d.getDepartmentId().equals(course.getDepartmentId())).findFirst();
@@ -378,6 +382,20 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         setAddMode();
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
+    private void jTextFieldFilterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFilterKeyTyped
+        String filter = jTextFieldFilter.getText().trim();
+        
+        if (filter.length() > 2) {
+            courses = courseService.searchByCourseName(filter);
+            updateJTable();
+        } else if (filter.length() == 0) {
+            courses = courseService.getAllCourses();
+            updateJTable();
+        }
+        
+        
+    }//GEN-LAST:event_jTextFieldFilterKeyTyped
+
     private void cleanInputs() {
         jTextFieldID.setText("");
         jTextFieldCourseCode.setText("");
@@ -394,18 +412,20 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JComboBox<Integer> jComboBoxCertification;
-    private javax.swing.JComboBox<CourseType> jComboBoxCourseType;
-    private javax.swing.JComboBox<Department> jComboBoxDepartment;
+    private javax.swing.JComboBox<IComboElement> jComboBoxCourseType;
+    private javax.swing.JComboBox<IComboElement> jComboBoxDepartment;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableCourses;
     private javax.swing.JTextArea jTextAreaDescription;
     private javax.swing.JTextField jTextFieldCourseCode;
+    private javax.swing.JTextField jTextFieldFilter;
     private javax.swing.JTextField jTextFieldID;
     private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables

@@ -35,6 +35,21 @@ public class CourseDao {
         
         return jdbcTemplate.query(sql, new CourseMapper());
     }
+    
+    public List<Course> searchByCourseName(String courseName) {
+        String sql =    "SELECT c.*,\n" +
+                        "       d.name as department_name, \n" +
+                        "       ct.description as course_type \n" +
+                        "FROM course c, department d, course_type ct \n" +
+                        "WHERE c.department_id = d.department_id \n" +
+                        "AND   c.course_type_id = ct.course_type_id AND c.name LIKE ?";
+        
+        Object[] args = {
+            "%" + courseName + "%"
+        };
+        
+        return jdbcTemplate.query(sql, args, new CourseMapper());
+    }
 
     public void insertCourse(Course course) {
         String sql = "INSERT INTO course (department_id, course_type_id, course_code, name, description, certification)\n" +

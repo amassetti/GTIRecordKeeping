@@ -57,4 +57,15 @@ public class FieldsUtils {
         return text;
     }
     
+    
+    public static Integer getMandatoryIdFromCombo(JFrame parentFrame, JComboBox<IComboElement> jComboBox, String name) {
+        IComboElement selection = (IComboElement)jComboBox.getSelectedItem();
+        Integer id = selection.getComboElementId();
+        if (id.equals(-1)) {
+            JOptionPane.showMessageDialog(parentFrame, "Please select a valid option for " + name);
+            jComboBox.requestFocus();
+        }
+        return id;
+    }
+    
 }
