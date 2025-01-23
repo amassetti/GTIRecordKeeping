@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.UserDao;
 import edu.gti.asd.ariel.recordkeeping.model.User;
+import java.util.Optional;
 
 /**
  *
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public User getUserByUsername(String username) {
+    public Optional<User> getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
     }
     

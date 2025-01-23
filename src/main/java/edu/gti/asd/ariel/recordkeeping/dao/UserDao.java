@@ -7,6 +7,7 @@ package edu.gti.asd.ariel.recordkeeping.dao;
 import edu.gti.asd.ariel.recordkeeping.mappers.UserMapper;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -23,13 +24,13 @@ public class UserDao {
         this.jdbcTemplate = jdbcTemplate;
     }
     
-    public User getUserByUsername(String username) {
+    public Optional<User> getUserByUsername(String username) {
         String sql = "SELECT * FROM user u, role r WHERE u.role_id = r.role_id AND username=?";
         Object[] args = new Object[]{username};
         List<User> users = jdbcTemplate.query(sql, args, new UserMapper());
         log.info("Results: " + users);
         User user = (users != null && !users.isEmpty()) ? users.get(0) : null;
-        return user;
+        return Optional.ofNullable(user);
     }
     
 }

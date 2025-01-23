@@ -9,6 +9,7 @@ import edu.gti.asd.ariel.recordkeeping.gui.admin.GTIAdminForm;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
 import edu.gti.asd.ariel.recordkeeping.service.UserServiceImpl;
+import java.util.Optional;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -136,10 +137,11 @@ public class GTILoginForm extends javax.swing.JFrame {
         String username = jTextFieldUsername.getText();
         String password = String.valueOf(jPasswordField.getPassword());
         
-        User user = userService.getUserByUsername(username);
-        log.info("User from db: " + user);
+        Optional<User> userOpt = userService.getUserByUsername(username);
+        log.info("User from db: " + userOpt.orElse(null));
         
-        if (user != null) {
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 // OK, Check role
                 if (user.isAdmin()) {
@@ -158,7 +160,7 @@ public class GTILoginForm extends javax.swing.JFrame {
             }
             
         } else {
-            JOptionPane.showMessageDialog(this, "Username not found");
+            JOptionPane.showMessageDialog(this, "Username " + username + " not found");
         }
         
         

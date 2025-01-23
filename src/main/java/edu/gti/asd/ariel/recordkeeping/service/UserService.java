@@ -5,11 +5,12 @@
 package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.model.User;
+import java.util.Optional;
 
 /**
  *
  * @author ariel
  */
 public interface UserService {
-    User getUserByUsername(String username);
+    Optional<User> getUserByUsername(String username);
 }
