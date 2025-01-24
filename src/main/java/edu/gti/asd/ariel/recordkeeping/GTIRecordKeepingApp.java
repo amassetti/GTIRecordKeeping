@@ -5,6 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping;
 
 import edu.gti.asd.ariel.recordkeeping.gui.GTILoginForm;
+import edu.gti.asd.ariel.recordkeeping.gui.admin.GTIRegisterStudentForm;
 import java.util.logging.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,9 +22,12 @@ public class GTIRecordKeepingApp {
         
         log.info("Starting GTIRecordKeeping App");
         
-        log.info("Opening login form");
-        GTILoginForm loginForm = new GTILoginForm(ctx);
-        loginForm.setVisible(true);
+        log.info("Create and display the form");
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GTILoginForm(ctx).setVisible(true);
+            }
+        });
         
         log.info("Ending GTIRecordKeeping App");
     }

@@ -26,8 +26,17 @@ public class DepartmentDao {
     
     public List<Department> getDepartments() {
         log.info("Getting all departments from db...");
-        String sql = "SELECT * FROM department";
+        String sql = "SELECT * FROM department ORDER BY name";
         return jdbcTemplate.query(sql, new DepartmentMapper());
+    }
+    
+    public List<Department> searchByName(String departmentName) {
+        log.info("Getting departments with name: " + departmentName);
+        String sql = "SELECT * FROM department WHERE name LIKE ?  ORDER BY name";
+        Object[] args = {
+            "%" + departmentName + "%"
+        };
+        return jdbcTemplate.query(sql, args, new DepartmentMapper());
     }
     
     public void insertDepartment(Department department) {

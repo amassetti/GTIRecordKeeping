@@ -55,12 +55,10 @@
               <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jButtonRegisterCourse" pref="128" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButtonCities" pref="128" max="32767" attributes="0"/>
-                      <Component id="jButtonDepartments" max="32767" attributes="0"/>
-                      <Component id="jButtonRegisterStudent" pref="128" max="32767" attributes="0"/>
-                      <Component id="jButtonRegisterTeacher" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jButtonCities" pref="128" max="32767" attributes="0"/>
+                  <Component id="jButtonDepartments" max="32767" attributes="0"/>
+                  <Component id="jButtonRegisterStudent" pref="128" max="32767" attributes="0"/>
+                  <Component id="jButtonRegisterTeacher" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -89,6 +87,9 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Register Student"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegisterStudentActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonReports">
       <Properties>

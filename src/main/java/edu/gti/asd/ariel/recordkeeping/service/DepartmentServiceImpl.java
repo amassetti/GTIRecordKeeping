@@ -26,6 +26,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public List<Department> searchByName(String departmentName) {
+        return departmentDao.searchByName(departmentName);
+    }
+    
+    @Override
     public void insertDepartment(Department department) {
         departmentDao.insertDepartment(department);
     }

@@ -31,7 +31,7 @@ public class CourseDao {
                         "       ct.description as course_type \n" +
                         "FROM course c, department d, course_type ct \n" +
                         "WHERE c.department_id = d.department_id \n" +
-                        "AND   c.course_type_id = ct.course_type_id";
+                        "AND   c.course_type_id = ct.course_type_id ORDER BY d.name, c.name";
         
         return jdbcTemplate.query(sql, new CourseMapper());
     }
@@ -42,7 +42,7 @@ public class CourseDao {
                         "       ct.description as course_type \n" +
                         "FROM course c, department d, course_type ct \n" +
                         "WHERE c.department_id = d.department_id \n" +
-                        "AND   c.course_type_id = ct.course_type_id AND c.name LIKE ?";
+                        "AND   c.course_type_id = ct.course_type_id AND c.name LIKE ?  ORDER BY d.name, c.name";
         
         Object[] args = {
             "%" + courseName + "%"

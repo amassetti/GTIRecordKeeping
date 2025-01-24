@@ -49,6 +49,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
 
         jButtonRegisterStudent.setIcon(new javax.swing.ImageIcon("/home/ariel/Desktop/GTI/GTIRecordKeeping/student3.png")); // NOI18N
         jButtonRegisterStudent.setToolTipText("Register Student");
+        jButtonRegisterStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterStudentActionPerformed(evt);
+            }
+        });
 
         jButtonReports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reports2.png"))); // NOI18N
         jButtonReports.setToolTipText("Reports / Export Data");
@@ -106,11 +111,10 @@ public class GTIAdminForm extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonRegisterCourse, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButtonCities, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                        .addComponent(jButtonDepartments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonRegisterStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                        .addComponent(jButtonRegisterTeacher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButtonCities, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addComponent(jButtonDepartments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRegisterStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addComponent(jButtonRegisterTeacher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonRegisterStudentInCourse, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
@@ -131,6 +135,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
         GTIManageCoursesForm coursesForm = new GTIManageCoursesForm(ctx);
         coursesForm.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterCourseActionPerformed
+
+    private void jButtonRegisterStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterStudentActionPerformed
+        GTIRegisterStudentForm studentForm = new GTIRegisterStudentForm(ctx);
+        studentForm.setVisible(true);
+    }//GEN-LAST:event_jButtonRegisterStudentActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCities;

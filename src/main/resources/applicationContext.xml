@@ -57,5 +57,14 @@
     <bean id="courseTypeService" class="edu.gti.asd.ariel.recordkeeping.service.CourseTypeServiceImpl">
         <property name="courseTypeDao" ref="courseTypeDao" />
     </bean>
+    
+    <!-- City beans -->
+    <bean id="cityDao" class="edu.gti.asd.ariel.recordkeeping.dao.CityDao" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
+    <bean id="cityService" class="edu.gti.asd.ariel.recordkeeping.service.CityServiceImpl">
+        <property name="cityDao" ref="cityDao" />
+    </bean>
 
 </beans>

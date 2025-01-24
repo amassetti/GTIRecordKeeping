@@ -64,6 +64,8 @@ public class GTIManageDepartments extends javax.swing.JFrame {
         jTextFieldID = new javax.swing.JTextField();
         jButtonUpdateDept = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldFilter = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,6 +156,14 @@ public class GTIManageDepartments extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Filter:");
+
+        jTextFieldFilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldFilterKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,7 +197,12 @@ public class GTIManageDepartments extends javax.swing.JFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jTextFieldDepartmentName, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(25, 25, 25))
             .addGroup(layout.createSequentialGroup()
                 .addGap(79, 79, 79)
@@ -199,7 +214,11 @@ public class GTIManageDepartments extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -336,6 +355,19 @@ public class GTIManageDepartments extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
+    private void jTextFieldFilterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFilterKeyTyped
+        String filter = jTextFieldFilter.getText().trim();
+        
+        if (filter.length() > 2) {
+            departments = departmentService.searchByName(filter);
+            updateJTable();
+        } else if (filter.length() == 0) {
+            departments = departmentService.getDepartments();
+            updateJTable();
+        }
+        
+    }//GEN-LAST:event_jTextFieldFilterKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
@@ -346,11 +378,13 @@ public class GTIManageDepartments extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTableDepartments;
     private javax.swing.JTextArea jTextAreaDescription;
     private javax.swing.JTextField jTextFieldDepartmentName;
+    private javax.swing.JTextField jTextFieldFilter;
     private javax.swing.JTextField jTextFieldID;
     // End of variables declaration//GEN-END:variables
 

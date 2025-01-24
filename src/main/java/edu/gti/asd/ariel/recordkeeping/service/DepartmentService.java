@@ -14,6 +14,7 @@ import java.util.List;
 public interface DepartmentService {
     
     List<Department> getDepartments();
+    List<Department> searchByName(String departmentName);
     void insertDepartment(Department department);
     void updateDepartment(Department department);
     void deleteDepartment(Integer departmentId);
