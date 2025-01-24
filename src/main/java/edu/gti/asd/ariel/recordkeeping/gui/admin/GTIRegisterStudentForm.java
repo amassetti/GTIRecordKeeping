@@ -6,9 +6,12 @@ package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.City;
 import edu.gti.asd.ariel.recordkeeping.model.CourseType;
+import edu.gti.asd.ariel.recordkeeping.model.Gender;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
 import edu.gti.asd.ariel.recordkeeping.service.CityServiceImpl;
+import edu.gti.asd.ariel.recordkeeping.service.GenderService;
+import edu.gti.asd.ariel.recordkeeping.service.GenderServiceImpl;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,8 +24,10 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     
     private ClassPathXmlApplicationContext ctx;
     private CityService cityService;
+    private GenderService genderService;
     
     private List<City> cities;
+    private List<Gender> genders;
     
 
     /**
@@ -35,6 +40,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         populateStudentsData();
         populateCombosData();
         updateCitiesCombo();
+        updateGendersCombo();
     }
 
     /**
@@ -145,8 +151,6 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jLabel4.setText("PPSN:");
 
         jLabel5.setText("Gender:");
-
-        jComboBoxGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setText("First Name:");
 
@@ -259,7 +263,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<IComboElement> jComboBoxCity;
-    private javax.swing.JComboBox<String> jComboBoxGender;
+    private javax.swing.JComboBox<IComboElement> jComboBoxGender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -286,6 +290,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
 
     private void initBeans() {
         this.cityService = ctx.getBean(CityServiceImpl.class);
+        this.genderService = ctx.getBean(GenderServiceImpl.class);
     }
 
     private void populateStudentsData() {
@@ -294,11 +299,18 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
 
     private void populateCombosData() {
         cities = cityService.getCities();
+        genders = genderService.getGenders();
     }
 
     private void updateCitiesCombo() {
         DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxCity.getModel();
         cbModel.addElement(new City(-1, "Select one..."));
         cbModel.addAll(cities);
+    }
+    
+    private void updateGendersCombo() {
+        DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxGender.getModel();
+        cbModel.addElement(new Gender(-1, "Select one..."));
+        cbModel.addAll(genders);
     }
 }
