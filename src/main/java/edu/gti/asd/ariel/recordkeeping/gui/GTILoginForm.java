@@ -9,7 +9,9 @@ import edu.gti.asd.ariel.recordkeeping.gui.admin.GTIAdminForm;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
 import edu.gti.asd.ariel.recordkeeping.service.UserServiceImpl;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,6 +34,7 @@ public class GTILoginForm extends javax.swing.JFrame {
         this.ctx = ctx;
         initComponents();
         initSpringBeans();
+        setLanguage();
         jTextFieldUsername.requestFocus();
     }
     
@@ -50,34 +53,39 @@ public class GTILoginForm extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        buttonGroupLanguage = new javax.swing.ButtonGroup();
+        jLabelUser = new javax.swing.JLabel();
+        jLabelPassword = new javax.swing.JLabel();
         jButtonOK = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jTextFieldUsername = new javax.swing.JTextField();
         jPasswordField = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jRadioButtonEnglish = new javax.swing.JRadioButton();
+        jRadioButtonIrish = new javax.swing.JRadioButton();
+        jRadioButtonSpanish = new javax.swing.JRadioButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("edu/gti/asd/ariel/recordkeeping/gui/Bundle"); // NOI18N
+        setTitle(bundle.getString("GTILoginForm.title")); // NOI18N
         setResizable(false);
 
-        jLabel1.setText("Username:");
+        jLabelUser.setText(bundle.getString("GTILoginForm.jLabelUser.text")); // NOI18N
 
-        jLabel2.setText("Password:");
+        jLabelPassword.setText(bundle.getString("GTILoginForm.jLabelPassword.text")); // NOI18N
 
-        jButtonOK.setText("OK");
+        jButtonOK.setText(bundle.getString("GTILoginForm.jButtonOK.text")); // NOI18N
         jButtonOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonOKActionPerformed(evt);
             }
         });
 
-        jButtonCancel.setText("Cancel");
+        jButtonCancel.setText(bundle.getString("GTILoginForm.jButtonCancel.text")); // NOI18N
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelActionPerformed(evt);
@@ -85,6 +93,31 @@ public class GTILoginForm extends javax.swing.JFrame {
         });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gti-logo.png"))); // NOI18N
+
+        buttonGroupLanguage.add(jRadioButtonEnglish);
+        jRadioButtonEnglish.setSelected(true);
+        jRadioButtonEnglish.setText(bundle.getString("GTILoginForm.jRadioButtonEnglish.text")); // NOI18N
+        jRadioButtonEnglish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonEnglishActionPerformed(evt);
+            }
+        });
+
+        buttonGroupLanguage.add(jRadioButtonIrish);
+        jRadioButtonIrish.setText(bundle.getString("GTILoginForm.jRadioButtonIrish.text")); // NOI18N
+        jRadioButtonIrish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonIrishActionPerformed(evt);
+            }
+        });
+
+        buttonGroupLanguage.add(jRadioButtonSpanish);
+        jRadioButtonSpanish.setText(bundle.getString("GTILoginForm.jRadioButtonSpanish.text")); // NOI18N
+        jRadioButtonSpanish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonSpanishActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,20 +127,28 @@ public class GTILoginForm extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(jButton1)
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabelPassword)
+                            .addComponent(jLabelUser))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldUsername)
                             .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonOK)
+                        .addComponent(jRadioButtonEnglish)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonCancel)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addComponent(jRadioButtonIrish)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButtonSpanish)))
+                .addContainerGap(104, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonOK)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonCancel)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,18 +157,24 @@ public class GTILoginForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(jLabelUser)
                             .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
+                            .addComponent(jLabelPassword)
                             .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonOK)
-                            .addComponent(jButtonCancel)))
+                            .addComponent(jRadioButtonEnglish)
+                            .addComponent(jRadioButtonIrish)
+                            .addComponent(jRadioButtonSpanish))
+                        .addGap(8, 8, 8))
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonOK)
+                    .addComponent(jButtonCancel))
+                .addGap(28, 28, 28))
         );
 
         pack();
@@ -170,6 +217,18 @@ public class GTILoginForm extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    private void jRadioButtonEnglishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonEnglishActionPerformed
+        setLanguage();
+    }//GEN-LAST:event_jRadioButtonEnglishActionPerformed
+
+    private void jRadioButtonIrishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonIrishActionPerformed
+        setLanguage();
+    }//GEN-LAST:event_jRadioButtonIrishActionPerformed
+
+    private void jRadioButtonSpanishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSpanishActionPerformed
+        setLanguage();
+    }//GEN-LAST:event_jRadioButtonSpanishActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,14 +265,41 @@ public class GTILoginForm extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupLanguage;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonOK;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelPassword;
+    private javax.swing.JLabel jLabelUser;
     private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JRadioButton jRadioButtonEnglish;
+    private javax.swing.JRadioButton jRadioButtonIrish;
+    private javax.swing.JRadioButton jRadioButtonSpanish;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
+
+    private void setLanguage() {
+        Locale locale = null;
+        if (jRadioButtonEnglish.isSelected()) {
+            locale = new Locale("en", "IE");
+        } else if (jRadioButtonIrish.isSelected()) {
+            locale = new Locale("ga", "IE");
+        } else if (jRadioButtonSpanish.isSelected()) {
+            locale = new Locale("es", "ES");
+        }
+        
+        ResourceBundle rb = ResourceBundle.getBundle("edu/gti/asd/ariel/recordkeeping/gui/Bundle", locale);
+        
+        jLabelUser.setText(rb.getString("GTILoginForm.jLabelUser.text"));
+        jLabelPassword.setText(rb.getString("GTILoginForm.jLabelPassword.text"));
+        this.setTitle(rb.getString("GTILoginForm.title"));
+        jRadioButtonEnglish.setText(rb.getString("GTILoginForm.jRadioButtonEnglish.text"));
+        jRadioButtonSpanish.setText(rb.getString("GTILoginForm.jRadioButtonSpanish.text"));
+        jRadioButtonIrish.setText(rb.getString("GTILoginForm.jRadioButtonIrish.text"));
+        jButtonCancel.setText(rb.getString("GTILoginForm.jButtonCancel.text"));
+        jButtonOK.setText(rb.getString("GTILoginForm.jButtonOK.text"));
+
+    }
 }

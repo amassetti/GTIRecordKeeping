@@ -55,11 +55,9 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jPanelAddress = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTextFieldAddressLine1 = new javax.swing.JTextField();
-        jTextFieldAddressLine3 = new javax.swing.JTextField();
         jTextFieldAddressLine2 = new javax.swing.JTextField();
         jComboBoxCity = new javax.swing.JComboBox<>();
         jTextFieldEirCode = new javax.swing.JTextField();
@@ -85,8 +83,6 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
 
         jLabel7.setText("Line 2:");
 
-        jLabel8.setText("Line 3:");
-
         jLabel9.setText("City:");
 
         jLabel10.setText("Eir Code:");
@@ -111,13 +107,9 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldAddressLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelAddressLayout.createSequentialGroup()
-                        .addGroup(jPanelAddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelAddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldAddressLine3)
-                            .addComponent(jComboBoxCity, 0, 199, Short.MAX_VALUE))))
+                        .addComponent(jLabel9)
+                        .addGap(30, 30, 30)
+                        .addComponent(jComboBoxCity, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanelAddressLayout.setVerticalGroup(
@@ -131,11 +123,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                 .addGroup(jPanelAddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextFieldAddressLine2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelAddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextFieldAddressLine3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addGroup(jPanelAddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jComboBoxCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -272,7 +260,6 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelAddress;
     private javax.swing.JPanel jPanelStudent;
@@ -280,7 +267,6 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldAddressLine1;
     private javax.swing.JTextField jTextFieldAddressLine2;
-    private javax.swing.JTextField jTextFieldAddressLine3;
     private javax.swing.JTextField jTextFieldEirCode;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldFirstName;
