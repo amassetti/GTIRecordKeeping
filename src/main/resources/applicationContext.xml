@@ -75,5 +75,14 @@
     <bean id="genderService" class="edu.gti.asd.ariel.recordkeeping.service.GenderServiceImpl">
         <property name="genderDao" ref="genderDao" />
     </bean>
+    
+    <!-- Student beans -->
+    <bean id="studentDao" class="edu.gti.asd.ariel.recordkeeping.dao.StudentDao" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
+    <bean id="studentService" class="edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl">
+        <property name="studentDao" ref="studentDao" />
+    </bean>
 
 </beans>

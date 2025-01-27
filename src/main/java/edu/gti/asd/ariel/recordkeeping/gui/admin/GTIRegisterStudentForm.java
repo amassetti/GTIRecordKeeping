@@ -4,16 +4,23 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
+import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.City;
 import edu.gti.asd.ariel.recordkeeping.model.CourseType;
+import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.model.Gender;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
+import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
 import edu.gti.asd.ariel.recordkeeping.service.CityServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.GenderService;
 import edu.gti.asd.ariel.recordkeeping.service.GenderServiceImpl;
+import edu.gti.asd.ariel.recordkeeping.service.StudentService;
+import edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -23,9 +30,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class GTIRegisterStudentForm extends javax.swing.JFrame {
     
     private ClassPathXmlApplicationContext ctx;
+    private StudentService studentService;
     private CityService cityService;
     private GenderService genderService;
     
+    private List<Student> students;
     private List<City> cities;
     private List<Gender> genders;
     
@@ -39,6 +48,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         initBeans();
         populateStudentsData();
         populateCombosData();
+        updateStudentsJTable();
         updateCitiesCombo();
         updateGendersCombo();
     }
@@ -73,7 +83,9 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableStudents = new javax.swing.JTable();
+        jButtonAdd = new javax.swing.JButton();
+        jButtonExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,7 +122,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addGap(30, 30, 30)
                         .addComponent(jComboBoxCity, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanelAddressLayout.setVerticalGroup(
             jPanelAddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,11 +164,11 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
             jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStudentLayout.createSequentialGroup()
                 .addGap(63, 63, 63)
-                .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanelStudentLayout.createSequentialGroup()
+                .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelStudentLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelStudentLayout.createSequentialGroup()
                         .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,21 +185,21 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStudentLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(27, 27, 27)))
-                        .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldLastName)
+                        .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldEmail)
                             .addComponent(jTextFieldPpsn)
-                            .addComponent(jComboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(73, Short.MAX_VALUE))
+                            .addComponent(jComboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         jPanelStudentLayout.setVerticalGroup(
             jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStudentLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(16, 16, 16)
                 .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -206,18 +218,39 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableStudents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "First Name", "Last Name", "Email", "PPSN", "Gender", "Address", "City"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableStudents);
+
+        jButtonAdd.setText("Add");
+
+        jButtonExit.setText("Exit");
+        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,12 +259,18 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 883, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
-                        .addComponent(jPanelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36)
+                        .addComponent(jPanelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAdd)))
                 .addGap(130, 130, 130))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonExit)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,17 +278,26 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanelStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addComponent(jPanelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAdd))
+                .addGap(46, 46, 46)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonExit)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonExitActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonExit;
     private javax.swing.JComboBox<IComboElement> jComboBoxCity;
     private javax.swing.JComboBox<IComboElement> jComboBoxGender;
     private javax.swing.JLabel jLabel1;
@@ -264,7 +312,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelAddress;
     private javax.swing.JPanel jPanelStudent;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableStudents;
     private javax.swing.JTextField jTextFieldAddressLine1;
     private javax.swing.JTextField jTextFieldAddressLine2;
     private javax.swing.JTextField jTextFieldEirCode;
@@ -277,10 +325,11 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private void initBeans() {
         this.cityService = ctx.getBean(CityServiceImpl.class);
         this.genderService = ctx.getBean(GenderServiceImpl.class);
+        this.studentService = ctx.getBean(StudentServiceImpl.class);
     }
 
     private void populateStudentsData() {
-        // TODO
+        students = studentService.getStudents();
     }
 
     private void populateCombosData() {
@@ -298,5 +347,37 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxGender.getModel();
         cbModel.addElement(new Gender(-1, "Select one..."));
         cbModel.addAll(genders);
+    }
+
+    private void updateStudentsJTable() {
+        DefaultTableModel tableModel = (DefaultTableModel) jTableStudents.getModel();
+        
+        // Clean table
+        tableModel.getDataVector().removeAllElements();
+        tableModel.fireTableDataChanged();
+        
+        // Populate table
+        for (Student student : students) {
+            Vector row = new Vector();
+            row.add(student.getStudentId());
+            row.add(student.getFirstName());
+            row.add(student.getLastName());
+            row.add(student.getEmail());
+            row.add(student.getPpsn());
+            row.add(student.getGender());
+            
+            // address
+            Address address = student.getAddress();
+            if (address != null) {
+                row.add(address.getAddressLine1());
+                row.add(address.getCity());
+            } else {
+                row.add("N/A");
+                row.add("N/A");
+            }
+
+            tableModel.addRow(row);
+        }
+
     }
 }
