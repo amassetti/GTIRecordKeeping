@@ -4,14 +4,12 @@
  */
 package edu.gti.asd.ariel.recordkeeping.service;
 
-import edu.gti.asd.ariel.recordkeeping.model.Student;
-import java.util.List;
+import edu.gti.asd.ariel.recordkeeping.model.Address;
 
 /**
  *
  * @author ariel
  */
-public interface StudentService {
-    List<Student> getStudents();
-    void insertStudent(Student student) throws IllegalAccessException;
+public interface AddressService {
+    Integer insertAddress(Address address);
 }

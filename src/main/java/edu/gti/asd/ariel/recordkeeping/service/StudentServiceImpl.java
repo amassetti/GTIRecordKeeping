@@ -4,6 +4,7 @@
  */
 package edu.gti.asd.ariel.recordkeeping.service;
 
+import edu.gti.asd.ariel.recordkeeping.dao.AddressDao;
 import edu.gti.asd.ariel.recordkeeping.dao.StudentDao;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
@@ -15,15 +16,33 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     
     private StudentDao studentDao;
+    private AddressDao addressDao;
 
     public void setStudentDao(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
 
+    public void setAddressDao(AddressDao addressDao) {
+        this.addressDao = addressDao;
+    }
 
     @Override
     public List<Student> getStudents() {
         return studentDao.getStudents();
+    }
+
+    @Override
+    public void insertStudent(Student student) throws IllegalAccessException {
+        
+        if (student.getAddress() == null) throw new IllegalAccessException("No address has been registered for student");
+        
+        // Insert address
+        Integer addressId = addressDao.insertAddress(student.getAddress());
+        student.getAddress().setAddressId(addressId);
+        
+        // Insert student
+        studentDao.insertStudent(student);
+        
     }
     
 }

@@ -45,5 +45,21 @@ public class StudentDao {
         return jdbcTemplate.query(sql, new StudentMapper());
     }
     
+    public void insertStudent(Student student) {
+        String sql = "INSERT INTO student (address_id, gender_id, first_name, last_name, email, ppsn) " +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
+        
+        Object[] args = {
+            student.getAddress().getAddressId(),
+            student.getGenderId(),
+            student.getFirstName(),
+            student.getLastName(),
+            student.getEmail(),
+            student.getPpsn()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+    
     
 }

@@ -20,7 +20,7 @@ USE `gti_record_keeping` ;
 DROP TABLE IF EXISTS `gti_record_keeping`.`city` ;
 
 CREATE TABLE IF NOT EXISTS `gti_record_keeping`.`city` (
-  `city_id` INT NOT NULL,
+  `city_id` INT NOT NULL  AUTO_INCREMENT,
   `city_name` VARCHAR(50) NULL,
   `county` VARCHAR(50) NULL,
   PRIMARY KEY (`city_id`))
@@ -33,7 +33,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `gti_record_keeping`.`address` ;
 
 CREATE TABLE IF NOT EXISTS `gti_record_keeping`.`address` (
-  `address_id` INT NOT NULL,
+  `address_id` INT NOT NULL AUTO_INCREMENT,
   `city_id` INT NOT NULL,
   `address_line_1` VARCHAR(100) NULL,
   `address_line_2` VARCHAR(100) NULL,

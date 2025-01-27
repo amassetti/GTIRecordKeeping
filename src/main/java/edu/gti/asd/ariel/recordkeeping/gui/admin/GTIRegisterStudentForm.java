@@ -6,8 +6,6 @@ package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.City;
-import edu.gti.asd.ariel.recordkeeping.model.CourseType;
-import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.model.Gender;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
@@ -17,8 +15,10 @@ import edu.gti.asd.ariel.recordkeeping.service.GenderService;
 import edu.gti.asd.ariel.recordkeeping.service.GenderServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl;
+import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -28,6 +28,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author ariel
  */
 public class GTIRegisterStudentForm extends javax.swing.JFrame {
+    
+    static Logger log = Logger.getLogger(GTIRegisterStudentForm.class.getName());
     
     private ClassPathXmlApplicationContext ctx;
     private StudentService studentService;
@@ -244,6 +246,11 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableStudents);
 
         jButtonAdd.setText("Add");
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
 
         jButtonExit.setText("Exit");
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
@@ -293,6 +300,60 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        // Get and validate data from form
+        String firstName = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldFirstName, "first name");
+        if (firstName.length() == 0) return;
+        
+        String lastName = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldLastName, "last name");
+        if (lastName.length() == 0) return;
+        
+        String email = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldEmail, "email");
+        if (email.length() == 0) return;
+        
+        String ppsn = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldPpsn, "ppsn");
+        if (ppsn.length() == 0) return;
+        
+        Integer genderId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxGender, "gender");
+        if (genderId.equals(-1)) return;
+
+        String addressLine1 = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldAddressLine1, "address line 1");
+        if (addressLine1.length() == 0) return;
+        
+        String addressLine2 = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldAddressLine2, "address line 2");
+        if (addressLine2.length() == 0) return;
+        
+        Integer cityId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxCity, "city");
+        if (cityId.equals(-1)) return;
+        
+        String eirCode = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldEirCode, "eir code");
+        if (eirCode.length() == 0) return;
+        
+        Student student = new Student();
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
+        student.setEmail(email);
+        student.setPpsn(ppsn);
+        student.setGenderId(genderId);
+        
+        Address address = new Address();
+        address.setAddressLine1(addressLine1);
+        address.setAddressLine2(addressLine2);
+        address.setCityId(cityId);
+        address.setEirCode(eirCode);
+        student.setAddress(address);
+        
+        try {
+            studentService.insertStudent(student);
+        } catch (IllegalAccessException ex) {
+            log.info("Error: " + ex.getMessage());
+        }
+        
+        clearFields();
+        populateStudentsData();
+        updateStudentsJTable();
+    }//GEN-LAST:event_jButtonAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -379,5 +440,18 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
             tableModel.addRow(row);
         }
 
+    }
+
+    private void clearFields() {
+        jTextFieldFirstName.setText("");
+        jTextFieldLastName.setText("");
+        jTextFieldEmail.setText("");
+        jTextFieldPpsn.setText("");
+        jComboBoxGender.setSelectedIndex(0);
+
+        jTextFieldAddressLine1.setText("");
+        jTextFieldAddressLine2.setText("");
+        jComboBoxCity.setSelectedIndex(0);
+        jTextFieldEirCode.setText("");
     }
 }

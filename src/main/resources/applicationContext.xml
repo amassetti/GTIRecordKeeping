@@ -76,6 +76,15 @@
         <property name="genderDao" ref="genderDao" />
     </bean>
     
+    <!-- Address beans -->
+    <bean id="addressDao" class="edu.gti.asd.ariel.recordkeeping.dao.AddressDao" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
+    <bean id="addressService" class="edu.gti.asd.ariel.recordkeeping.service.AddressServiceImpl">
+        <property name="addressDao" ref="addressDao" />
+    </bean>
+    
     <!-- Student beans -->
     <bean id="studentDao" class="edu.gti.asd.ariel.recordkeeping.dao.StudentDao" >
         <property name="jdbcTemplate" ref="jdbcTemplate" />
@@ -83,6 +92,7 @@
     
     <bean id="studentService" class="edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl">
         <property name="studentDao" ref="studentDao" />
+        <property name="addressDao" ref="addressDao" />
     </bean>
 
 </beans>

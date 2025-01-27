@@ -5,8 +5,11 @@
 package edu.gti.asd.ariel.recordkeeping.dao;
 
 import edu.gti.asd.ariel.recordkeeping.model.Address;
+import java.sql.PreparedStatement;
 import java.util.logging.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 /**
  *
@@ -22,17 +25,30 @@ public class AddressDao {
     }
     
     public Integer insertAddress(Address address) {
-        String sql = "INSERT INTO address (address_id, city_id, address_line_1, address_line_2, eir_code) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO address (city_id, address_line_1, address_line_2, eir_code) VALUES (?, ?, ?, ?);";
         
-        Object[] args = {
-            address.getAddressId(),
-            address.getCityId(),
-            address.getAddressLine1(),
-            address.getAddressLine2(),
-            address.getEirCode()
-        };
+//        Object[] args = {
+//            address.getCityId(),
+//            address.getAddressLine1(),
+//            address.getAddressLine2(),
+//            address.getEirCode()
+//        };
         
-        return jdbcTemplate.update(sql, args);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, new String[] { "id" });
+            ps.setInt(1, address.getCityId());
+            ps.setString(2, address.getAddressLine1());
+            ps.setString(3, address.getAddressLine2());
+            ps.setString(4, address.getEirCode());
+            return ps;
+        }, keyHolder);
+        
+        
+        //return jdbcTemplate.update(sql, args);
+        
+        return keyHolder.getKey().intValue();
     }
     
 }

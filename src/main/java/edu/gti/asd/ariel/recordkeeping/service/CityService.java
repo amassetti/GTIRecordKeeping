@@ -13,4 +13,8 @@ import java.util.List;
  */
 public interface CityService {
     List<City> getCities();
+    List<City> searchByName(String filter);
+    void insertCity(City city);
+    void updateCity(City city);
+    void deleteCity(Integer id);
 }

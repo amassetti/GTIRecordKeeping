@@ -27,5 +27,50 @@ public class CityDao {
         String sql = "SELECT * FROM city ORDER BY city_name";
         return jdbcTemplate.query(sql, new CityMapper());
     }
+
+    public List<City> searchByName(String filter) {
+        log.info("Filtering cities with name: " + filter);
+        String sql = "SELECT * FROM city WHERE name LIKE ? ORDER BY name";
+        Object[] args = {
+            "%" + filter + "%"
+        };
+        return jdbcTemplate.query(sql, args, new CityMapper());
+    }
+
+    public void insertCity(City city) {
+        log.info("Inserting city " + city);
+        String sql = "INSERT INTO city (city_name, county) values (?, ?)";
+        
+        Object[] args = {
+            city.getCityName(),
+            city.getCounty()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+
+    public void updateCity(City city) {
+        log.info("Updating city " + city);
+        String sql = "UPDATE city SET city_name = ?, county = ? WHERE city_id = ?";
+        
+        Object[] args = {
+            city.getCityName(),
+            city.getCounty(),
+            city.getCityId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+
+    public void deleteCity(Integer id) {
+        log.info("Deleting city with id " + id);
+        String sql = "DELETE FROM city where city_id = ?";
+        
+        Object[] args = {
+            id
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
     
 }

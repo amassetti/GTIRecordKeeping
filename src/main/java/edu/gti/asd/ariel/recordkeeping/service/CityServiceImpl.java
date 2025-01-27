@@ -24,5 +24,25 @@ public class CityServiceImpl implements CityService {
     public List<City> getCities() {
         return cityDao.getCities();
     }
+
+    @Override
+    public List<City> searchByName(String filter) {
+        return cityDao.searchByName(filter);
+    }
+
+    @Override
+    public void insertCity(City city) {
+        cityDao.insertCity(city);
+    }
+
+    @Override
+    public void updateCity(City city) {
+        cityDao.updateCity(city);
+    }
+
+    @Override
+    public void deleteCity(Integer id) {
+        cityDao.deleteCity(id);
+    }
     
 }
