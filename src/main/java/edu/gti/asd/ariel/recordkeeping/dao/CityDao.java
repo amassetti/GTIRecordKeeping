@@ -24,13 +24,13 @@ public class CityDao {
     }
     
     public List<City> getCities() {
-        String sql = "SELECT * FROM city ORDER BY city_name";
+        String sql = "SELECT * FROM city ORDER BY county, city_name";
         return jdbcTemplate.query(sql, new CityMapper());
     }
 
     public List<City> searchByName(String filter) {
         log.info("Filtering cities with name: " + filter);
-        String sql = "SELECT * FROM city WHERE name LIKE ? ORDER BY name";
+        String sql = "SELECT * FROM city WHERE city_name LIKE ? ORDER BY county, city_name";
         Object[] args = {
             "%" + filter + "%"
         };

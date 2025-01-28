@@ -6,6 +6,9 @@ package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.City;
+import edu.gti.asd.ariel.recordkeeping.model.Course;
+import edu.gti.asd.ariel.recordkeeping.model.CourseType;
+import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.model.Gender;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
@@ -16,7 +19,9 @@ import edu.gti.asd.ariel.recordkeeping.service.GenderServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -88,6 +93,8 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jTableStudents = new javax.swing.JTable();
         jButtonAdd = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
+        jButtonUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -243,6 +250,11 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableStudentsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableStudents);
 
         jButtonAdd.setText("Add");
@@ -259,6 +271,12 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
             }
         });
 
+        jButtonDelete.setText("Delete");
+        jButtonDelete.setEnabled(false);
+
+        jButtonUpdate.setText("Update");
+        jButtonUpdate.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -266,14 +284,19 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 883, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 883, Short.MAX_VALUE)
+                        .addGap(130, 130, 130))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jPanelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonAdd)))
-                .addGap(130, 130, 130))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonAdd)
+                            .addComponent(jButtonDelete)
+                            .addComponent(jButtonUpdate))
+                        .addGap(124, 124, 124))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonExit)
@@ -286,7 +309,12 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanelStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAdd))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonUpdate)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonDelete)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAdd)))
                 .addGap(46, 46, 46)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -355,10 +383,44 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         updateStudentsJTable();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
+    private void jTableStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableStudentsMouseClicked
+        // Double click
+        if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+            DefaultTableModel tableModel = (DefaultTableModel)jTableStudents.getModel();
+            int index = jTableStudents.getSelectedRow();
+            
+            Student student = students.get(index);
+            
+            // Set fields
+            jTextFieldFirstName.setText(student.getFirstName());
+            jTextFieldLastName.setText(student.getLastName());
+            
+            // TODO: rest of the fields
+//            jTextFieldID.setText(course.getCourseId().toString());
+//            jTextAreaDescription.setText(course.getDescription());
+//            jTextFieldCourseCode.setText(course.getCode());
+//            jTextFieldName.setText(course.getName());
+//            
+//            Optional<Department> department = departments.stream().filter(d -> d.getDepartmentId().equals(course.getDepartmentId())).findFirst();
+//            jComboBoxDepartment.setSelectedItem(department.get());
+//            
+//            Optional<CourseType> courseType = courseTypes.stream().filter(ct -> ct.getCourseTypeId().equals(course.getCourseTypeId())).findFirst();
+//            jComboBoxCourseType.setSelectedItem(courseType.get());
+//            
+//            Optional<Integer> certification = certifications.stream().filter(ct -> ct.equals(course.getCertification())).findFirst();
+//            jComboBoxCertification.setSelectedItem(certification.get());
+            
+            setEditDeleteMode();
+            
+        }
+    }//GEN-LAST:event_jTableStudentsMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonExit;
+    private javax.swing.JButton jButtonUpdate;
     private javax.swing.JComboBox<IComboElement> jComboBoxCity;
     private javax.swing.JComboBox<IComboElement> jComboBoxGender;
     private javax.swing.JLabel jLabel1;
@@ -453,5 +515,17 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jTextFieldAddressLine2.setText("");
         jComboBoxCity.setSelectedIndex(0);
         jTextFieldEirCode.setText("");
+    }
+
+    private void setAddMode() {
+        jButtonAdd.setEnabled(true);
+        jButtonUpdate.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+    }
+    
+    private void setEditDeleteMode() {
+        jButtonAdd.setEnabled(false);
+        jButtonUpdate.setEnabled(true);
+        jButtonDelete.setEnabled(true);
     }
 }
