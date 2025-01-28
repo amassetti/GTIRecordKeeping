@@ -6,9 +6,6 @@ package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.City;
-import edu.gti.asd.ariel.recordkeeping.model.Course;
-import edu.gti.asd.ariel.recordkeeping.model.CourseType;
-import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.model.Gender;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
@@ -89,6 +86,8 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jTextFieldLastName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStudents = new javax.swing.JTable();
         jButtonAdd = new javax.swing.JButton();
@@ -167,18 +166,18 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
 
         jLabel3.setText("Email:");
 
+        jLabel8.setText("ID:");
+
+        jTextFieldID.setEditable(false);
+
         javax.swing.GroupLayout jPanelStudentLayout = new javax.swing.GroupLayout(jPanelStudent);
         jPanelStudent.setLayout(jPanelStudentLayout);
         jPanelStudentLayout.setHorizontalGroup(
             jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStudentLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelStudentLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelStudentLayout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelStudentLayout.createSequentialGroup()
                         .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,13 +197,25 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                             .addComponent(jTextFieldEmail)
                             .addComponent(jTextFieldPpsn)
                             .addComponent(jComboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))))
-                .addContainerGap(74, Short.MAX_VALUE))
+                            .addComponent(jTextFieldLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelStudentLayout.createSequentialGroup()
+                        .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         jPanelStudentLayout.setVerticalGroup(
             jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStudentLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStudentLayout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -224,7 +235,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                 .addGroup(jPanelStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jComboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTableStudents.setModel(new javax.swing.table.DefaultTableModel(
@@ -273,9 +284,19 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
 
         jButtonDelete.setText("Delete");
         jButtonDelete.setEnabled(false);
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
         jButtonUpdate.setText("Update");
         jButtonUpdate.setEnabled(false);
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -319,7 +340,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonExit)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -392,28 +413,39 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
             Student student = students.get(index);
             
             // Set fields
+            jTextFieldID.setText(student.getStudentId().toString());
             jTextFieldFirstName.setText(student.getFirstName());
             jTextFieldLastName.setText(student.getLastName());
+            jTextFieldEmail.setText(student.getEmail());
+            jTextFieldPpsn.setText(student.getPpsn());
             
-            // TODO: rest of the fields
-//            jTextFieldID.setText(course.getCourseId().toString());
-//            jTextAreaDescription.setText(course.getDescription());
-//            jTextFieldCourseCode.setText(course.getCode());
-//            jTextFieldName.setText(course.getName());
-//            
-//            Optional<Department> department = departments.stream().filter(d -> d.getDepartmentId().equals(course.getDepartmentId())).findFirst();
-//            jComboBoxDepartment.setSelectedItem(department.get());
-//            
-//            Optional<CourseType> courseType = courseTypes.stream().filter(ct -> ct.getCourseTypeId().equals(course.getCourseTypeId())).findFirst();
-//            jComboBoxCourseType.setSelectedItem(courseType.get());
-//            
-//            Optional<Integer> certification = certifications.stream().filter(ct -> ct.equals(course.getCertification())).findFirst();
-//            jComboBoxCertification.setSelectedItem(certification.get());
+            Optional<Gender> gender = genders.stream().filter(g -> g.getGenderId().equals(student.getGenderId())).findFirst();
+            jComboBoxGender.setSelectedItem(gender.get());
             
+            Address address = student.getAddress();
+            jTextFieldAddressLine1.setText(address.getAddressLine1());
+            jTextFieldAddressLine2.setText(address.getAddressLine2());
+            jTextFieldEirCode.setText(address.getEirCode());
+            
+            Optional<City> city = cities.stream().filter(c -> c.getCityId().equals(address.getCityId())).findFirst();
+            jComboBoxCity.setSelectedItem(city.get());
+                        
             setEditDeleteMode();
             
         }
     }//GEN-LAST:event_jTableStudentsMouseClicked
+
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+        // TODO
+        //studentService.updateStudent(student);
+        setAddMode();
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        // TODO add your handling code here:
+        //studentService.deleteStudent(studentId);
+        setAddMode();
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -431,6 +463,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelAddress;
     private javax.swing.JPanel jPanelStudent;
@@ -441,6 +474,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldEirCode;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldFirstName;
+    private javax.swing.JTextField jTextFieldID;
     private javax.swing.JTextField jTextFieldLastName;
     private javax.swing.JTextField jTextFieldPpsn;
     // End of variables declaration//GEN-END:variables
