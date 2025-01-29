@@ -375,11 +375,17 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         Integer courseId = Integer.parseInt(jTextFieldID.getText());
-        courseService.deleteCourse(courseId);
-        populateCoursesData();
-        updateJTable();
-        cleanInputs();
-        setAddMode();
+        String courseName = jTextFieldName.getText();
+        
+        int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete course " + courseName, "Delete Course", 0);
+       
+        if (option == JOptionPane.YES_OPTION) {
+            courseService.deleteCourse(courseId);
+            populateCoursesData();
+            updateJTable();
+            cleanInputs();
+            setAddMode();
+        }
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jTextFieldFilterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFilterKeyTyped

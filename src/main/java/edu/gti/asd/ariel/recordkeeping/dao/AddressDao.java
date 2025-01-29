@@ -50,5 +50,37 @@ public class AddressDao {
         
         return keyHolder.getKey().intValue();
     }
+
+    public void deleteAddress(Integer addressId) {
+        log.info("Deleting address with id " + addressId);
+        String sql = "DELETE FROM address WHERE address_id = ?";
+        
+        Object[] args = {
+            addressId
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+
+    public void updateAddress(Address address) {
+        log.info("Updating address " + address);
+        String sql = "UPDATE address\n" +
+                        "SET\n" +
+                        "	city_id = ?,\n" +
+                        "	address_line_1 = ?,\n" +
+                        "	address_line_2 = ?,\n" +
+                        "	eir_code = ?\n" +
+                        "WHERE address_id = ?;";
+        
+        Object[] args = {
+            address.getCityId(),
+            address.getAddressLine1(),
+            address.getAddressLine2(),
+            address.getEirCode(),
+            address.getAddressId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
     
 }

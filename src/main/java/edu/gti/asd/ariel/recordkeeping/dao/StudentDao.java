@@ -60,6 +60,41 @@ public class StudentDao {
         
         jdbcTemplate.update(sql, args);
     }
+
+    public void deleteStudent(Integer studentId) {
+        log.info("Deleting student with id " + studentId);
+        String sql = "DELETE FROM student " +
+                     " WHERE student_id = ?";
+        
+        Object[] args = {
+            studentId
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+
+    public void updateStudent(Student student) {
+        log.info("Updating student " + student);
+        String sql = "UPDATE student\n" +
+                        "SET\n" +
+                        "	gender_id = ?,\n" +
+                        "	first_name = ?,\n" +
+                        "	last_name = ?,\n" +
+                        "	email = ?,\n" +
+                        "	ppsn = ?\n" +
+                        "WHERE student_id = ?";
+        
+        Object[] args = {
+            student.getGenderId(),
+            student.getFirstName(),
+            student.getLastName(),
+            student.getEmail(),
+            student.getPpsn(),
+            student.getStudentId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
     
     
 }

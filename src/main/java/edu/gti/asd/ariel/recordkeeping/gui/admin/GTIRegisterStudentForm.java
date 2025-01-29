@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -41,6 +42,8 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     private List<Student> students;
     private List<City> cities;
     private List<Gender> genders;
+    
+    private Student selectedStudent;
     
 
     /**
@@ -411,6 +414,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
             int index = jTableStudents.getSelectedRow();
             
             Student student = students.get(index);
+            selectedStudent = student;
             
             // Set fields
             jTextFieldID.setText(student.getStudentId().toString());
@@ -436,15 +440,76 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableStudentsMouseClicked
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
-        // TODO
-        //studentService.updateStudent(student);
+        // Get and validate data from form
+        Integer studentId = Integer.valueOf(jTextFieldID.getText());
+        
+        String firstName = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldFirstName, "first name");
+        if (firstName.length() == 0) return;
+        
+        String lastName = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldLastName, "last name");
+        if (lastName.length() == 0) return;
+        
+        String email = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldEmail, "email");
+        if (email.length() == 0) return;
+        
+        String ppsn = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldPpsn, "ppsn");
+        if (ppsn.length() == 0) return;
+        
+        Integer genderId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxGender, "gender");
+        if (genderId.equals(-1)) return;
+
+        String addressLine1 = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldAddressLine1, "address line 1");
+        if (addressLine1.length() == 0) return;
+        
+        String addressLine2 = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldAddressLine2, "address line 2");
+        if (addressLine2.length() == 0) return;
+        
+        Integer cityId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxCity, "city");
+        if (cityId.equals(-1)) return;
+        
+        String eirCode = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldEirCode, "eir code");
+        if (eirCode.length() == 0) return;
+        
+        //Student student = new Student();
+        selectedStudent.setFirstName(firstName);
+        selectedStudent.setLastName(lastName);
+        selectedStudent.setEmail(email);
+        selectedStudent.setPpsn(ppsn);
+        selectedStudent.setGenderId(genderId);
+        
+        Address address = selectedStudent.getAddress();
+        address.setAddressLine1(addressLine1);
+        address.setAddressLine2(addressLine2);
+        address.setCityId(cityId);
+        address.setEirCode(eirCode);
+        selectedStudent.setAddress(address);
+        
+        studentService.updateStudent(selectedStudent);
         setAddMode();
+        clearFields();
+        populateStudentsData();
+        updateStudentsJTable();
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
-        //studentService.deleteStudent(studentId);
-        setAddMode();
+        Integer studentId = Integer.valueOf(jTextFieldID.getText());
+        
+        if (selectedStudent != null && selectedStudent.getStudentId().equals(studentId)) {
+            
+            int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete student " + selectedStudent.getLastName(), "Delete Student", 0);
+       
+            if (option == JOptionPane.YES_OPTION) {
+                studentService.deleteStudent(selectedStudent);
+                setAddMode();
+                clearFields();
+                populateStudentsData();
+                updateStudentsJTable();
+            }
+            
+        } else {
+            log.info("Error deleting student...");
+        }
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
 
@@ -539,6 +604,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     }
 
     private void clearFields() {
+        jTextFieldID.setText("");
         jTextFieldFirstName.setText("");
         jTextFieldLastName.setText("");
         jTextFieldEmail.setText("");
@@ -549,6 +615,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jTextFieldAddressLine2.setText("");
         jComboBoxCity.setSelectedIndex(0);
         jTextFieldEirCode.setText("");
+        selectedStudent = null;
     }
 
     private void setAddMode() {

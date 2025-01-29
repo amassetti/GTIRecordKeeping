@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.AddressDao;
 import edu.gti.asd.ariel.recordkeeping.dao.StudentDao;
+import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
 
@@ -44,5 +45,21 @@ public class StudentServiceImpl implements StudentService {
         studentDao.insertStudent(student);
         
     }
+
+    @Override
+    public void deleteStudent(Student student) {
+        studentDao.deleteStudent(student.getStudentId());
+        Address address = student.getAddress();
+        addressDao.deleteAddress(address.getAddressId());
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+        Address address = student.getAddress();
+        addressDao.updateAddress(address);
+        studentDao.updateStudent(student);
+    }
+    
+    
     
 }
