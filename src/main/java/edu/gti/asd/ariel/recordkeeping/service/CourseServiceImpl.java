@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.CourseDao;
 import edu.gti.asd.ariel.recordkeeping.model.Course;
+import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
 
 /**
@@ -43,6 +44,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void deleteCourse(Integer courseId) {
         courseDao.deleteCourse(courseId);
+    }
+
+    @Override
+    public Integer registerStudent(Course course, Student student) {
+        return courseDao.registerStudent(course, student);
     }
     
 }

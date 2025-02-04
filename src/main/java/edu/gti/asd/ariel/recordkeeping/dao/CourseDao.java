@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.dao;
 
 import edu.gti.asd.ariel.recordkeeping.mappers.CourseMapper;
 import edu.gti.asd.ariel.recordkeeping.model.Course;
+import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -102,6 +103,14 @@ public class CourseDao {
         
         jdbcTemplate.update(sql, args);
         
+    }
+    
+    public Integer registerStudent(Course course, Student student) {
+        Integer registrationId = null;
+        
+        
+        
+        return registrationId;
     }
     
 }

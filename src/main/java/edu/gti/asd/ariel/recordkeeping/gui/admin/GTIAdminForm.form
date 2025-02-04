@@ -138,6 +138,9 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Register Student in Course"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegisterStudentInCourseActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonRegisterTeacherInSubject">
       <Properties>

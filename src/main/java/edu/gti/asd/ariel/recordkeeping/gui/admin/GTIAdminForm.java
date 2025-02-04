@@ -77,6 +77,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
 
         jButtonRegisterStudentInCourse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/registerStudent.png"))); // NOI18N
         jButtonRegisterStudentInCourse.setToolTipText("Register Student in Course");
+        jButtonRegisterStudentInCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterStudentInCourseActionPerformed(evt);
+            }
+        });
 
         jButtonRegisterTeacherInSubject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/registerTeacher.png"))); // NOI18N
         jButtonRegisterTeacherInSubject.setToolTipText("Register Teacher in Subject");
@@ -169,6 +174,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
         GTIManageCitiesForm citiesForm = new GTIManageCitiesForm(ctx);
         citiesForm.setVisible(true);
     }//GEN-LAST:event_jButtonCitiesActionPerformed
+
+    private void jButtonRegisterStudentInCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterStudentInCourseActionPerformed
+        GTIRegisterStudentInCourseForm registerStudentInCourse = new GTIRegisterStudentInCourseForm(ctx);
+        registerStudentInCourse.setVisible(true);
+    }//GEN-LAST:event_jButtonRegisterStudentInCourseActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCities;
