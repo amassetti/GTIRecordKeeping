@@ -5,6 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.model.User;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,4 +14,7 @@ import java.util.Optional;
  */
 public interface UserService {
     Optional<User> getUserByUsername(String username);
+    void registerUser(User user);
+
+    public List<User> getUsers();
 }

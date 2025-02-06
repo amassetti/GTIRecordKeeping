@@ -43,10 +43,18 @@
                           <Component id="jButtonRegisterStudent" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButtonRegisterCourse" min="-2" pref="137" max="-2" attributes="0"/>
-                      <EmptySpace pref="76" max="32767" attributes="0"/>
-                      <Component id="jButtonDepartments" min="-2" pref="136" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jButtonRegisterCourse" min="-2" pref="137" max="-2" attributes="0"/>
+                              <EmptySpace pref="76" max="32767" attributes="0"/>
+                              <Component id="jButtonDepartments" min="-2" pref="136" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jButtonRegisterUser" min="-2" pref="137" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButtonCities" min="-2" pref="130" max="-2" attributes="0"/>
                           <Component id="jButtonReports" min="-2" pref="134" max="-2" attributes="0"/>
@@ -70,11 +78,12 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButtonRegisterStudentInCourse" pref="121" max="32767" attributes="0"/>
+                  <Component id="jButtonRegisterStudentInCourse" pref="128" max="32767" attributes="0"/>
                   <Component id="jButtonRegisterTeacherInSubject" max="32767" attributes="0"/>
                   <Component id="jButtonReports" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButtonRegisterUser" alignment="1" pref="128" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="159" max="32767" attributes="0"/>
+              <EmptySpace pref="152" max="32767" attributes="0"/>
               <Component id="jButtonExit" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
           </Group>
@@ -164,6 +173,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExitActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRegisterUser">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Register User"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegisterUserActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

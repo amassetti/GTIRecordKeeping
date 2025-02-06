@@ -16,6 +16,7 @@ public class User {
     private Integer teacherId;
     private Integer adminId;
     private String role;
+    private Integer roleId;
 
     public User() {
     }
@@ -76,12 +77,20 @@ public class User {
         this.role = role;
     }
     
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+    
     public boolean isAdmin() {
-        return Role.ROLE_ADMIN.name().equals(role);
+        return RoleTypes.ROLE_ADMIN.name().equals(role);
     }
     
     public boolean isTeacher() {
-        return Role.ROLE_TEACHER.name().equals(role);
+        return RoleTypes.ROLE_TEACHER.name().equals(role);
     }
 
     @Override

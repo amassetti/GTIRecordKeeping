@@ -18,13 +18,31 @@ public class UserMapper implements RowMapper {
     @Override
     public Object mapRow(ResultSet rs, int i) throws SQLException {
         User user = new User();
-        user.setUserId(rs.getInt("user_id"));
-        user.setUsername(rs.getString("username"));
-        user.setPassword(rs.getString("password"));
-        user.setStudentId(rs.getInt("student_id"));
-        user.setTeacherId(rs.getInt("teacher_id"));       
-        user.setAdminId(rs.getInt("admin_id"));
-        user.setRole(rs.getString("role_code"));
+        
+        if (rs.findColumn("user_id") > -1)
+            user.setUserId(rs.getInt("user_id"));
+        
+        if (rs.findColumn("role_id") > -1)
+            user.setRoleId(rs.getInt("role_id"));
+        
+        if (rs.findColumn("username") > -1)
+            user.setUsername(rs.getString("username"));
+        
+        if (rs.findColumn("password") > -1)
+            user.setPassword(rs.getString("password"));
+        
+        if (rs.findColumn("student_id") > -1)
+            user.setStudentId(rs.getInt("student_id"));
+        
+        if (rs.findColumn("teacher_id") > -1)
+            user.setTeacherId(rs.getInt("teacher_id"));
+        
+        if ( rs.findColumn("admin_id") > -1 )
+            user.setAdminId(rs.getInt("admin_id"));
+        
+        if (rs.findColumn("role_code") > -1)
+            user.setRole(rs.getString("role_code"));
+        
         return user;
     }
     

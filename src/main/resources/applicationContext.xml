@@ -94,5 +94,14 @@
         <property name="studentDao" ref="studentDao" />
         <property name="addressDao" ref="addressDao" />
     </bean>
+    
+    <!-- Rolebeans -->
+    <bean id="roleDao" class="edu.gti.asd.ariel.recordkeeping.dao.RoleDao" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
+    <bean id="roleService" class="edu.gti.asd.ariel.recordkeeping.service.RoleServiceImpl">
+        <property name="roleDao" ref="roleDao" />
+    </bean>
 
 </beans>

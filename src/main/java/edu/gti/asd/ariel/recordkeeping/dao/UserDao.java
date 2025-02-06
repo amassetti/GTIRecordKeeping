@@ -32,5 +32,26 @@ public class UserDao {
         User user = (users != null && !users.isEmpty()) ? users.get(0) : null;
         return Optional.ofNullable(user);
     }
+
+    public void registerUser(User user) {
+        String sql = "INSERT INTO user (role_id, username, password, teacher_id, student_id, admin_id) " +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
+        
+        Object[] args = {
+            user.getRoleId(),
+            user.getUsername(),
+            user.getPassword(),
+            user.getTeacherId(),
+            user.getStudentId(),
+            user.getAdminId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+
+    public List<User> getUsers() {
+        String sql = "SELECT * FROM user u, role r WHERE u.role_id = r.role_id";
+        return jdbcTemplate.query(sql, new UserMapper());
+    }
     
 }
