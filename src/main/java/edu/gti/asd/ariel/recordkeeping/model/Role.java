@@ -8,12 +8,17 @@ package edu.gti.asd.ariel.recordkeeping.model;
  *
  * @author ariel
  */
-public class Role {
+public class Role implements IComboElement {
     private Integer roleId;
     private String roleCode;
     private String roleDescription;
 
     public Role() {
+    }
+
+    public Role(Integer roleId, String roleDescription) {
+        this.roleId = roleId;
+        this.roleDescription = roleDescription;
     }
 
     public Integer getRoleId() {
@@ -42,7 +47,17 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" + "roleId=" + roleId + ", roleCode=" + roleCode + ", roleDescription=" + roleDescription + '}';
+        return getRoleDescription();
     }    
+
+    @Override
+    public Integer getComboElementId() {
+        return getRoleId();
+    }
+
+    @Override
+    public String getComboElementDescription() {
+        return getRoleDescription();
+    }
     
 }

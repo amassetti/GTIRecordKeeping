@@ -295,7 +295,6 @@ public class GTIManageCitiesForm extends javax.swing.JFrame {
     }
     
     private void jTableDepartmentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDepartmentsMouseClicked
-        
         // Double click
         if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
             DefaultTableModel tableModel = (DefaultTableModel)jTableDepartments.getModel();

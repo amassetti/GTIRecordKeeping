@@ -4,14 +4,24 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
+import edu.gti.asd.ariel.recordkeeping.model.Admin;
+import edu.gti.asd.ariel.recordkeeping.model.City;
+import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Role;
+import edu.gti.asd.ariel.recordkeeping.model.RoleTypes;
+import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.model.User;
+import edu.gti.asd.ariel.recordkeeping.service.AdminService;
+import edu.gti.asd.ariel.recordkeeping.service.AdminServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.RoleService;
 import edu.gti.asd.ariel.recordkeeping.service.RoleServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
 import edu.gti.asd.ariel.recordkeeping.service.UserServiceImpl;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -23,9 +33,14 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     private ClassPathXmlApplicationContext ctx;
     private RoleService roleService;
     private UserService userService;
+    private AdminService adminService;
     
     private List<User> users;
     private List<Role> roles;
+    
+    //private List<Student> students;
+    private List<Teacher> teachers;
+    private List<Admin> admins;
     
     /**
      * Creates new form GTIAdminRegisterUserForm
@@ -34,8 +49,10 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         initComponents();
         this.ctx = ctx;
         initBeans();
-        populateRolesData();
+        populateUsersData();
         updateJTable();
+        updateRolesCombo();
+        updateAdminCombo();
     }
 
     /**
@@ -50,6 +67,22 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUsers = new javax.swing.JTable();
         jButtonExit = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldId = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldUsername = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBoxRole = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBoxStudent = new javax.swing.JComboBox<>();
+        jComboBoxTeacher = new javax.swing.JComboBox<>();
+        jComboBoxAdmin = new javax.swing.JComboBox<>();
+        jButtonUpdate = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
+        jButtonAdd = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -77,6 +110,11 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableUsersMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableUsers);
 
         jButtonExit.setText("Exit");
@@ -86,26 +124,133 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("ID");
+
+        jTextFieldId.setEditable(false);
+
+        jLabel2.setText("Username");
+
+        jTextFieldUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldUsernameActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Role");
+
+        jComboBoxRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxRoleActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Student");
+
+        jLabel5.setText("Teacher");
+
+        jLabel6.setText("Admin");
+
+        jComboBoxStudent.setEnabled(false);
+
+        jButtonUpdate.setText("Update");
+        jButtonUpdate.setEnabled(false);
+
+        jButtonDelete.setText("Delete");
+        jButtonDelete.setEnabled(false);
+
+        jButtonAdd.setText("Add");
+
+        jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel7.setText("Users");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(171, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonExit)
+                .addGap(25, 25, 25))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jComboBoxRole, javax.swing.GroupLayout.Alignment.LEADING, 0, 175, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButtonUpdate)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButtonDelete)))
+                                        .addGap(20, 20, 20)
+                                        .addComponent(jButtonAdd))
+                                    .addComponent(jLabel4)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(163, 163, 163))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxStudent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxTeacher, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(444, 444, 444))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonExit)
-                        .addGap(25, 25, 25))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxTeacher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonUpdate)
+                            .addComponent(jButtonDelete)
+                            .addComponent(jButtonAdd))))
+                .addGap(52, 52, 52)
                 .addComponent(jButtonExit)
                 .addGap(26, 26, 26))
         );
@@ -117,14 +262,50 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonExitActionPerformed
 
+    private void jTextFieldUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldUsernameActionPerformed
+
+    private void jComboBoxRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRoleActionPerformed
+        Role role = (Role)jComboBoxRole.getSelectedItem();
+        
+        if (RoleTypes.ROLE_ADMIN.name().equals(role.getRoleCode())) {
+            jComboBoxAdmin.setEnabled(true);
+            jComboBoxTeacher.setEnabled(false);
+        } else if (RoleTypes.ROLE_TEACHER.name().equals(role.getRoleCode())) {
+            jComboBoxAdmin.setEnabled(false);
+            jComboBoxTeacher.setEnabled(true);
+        }
+    }//GEN-LAST:event_jComboBoxRoleActionPerformed
+
+    private void jTableUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsersMouseClicked
+        // Double click
+        if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+            DefaultTableModel tableModel = (DefaultTableModel)jTableUsers.getModel();
+            int index = jTableUsers.getSelectedRow();
+            jTextFieldId.setText(tableModel.getValueAt(index, 0).toString());
+            jTextFieldUsername.setText(tableModel.getValueAt(index, 1).toString());
+            jComboBoxRole.setSelectedItem(tableModel.getValueAt(index, 2).toString());
+            //jComboBoxStudent.setSelectedItem(tableModel.getValueAt(index, 3).toString());
+            jComboBoxTeacher.setSelectedItem(tableModel.getValueAt(index, 4).toString());
+            
+            Integer adminIdSelected = (Integer)tableModel.getValueAt(index, 5);
+            Optional<Admin> admin = admins.stream().filter(a -> a.getAdminId().equals(adminIdSelected)).findFirst();
+            jComboBoxAdmin.setSelectedItem(admin.get());
+            setEditDeleteMode();
+        }
+    }//GEN-LAST:event_jTableUsersMouseClicked
+
     private void initBeans() {
         roleService = ctx.getBean(RoleServiceImpl.class);
         userService = ctx.getBean(UserServiceImpl.class);
+        adminService = ctx.getBean(AdminServiceImpl.class);
     }
 
-    private void populateRolesData() {
+    private void populateUsersData() {
         roles = roleService.getRoles();
         users = userService.getUsers();
+        admins = adminService.getAllAdmins();
     }
 
     private void updateJTable() {
@@ -148,8 +329,48 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonExit;
+    private javax.swing.JButton jButtonUpdate;
+    private javax.swing.JComboBox<IComboElement> jComboBoxAdmin;
+    private javax.swing.JComboBox<IComboElement> jComboBoxRole;
+    private javax.swing.JComboBox<String> jComboBoxStudent;
+    private javax.swing.JComboBox<IComboElement> jComboBoxTeacher;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUsers;
+    private javax.swing.JTextField jTextFieldId;
+    private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
+
+    private void updateRolesCombo() {
+        DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxRole.getModel();
+        cbModel.addElement(new Role(-1, "Select one..."));
+        cbModel.addAll(roles);
+    }
+
+    private void updateAdminCombo() {
+        DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxAdmin.getModel();
+        cbModel.addElement(new Admin(-1, "...", "Select one" ));
+        cbModel.addAll(admins);
+    }
+
+    public void setEditDeleteMode() {
+        jButtonUpdate.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonAdd.setEnabled(false);
+    }
+    
+    public void setAddMode() {
+        jButtonUpdate.setEnabled(false);
+        jButtonDelete.setEnabled(false);
+        jButtonAdd.setEnabled(true);
+    }
 }

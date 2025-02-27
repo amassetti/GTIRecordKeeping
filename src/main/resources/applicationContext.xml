@@ -95,13 +95,22 @@
         <property name="addressDao" ref="addressDao" />
     </bean>
     
-    <!-- Rolebeans -->
+    <!-- Role beans -->
     <bean id="roleDao" class="edu.gti.asd.ariel.recordkeeping.dao.RoleDao" >
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
     <bean id="roleService" class="edu.gti.asd.ariel.recordkeeping.service.RoleServiceImpl">
         <property name="roleDao" ref="roleDao" />
+    </bean>
+    
+    <!-- Admin beans -->
+    <bean id="adminDao" class="edu.gti.asd.ariel.recordkeeping.dao.AdminDao" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
+    <bean id="adminService" class="edu.gti.asd.ariel.recordkeeping.service.AdminServiceImpl">
+        <property name="adminDao" ref="adminDao" />
     </bean>
 
 </beans>

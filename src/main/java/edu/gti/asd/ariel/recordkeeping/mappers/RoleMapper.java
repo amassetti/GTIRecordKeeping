@@ -21,7 +21,7 @@ public class RoleMapper implements RowMapper {
         
         role.setRoleId(rs.getInt("role_id"));
         role.setRoleCode(rs.getString("role_code"));
-        role.setRoleDescription("role_description");
+        role.setRoleDescription(rs.getString("role_description"));
         
         return role;
     }
