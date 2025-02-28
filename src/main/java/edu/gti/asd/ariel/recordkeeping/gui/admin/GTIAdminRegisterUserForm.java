@@ -168,6 +168,11 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         jButtonDelete.setEnabled(false);
 
         jButtonAdd.setText("Add");
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel7.setText("Users");
@@ -353,6 +358,29 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         updateJTable();
         
     }//GEN-LAST:event_jButtonUpdateActionPerformed
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        String username = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldUsername, "username");
+        String password = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldPassword, "password");
+        Integer roleId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxRole, "role");
+        Student student = (Student)jComboBoxStudent.getSelectedItem();
+        Teacher teacher = (Teacher)jComboBoxTeacher.getSelectedItem();
+        Admin admin = (Admin)jComboBoxAdmin.getSelectedItem();
+        
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setRoleId(roleId);
+        user.setStudentId(student != null ? student.getStudentId() : null);
+        user.setTeacherId(teacher != null ? teacher.getTeacherId() : null);
+        user.setAdminId(admin != null ? admin.getAdminId() : null);
+        
+        userService.registerUser(user);
+        setAddMode();
+        clearFields();
+        populateUsersData();
+        updateJTable();
+    }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void initBeans() {
         roleService = ctx.getBean(RoleServiceImpl.class);
