@@ -48,6 +48,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
 
         jButtonRegisterTeacher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/teacher3.png"))); // NOI18N
         jButtonRegisterTeacher.setToolTipText("Register Teacher");
+        jButtonRegisterTeacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterTeacherActionPerformed(evt);
+            }
+        });
 
         jButtonRegisterStudent.setIcon(new javax.swing.ImageIcon("/home/ariel/Desktop/GTI/GTIRecordKeeping/student3.png")); // NOI18N
         jButtonRegisterStudent.setToolTipText("Register Student");
@@ -198,6 +203,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
         GTIAdminRegisterUserForm userFrom = new GTIAdminRegisterUserForm(ctx);
         userFrom.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterUserActionPerformed
+
+    private void jButtonRegisterTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterTeacherActionPerformed
+        GTIRegisterTeacherForm teacherForm = new GTIRegisterTeacherForm(ctx);
+        teacherForm.setVisible(true);
+    }//GEN-LAST:event_jButtonRegisterTeacherActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCities;

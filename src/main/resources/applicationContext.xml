@@ -95,6 +95,16 @@
         <property name="addressDao" ref="addressDao" />
     </bean>
     
+    <!-- Teacher beans -->
+    <bean id="teacherDao" class="edu.gti.asd.ariel.recordkeeping.dao.TeacherDao" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
+    <bean id="teacherService" class="edu.gti.asd.ariel.recordkeeping.service.TeacherServiceImpl">
+        <property name="teacherDao" ref="teacherDao" />
+        <property name="addressDao" ref="addressDao" />
+    </bean>
+    
     <!-- Role beans -->
     <bean id="roleDao" class="edu.gti.asd.ariel.recordkeeping.dao.RoleDao" >
         <property name="jdbcTemplate" ref="jdbcTemplate" />
