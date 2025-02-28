@@ -9,6 +9,7 @@ import edu.gti.asd.ariel.recordkeeping.model.City;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Role;
 import edu.gti.asd.ariel.recordkeeping.model.RoleTypes;
+import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.AdminService;
@@ -17,6 +18,7 @@ import edu.gti.asd.ariel.recordkeeping.service.RoleService;
 import edu.gti.asd.ariel.recordkeeping.service.RoleServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
 import edu.gti.asd.ariel.recordkeeping.service.UserServiceImpl;
+import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Optional;
@@ -83,6 +85,8 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         jButtonDelete = new javax.swing.JButton();
         jButtonAdd = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldPassword = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -154,6 +158,11 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
 
         jButtonUpdate.setText("Update");
         jButtonUpdate.setEnabled(false);
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateActionPerformed(evt);
+            }
+        });
 
         jButtonDelete.setText("Delete");
         jButtonDelete.setEnabled(false);
@@ -163,64 +172,73 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel7.setText("Users");
 
+        jLabel8.setText("Password");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonExit)
-                .addGap(25, 25, 25))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jComboBoxRole, javax.swing.GroupLayout.Alignment.LEADING, 0, 175, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jComboBoxStudent, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxTeacher, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxAdmin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldUsername)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel8)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel3)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButtonUpdate)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jButtonDelete)))
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jButtonAdd))
-                                    .addComponent(jLabel4)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                                                .addGap(1, 1, 1)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jComboBoxRole, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jLabel5)
+                                                            .addComponent(jLabel6)
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jButtonUpdate)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(jButtonDelete)))
+                                                        .addGap(20, 20, 20)
+                                                        .addComponent(jButtonAdd))
+                                                    .addComponent(jLabel4)))
+                                            .addComponent(jLabel1)
+                                            .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxStudent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxTeacher, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(419, 419, 419))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addGap(444, 444, 444))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonExit)))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,6 +248,10 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,11 +267,14 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonUpdate)
                             .addComponent(jButtonDelete)
-                            .addComponent(jButtonAdd))))
+                            .addComponent(jButtonAdd)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(52, 52, 52)
                 .addComponent(jButtonExit)
                 .addGap(26, 26, 26))
@@ -283,18 +308,51 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
             DefaultTableModel tableModel = (DefaultTableModel)jTableUsers.getModel();
             int index = jTableUsers.getSelectedRow();
+            User selectedUser = users.get(index);
+            
             jTextFieldId.setText(tableModel.getValueAt(index, 0).toString());
             jTextFieldUsername.setText(tableModel.getValueAt(index, 1).toString());
-            jComboBoxRole.setSelectedItem(tableModel.getValueAt(index, 2).toString());
+            jTextFieldPassword.setText(selectedUser != null ? selectedUser.getPassword() : null);
+            
+            String roleCode = tableModel.getValueAt(index, 2).toString();
+            Optional<Role> role = roles.stream().filter( r -> r.getRoleCode().equals(roleCode)).findFirst();
+            jComboBoxRole.setSelectedItem(role.get());
+            
             //jComboBoxStudent.setSelectedItem(tableModel.getValueAt(index, 3).toString());
-            jComboBoxTeacher.setSelectedItem(tableModel.getValueAt(index, 4).toString());
+            //jComboBoxTeacher.setSelectedItem(tableModel.getValueAt(index, 4).toString());
             
             Integer adminIdSelected = (Integer)tableModel.getValueAt(index, 5);
             Optional<Admin> admin = admins.stream().filter(a -> a.getAdminId().equals(adminIdSelected)).findFirst();
-            jComboBoxAdmin.setSelectedItem(admin.get());
+            jComboBoxAdmin.setSelectedItem(admin.orElse(new Admin(-1, "...", "Select one" )));
             setEditDeleteMode();
         }
     }//GEN-LAST:event_jTableUsersMouseClicked
+
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+        Integer userId = Integer.parseInt(jTextFieldId.getText());
+        String username = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldUsername, "username");
+        String password = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldPassword, "password");
+        Integer roleId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxRole, "role");
+        Student student = (Student)jComboBoxStudent.getSelectedItem();
+        Teacher teacher = (Teacher)jComboBoxTeacher.getSelectedItem();
+        Admin admin = (Admin)jComboBoxAdmin.getSelectedItem();
+        
+        User user = new User();
+        user.setUserId(userId);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setRoleId(roleId);
+        user.setStudentId(student != null ? student.getStudentId() : null);
+        user.setTeacherId(teacher != null ? teacher.getTeacherId() : null);
+        user.setAdminId(admin != null ? admin.getAdminId() : null);
+        
+        userService.updateUser(user);
+        setAddMode();
+        clearFields();
+        populateUsersData();
+        updateJTable();
+        
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void initBeans() {
         roleService = ctx.getBean(RoleServiceImpl.class);
@@ -344,9 +402,11 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUsers;
     private javax.swing.JTextField jTextFieldId;
+    private javax.swing.JTextField jTextFieldPassword;
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
 
@@ -372,5 +432,21 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         jButtonUpdate.setEnabled(false);
         jButtonDelete.setEnabled(false);
         jButtonAdd.setEnabled(true);
+    }
+
+    private void clearFields() {
+        jTextFieldId.setText("");
+        jTextFieldUsername.setText("");
+        jTextFieldPassword.setText("");
+        jComboBoxRole.setSelectedIndex(0);
+        
+        if (jComboBoxStudent.getItemCount() > 0)
+            jComboBoxStudent.setSelectedIndex(0);
+        
+        if (jComboBoxTeacher.getItemCount() > 0)
+            jComboBoxTeacher.setSelectedIndex(0);
+        
+        if (jComboBoxAdmin.getItemCount() > 0)
+            jComboBoxAdmin.setSelectedIndex(0);
     }
 }

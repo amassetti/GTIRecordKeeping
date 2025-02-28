@@ -54,4 +54,29 @@ public class UserDao {
         return jdbcTemplate.query(sql, new UserMapper());
     }
     
+    public void updateUser(User user) {
+        String sql = "UPDATE user\n" +
+            "SET\n" +
+            "role_id = ?,\n" +
+            "username = ?,\n" +
+            "password = ?,\n" +
+            "teacher_id = ?,\n" +
+            "student_id = ?,\n" +
+            "admin_id = ?\n" +
+            "WHERE user_id = ?";
+        
+        Object[] args = {
+            user.getRoleId(),
+            user.getUsername(),
+            user.getPassword(),
+            user.getTeacherId(),
+            user.getStudentId(),
+            user.getAdminId(),
+            user.getUserId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+        
+    }
+    
 }
