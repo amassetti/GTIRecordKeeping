@@ -33,10 +33,10 @@ public class TeacherDao {
                         "    g.*,\n" +
                         "    a.*,\n" +
                         "    c.*\n" +
-                        "FROM gti_record_keeping.teacher t,\n" +
-                        "     gti_record_keeping.gender g,\n" +
-                        "     gti_record_keeping.address a,\n" +
-                        "     gti_record_keeping.city c\n" +
+                        "FROM teacher t,\n" +
+                        "     gender g,\n" +
+                        "     address a,\n" +
+                        "     city c\n" +
                         "where \n" +
                         "    t.gender_id = g.gender_id and\n" +
                         "    t.address_id = a.address_id and\n" +

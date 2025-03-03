@@ -24,6 +24,7 @@ public class StudentDao {
     }
     
     public List<Student> getStudents() {
+        log.info("Getting all students from DB");
         String sql = "    SELECT\n" +
                         "	s.student_id,\n" +
                         "    s.first_name,\n" +
@@ -33,20 +34,23 @@ public class StudentDao {
                         "    g.*,\n" +
                         "    a.*,\n" +
                         "    c.*\n" +
-                        "FROM gti_record_keeping.student s,\n" +
-                        "	 gti_record_keeping.gender g,\n" +
-                        "     gti_record_keeping.address a,\n" +
-                        "     gti_record_keeping.city c\n" +
+                        "FROM student s,\n" +
+                        "     gender g,\n" +
+                        "     address a,\n" +
+                        "     city c\n" +
                         "where \n" +
-                        "	s.gender_id = g.gender_id and\n" +
+                        "    s.gender_id = g.gender_id and\n" +
                         "    s.address_id = a.address_id and\n" +
                         "    a.city_id=c.city_id";
+        
+        
         
         return jdbcTemplate.query(sql, new StudentMapper());
     }
     
     
     public List<Student> searchStudents(String filter) {
+        log.info("Searching students with filter" + filter);
         String sql = "    SELECT\n" +
                         "    s.student_id,\n" +
                         "    s.first_name,\n" +
@@ -56,16 +60,15 @@ public class StudentDao {
                         "    g.*,\n" +
                         "    a.*,\n" +
                         "    c.*\n" +
-                        "FROM gti_record_keeping.student s, \n" +
-                        "	 gti_record_keeping.gender g, \n" +
-                        "     gti_record_keeping.address a, \n" +
-                        "     gti_record_keeping.city c \n" +
+                        "FROM student s, \n" +
+                        "     gender g, \n" +
+                        "     address a, \n" +
+                        "     city c \n" +
                         "where \n" +
                         "    s.gender_id = g.gender_id and \n" +
                         "    s.address_id = a.address_id and \n" +
                         "    a.city_id=c.city_id and \n" +
                         "   (s.first_name LIKE ? OR s.last_name LIKE ?)";
-        
         
         Object[] args = {
             "%" + filter + "%",
@@ -75,6 +78,7 @@ public class StudentDao {
     }
     
     public void insertStudent(Student student) {
+        log.info("Inserting student" + student);
         String sql = "INSERT INTO student (address_id, gender_id, first_name, last_name, email, ppsn) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
         
