@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `gti_record_keeping_v2`.`course` (
   `department_id` INT NOT NULL,
   `course_type_id` INT NOT NULL,
   `course_code` VARCHAR(45) NULL,
-  `name` VARCHAR(45) NULL,
+  `name` VARCHAR(100) NULL,
   `description` VARCHAR(100) NULL,
   `certification` INT NULL,
   `fee` VARCHAR(45) NULL,
