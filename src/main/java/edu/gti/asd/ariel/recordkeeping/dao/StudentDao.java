@@ -45,6 +45,35 @@ public class StudentDao {
         return jdbcTemplate.query(sql, new StudentMapper());
     }
     
+    
+    public List<Student> searchStudents(String filter) {
+        String sql = "    SELECT\n" +
+                        "    s.student_id,\n" +
+                        "    s.first_name,\n" +
+                        "    s.last_name,\n" +
+                        "    s.email,\n" +
+                        "    s.ppsn,\n" +
+                        "    g.*,\n" +
+                        "    a.*,\n" +
+                        "    c.*\n" +
+                        "FROM gti_record_keeping.student s, \n" +
+                        "	 gti_record_keeping.gender g, \n" +
+                        "     gti_record_keeping.address a, \n" +
+                        "     gti_record_keeping.city c \n" +
+                        "where \n" +
+                        "    s.gender_id = g.gender_id and \n" +
+                        "    s.address_id = a.address_id and \n" +
+                        "    a.city_id=c.city_id and \n" +
+                        "   (s.first_name LIKE ? OR s.last_name LIKE ?)";
+        
+        
+        Object[] args = {
+            "%" + filter + "%",
+            "%" + filter + "%"
+        };
+        return jdbcTemplate.query(sql, args, new StudentMapper());
+    }
+    
     public void insertStudent(Student student) {
         String sql = "INSERT INTO student (address_id, gender_id, first_name, last_name, email, ppsn) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";

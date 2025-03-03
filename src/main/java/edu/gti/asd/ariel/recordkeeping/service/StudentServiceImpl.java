@@ -31,6 +31,11 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudents() {
         return studentDao.getStudents();
     }
+    
+    @Override
+    public List<Student> searchStudents(String filter) {
+        return studentDao.searchStudents(filter);
+    }    
 
     @Override
     public void insertStudent(Student student) throws IllegalAccessException {
@@ -59,7 +64,7 @@ public class StudentServiceImpl implements StudentService {
         addressDao.updateAddress(address);
         studentDao.updateStudent(student);
     }
-    
+
     
     
 }
