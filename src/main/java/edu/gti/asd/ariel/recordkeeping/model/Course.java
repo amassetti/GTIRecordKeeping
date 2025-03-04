@@ -8,8 +8,8 @@ package edu.gti.asd.ariel.recordkeeping.model;
  *
  * @author ariel
  */
-public class Course {
-    private Integer courseId;
+public class Course implements IComboElement {
+    private Integer courseId = null;
     private Integer departmentId;
     private String departmentName;
     private Integer courseTypeId;
@@ -20,6 +20,11 @@ public class Course {
     private Integer certification;
 
     public Course() {
+    }
+
+    public Course(Integer courseId, String name) {
+        this.courseId = courseId;
+        this.name = name;
     }
 
     public Integer getCourseId() {
@@ -96,7 +101,17 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" + "courseId=" + courseId + ", departmentId=" + departmentId + ", departmentName=" + departmentName + ", courseTypeId=" + courseTypeId + ", courseTypeName=" + courseTypeName + ", code=" + code + ", name=" + name + ", description=" + description + ", certification=" + certification + '}';
+        return getName();
+    }
+
+    @Override
+    public Integer getComboElementId() {
+        return getCourseId();
+    }
+
+    @Override
+    public String getComboElementDescription() {
+        return getName();
     }
     
 }

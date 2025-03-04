@@ -311,7 +311,7 @@ DROP TABLE IF EXISTS `gti_record_keeping_v2`.`student_course` ;
 CREATE TABLE IF NOT EXISTS `gti_record_keeping_v2`.`student_course` (
   `student_id` INT NOT NULL,
   `course_id` INT NOT NULL,
-  `registration_id` INT NULL AUTO_INCREMENT,
+  `registration_id` INT NULL,
   `registration_date` DATETIME NULL,
   `payment_ok` TINYINT NULL,
   PRIMARY KEY (`student_id`, `course_id`),

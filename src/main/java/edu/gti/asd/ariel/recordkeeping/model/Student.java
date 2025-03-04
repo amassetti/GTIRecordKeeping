@@ -17,6 +17,7 @@ public class Student {
     private String email;
     private String ppsn;
     private Address address;
+    private Course course;
     
     public Student() {
     }
@@ -84,10 +85,22 @@ public class Student {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
         
     @Override
     public String toString() {
         return "Student{" + "studentId=" + studentId + ", genderId=" + genderId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", ppsn=" + ppsn + ", address=" + address + '}';
+    }
+    
+    public boolean hasCourse() {
+        return (getCourse() != null && getCourse().getCourseId() != null);
     }
     
 }

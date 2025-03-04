@@ -45,7 +45,7 @@
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="courseService" class="edu.gti.asd.ariel.recordkeeping.service.CourseServiceImpl">
+    <bean name="courseService" id="courseService" class="edu.gti.asd.ariel.recordkeeping.service.CourseServiceImpl">
         <property name="courseDao" ref="courseDao" />
     </bean>
     
@@ -90,7 +90,7 @@
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="studentService" class="edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl">
+    <bean name="studentService" id="studentService" class="edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl">
         <property name="studentDao" ref="studentDao" />
         <property name="addressDao" ref="addressDao" />
     </bean>

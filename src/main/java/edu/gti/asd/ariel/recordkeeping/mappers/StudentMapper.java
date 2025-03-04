@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.mappers;
 
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.Address;
+import edu.gti.asd.ariel.recordkeeping.model.Course;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
@@ -74,7 +75,20 @@ public class StudentMapper implements RowMapper {
             }
             
             student.setAddress(address);
-
+        }
+        
+        if (rs.findColumn("course_id") >= 0 && !Integer.valueOf(0).equals(rs.getInt("course_id")) ) {
+            Course course = new Course();
+            
+            if (rs.findColumn("course_id") >= 0) {
+                course.setCourseId(rs.getInt("course_id"));
+            }
+            
+            if (rs.findColumn("course_code") >= 0) {
+                course.setCode(rs.getString("course_code"));
+            }
+           
+            student.setCourse(course);
         }
         
         return student;

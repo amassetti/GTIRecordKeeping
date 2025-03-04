@@ -5,6 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.model.Student;
+import edu.gti.asd.ariel.recordkeeping.model.StudentByCourse;
 import java.util.List;
 
 /**
@@ -14,7 +15,12 @@ import java.util.List;
 public interface StudentService {
     List<Student> getStudents();
     List<Student> searchStudents(String filter);
+    
     void insertStudent(Student student) throws IllegalAccessException;
     void deleteStudent(Student student);
     void updateStudent(Student student);
+    
+    List<StudentByCourse> getStudentsByCourse(Integer courseId);
+    void registerStudentsInCourse(List<Student> ableStudents, Integer courseId);
+    void unregisterStudentsFromCourse(List<StudentByCourse> studentsToUnregister);
 }

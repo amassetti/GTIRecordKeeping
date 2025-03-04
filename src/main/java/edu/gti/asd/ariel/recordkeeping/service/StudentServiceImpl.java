@@ -6,8 +6,10 @@ package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.AddressDao;
 import edu.gti.asd.ariel.recordkeeping.dao.StudentDao;
+import edu.gti.asd.ariel.recordkeeping.exceptions.ValidationException;
 import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
+import edu.gti.asd.ariel.recordkeeping.model.StudentByCourse;
 import java.util.List;
 
 /**
@@ -36,6 +38,11 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> searchStudents(String filter) {
         return studentDao.searchStudents(filter);
     }    
+    
+    @Override
+    public List<StudentByCourse> getStudentsByCourse(Integer courseId) {
+        return studentDao.getStudentsByCourse(courseId);
+    }
 
     @Override
     public void insertStudent(Student student) throws IllegalAccessException {
@@ -63,6 +70,26 @@ public class StudentServiceImpl implements StudentService {
         Address address = student.getAddress();
         addressDao.updateAddress(address);
         studentDao.updateStudent(student);
+    }
+
+    @Override
+    public void registerStudentsInCourse(List<Student> students, Integer courseId) {
+        
+        if (courseId == null) throw new ValidationException("Course id cannot be null");
+        
+        for (Student student : students) {
+            studentDao.registerStudentInCourse(student, courseId);
+        }
+        
+    }
+
+    @Override
+    public void unregisterStudentsFromCourse(List<StudentByCourse> studentsToUnregister) {
+        
+        for (StudentByCourse student : studentsToUnregister) {
+            studentDao.unregisterStudentFromCourse(student);
+        }
+        
     }
 
     
