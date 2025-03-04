@@ -92,7 +92,8 @@ public class GTIAdminForm extends javax.swing.JFrame {
         jButtonRegisterTeacherInSubject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/registerTeacher.png"))); // NOI18N
         jButtonRegisterTeacherInSubject.setToolTipText("Register Teacher in Subject");
 
-        jButtonRegisterCourse.setText("Register Course");
+        jButtonRegisterCourse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/course.png"))); // NOI18N
+        jButtonRegisterCourse.setToolTipText("Courses");
         jButtonRegisterCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRegisterCourseActionPerformed(evt);
@@ -106,7 +107,8 @@ public class GTIAdminForm extends javax.swing.JFrame {
             }
         });
 
-        jButtonRegisterUser.setText("Register User");
+        jButtonRegisterUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
+        jButtonRegisterUser.setToolTipText("Register Users");
         jButtonRegisterUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRegisterUserActionPerformed(evt);

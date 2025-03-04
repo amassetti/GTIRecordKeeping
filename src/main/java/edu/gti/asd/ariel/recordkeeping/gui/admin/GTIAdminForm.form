@@ -164,7 +164,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonRegisterCourse">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Register Course"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/course.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Courses"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegisterCourseActionPerformed"/>
@@ -180,7 +183,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonRegisterUser">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Register User"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/user.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Register Users"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegisterUserActionPerformed"/>
