@@ -20,6 +20,7 @@ public class SubjectMapper implements RowMapper {
     private final static String SUBJECT_CODE = "subject_code";
     private final static String SUBJECT_NAME = "subject_name";
     private final static String SUBJECT_DESCRIPTION = "subject_description";
+    private final static String NFQ_LEVEL = "nfq_level";
     
     
     @Override
@@ -42,6 +43,9 @@ public class SubjectMapper implements RowMapper {
             subject.setSubjectDescription(rs.getString(SUBJECT_DESCRIPTION));
         }
         
+        if (rs.findColumn(NFQ_LEVEL) >= 0) {
+            subject.setNfqLevel(rs.getInt(NFQ_LEVEL));
+        }
         
 
         return subject;

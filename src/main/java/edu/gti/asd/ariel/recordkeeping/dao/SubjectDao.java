@@ -4,6 +4,7 @@
  */
 package edu.gti.asd.ariel.recordkeeping.dao;
 
+import edu.gti.asd.ariel.recordkeeping.mappers.SubjectMapper;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import java.util.List;
 import java.util.logging.Logger;
@@ -24,27 +25,67 @@ public class SubjectDao {
     
     public List<Subject> getAllSubjects() {
         log.info("Fetching all subjects from db...");
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM subject";        
+        return jdbcTemplate.query(sql, new SubjectMapper());
     }
 
     public List<Subject> searchSubjects(String filter) {
         log.info("Fetching all subjects from db with filter: " + filter);
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM subject WHERE subject_name LIKE ?";
+        
+        Object[] args = {
+            "%" + filter + "%"
+        };
+        
+        return jdbcTemplate.query(sql, args, new SubjectMapper());
     }
 
     public void insertSubject(Subject subject) {
         log.info("Inserting subject into db: " + subject);
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO subject (subject_code, subject_name, subject_description, nfq_level) " +
+                     "VALUES (?, ?, ?, ?)";
+        
+        Object[] args = {
+            subject.getSubjectCode(),
+            subject.getSubjectName(),
+            subject.getSubjectDescription(),
+            subject.getNfqLevel()
+        };
+        
+        jdbcTemplate.update(sql, args);
+
     }
 
     public void updateSubject(Subject subject) {
         log.info("Updating subject into db: " + subject);
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE subject SET " +
+                "subject_code = ?, " +
+                "subject_name = ?, " +
+                "subject_description = ?, " +
+                "nfq_level = ? " +
+                " WHERE subject_id = ?";
+        
+        Object[] args = {
+            subject.getSubjectCode(),
+            subject.getSubjectName(),
+            subject.getSubjectDescription(),
+            subject.getNfqLevel(),
+            subject.getSubjectId()
+        };
+        
+        jdbcTemplate.update(sql, args);
+
     }
 
     public void deleteSubject(Integer subjectId) {
         log.info("Deleting subject from db: " + subjectId);
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM subject WHERE subject_id = ?";
+        Object[] args = {
+            subjectId
+        };
+            
+        jdbcTemplate.update(sql, args);
+
     }
     
 }

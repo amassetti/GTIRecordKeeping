@@ -275,6 +275,7 @@ public class GTIManageSubjects extends javax.swing.JFrame {
         String code = jTextFieldCode.getText();
         String name = jTextFieldSubjectName.getText();
         String description = jTextAreaDescription.getText();
+        Integer nfqLevel = Integer.valueOf(jComboBoxNFQLevel.getSelectedItem().toString());
         
         if (code == null || code.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Code is required");
@@ -298,6 +299,7 @@ public class GTIManageSubjects extends javax.swing.JFrame {
         subject.setSubjectCode(code);
         subject.setSubjectName(name);
         subject.setSubjectDescription(description);
+        subject.setNfqLevel(nfqLevel);
 
         subjectService.insertSubject(subject);
         
@@ -329,9 +331,13 @@ public class GTIManageSubjects extends javax.swing.JFrame {
         if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
             DefaultTableModel tableModel = (DefaultTableModel)jTableSubjects.getModel();
             int index = jTableSubjects.getSelectedRow();
-            jTextFieldID.setText(tableModel.getValueAt(index, 0).toString());
-            jTextFieldSubjectName.setText(tableModel.getValueAt(index, 1).toString());
-            jTextAreaDescription.setText(tableModel.getValueAt(index, 2).toString());
+            Subject selectedSubject = subjects.get(index);
+            
+            jTextFieldID.setText(selectedSubject.getSubjectId().toString());
+            jTextFieldCode.setText(selectedSubject.getSubjectCode());
+            jTextFieldSubjectName.setText(selectedSubject.getSubjectName());
+            jTextAreaDescription.setText(selectedSubject.getSubjectDescription());
+            jComboBoxNFQLevel.setSelectedItem(selectedSubject.getNfqLevel().toString());
             setEditDeleteMode();
         }
         
@@ -346,7 +352,7 @@ public class GTIManageSubjects extends javax.swing.JFrame {
         String code = jTextFieldCode.getText();
         String name = jTextFieldSubjectName.getText();
         String description = jTextAreaDescription.getText();
-        Integer nfqLevel = (Integer)jComboBoxNFQLevel.getSelectedItem();
+        Integer nfqLevel = Integer.valueOf(jComboBoxNFQLevel.getSelectedItem().toString());
         
         Subject subjectToUpdate = new Subject();
         subjectToUpdate.setSubjectId(id);
@@ -354,7 +360,6 @@ public class GTIManageSubjects extends javax.swing.JFrame {
         subjectToUpdate.setSubjectName(name);
         subjectToUpdate.setSubjectDescription(description);
         subjectToUpdate.setNfqLevel(nfqLevel);
-
         
         subjectService.updateSubject(subjectToUpdate);
         
@@ -436,6 +441,7 @@ public class GTIManageSubjects extends javax.swing.JFrame {
             row.add(subject.getSubjectCode());
             row.add(subject.getSubjectName());
             row.add(subject.getSubjectDescription());
+            row.add(subject.getNfqLevel());
             tableModel.addRow(row);
         }
         
