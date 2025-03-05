@@ -4,16 +4,13 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
-import edu.gti.asd.ariel.recordkeeping.gui.GTILoginForm;
 import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentService;
-import edu.gti.asd.ariel.recordkeeping.service.DepartmentServiceImpl;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -389,7 +386,7 @@ public class GTIManageDepartments extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.departmentService = ctx.getBean(DepartmentServiceImpl.class);
+        this.departmentService = (DepartmentService) ctx.getBean("departmentService");
     }
 
     private void updateJTable() {

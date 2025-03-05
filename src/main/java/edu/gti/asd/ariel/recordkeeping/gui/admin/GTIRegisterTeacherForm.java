@@ -11,11 +11,8 @@ import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
-import edu.gti.asd.ariel.recordkeeping.service.CityServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.GenderService;
-import edu.gti.asd.ariel.recordkeeping.service.GenderServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.TeacherService;
-import edu.gti.asd.ariel.recordkeeping.service.TeacherServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -548,9 +545,9 @@ public class GTIRegisterTeacherForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.cityService = ctx.getBean(CityServiceImpl.class);
-        this.genderService = ctx.getBean(GenderServiceImpl.class);
-        this.teacherService = ctx.getBean(TeacherServiceImpl.class);
+        this.cityService = (CityService) ctx.getBean("cityService");
+        this.genderService = (GenderService) ctx.getBean("genderService");
+        this.teacherService = (TeacherService) ctx.getBean("teacherService");
     }
 
     private void populateTeachersData() {

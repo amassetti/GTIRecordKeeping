@@ -13,11 +13,8 @@ import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.AdminService;
-import edu.gti.asd.ariel.recordkeeping.service.AdminServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.RoleService;
-import edu.gti.asd.ariel.recordkeeping.service.RoleServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
-import edu.gti.asd.ariel.recordkeeping.service.UserServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -383,9 +380,9 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void initBeans() {
-        roleService = ctx.getBean(RoleServiceImpl.class);
-        userService = ctx.getBean(UserServiceImpl.class);
-        adminService = ctx.getBean(AdminServiceImpl.class);
+        roleService =  (RoleService) ctx.getBean("roleService");
+        userService =  (UserService) ctx.getBean("userService");
+        adminService = (AdminService) ctx.getBean("adminService");
     }
 
     private void populateUsersData() {

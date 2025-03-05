@@ -5,16 +5,13 @@
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.City;
-import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
-import edu.gti.asd.ariel.recordkeeping.service.CityServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -388,7 +385,7 @@ public class GTIManageCitiesForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.cityService = ctx.getBean(CityServiceImpl.class);
+        this.cityService = (CityService) ctx.getBean("cityService");
     }
 
     private void updateJTable() {

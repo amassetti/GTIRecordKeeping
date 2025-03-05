@@ -9,11 +9,8 @@ import edu.gti.asd.ariel.recordkeeping.model.CourseType;
 import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentService;
-import edu.gti.asd.ariel.recordkeeping.service.DepartmentServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.CourseService;
-import edu.gti.asd.ariel.recordkeeping.service.CourseServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.CourseTypeService;
-import edu.gti.asd.ariel.recordkeeping.service.CourseTypeServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -459,9 +456,9 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.courseService = ctx.getBean(CourseServiceImpl.class);
-        this.departmentService = ctx.getBean(DepartmentServiceImpl.class);
-        this.courseTypeService = ctx.getBean(CourseTypeServiceImpl.class);
+        this.courseService = (CourseService) ctx.getBean("courseService");
+        this.departmentService = (DepartmentService) ctx.getBean("departmentService");
+        this.courseTypeService = (CourseTypeService) ctx.getBean("courseTypeService");
     }
 
     private void populateCoursesData() {

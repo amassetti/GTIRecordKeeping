@@ -10,11 +10,8 @@ import edu.gti.asd.ariel.recordkeeping.model.Gender;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
-import edu.gti.asd.ariel.recordkeeping.service.CityServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.GenderService;
-import edu.gti.asd.ariel.recordkeeping.service.GenderServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
-import edu.gti.asd.ariel.recordkeeping.service.StudentServiceImpl;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -598,9 +595,9 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.cityService = ctx.getBean(CityServiceImpl.class);
-        this.genderService = ctx.getBean(GenderServiceImpl.class);
-        this.studentService = ctx.getBean(StudentServiceImpl.class);
+        this.cityService = (CityService) ctx.getBean("cityService");
+        this.genderService = (GenderService) ctx.getBean("genderService");
+        this.studentService = (StudentService) ctx.getBean("studentService");
     }
 
     private void populateStudentsData() {
