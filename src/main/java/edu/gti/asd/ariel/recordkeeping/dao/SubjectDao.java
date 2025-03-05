@@ -6,6 +6,8 @@ package edu.gti.asd.ariel.recordkeeping.dao;
 
 import edu.gti.asd.ariel.recordkeeping.mappers.SubjectMapper;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -86,6 +88,48 @@ public class SubjectDao {
             
         jdbcTemplate.update(sql, args);
 
+    }
+
+    public List<Subject> getSubjectsByCourse(Integer courseId) {
+        log.info("Fetching subjects by course id: " + courseId);
+        String sql = "SELECT * \n" +
+                        "FROM subject_course sc, subject s \n" +
+                        "WHERE  s.subject_id = sc.subject_id \n" +
+                        "AND sc.course_id = ?";
+        Object[] args = {
+            courseId
+        };
+        
+        return jdbcTemplate.query(sql, args, new SubjectMapper());
+        
+    }
+
+    public void registerSubjectInCourse(Subject subject, Integer courseId) {
+        log.info("Registering subject " + subject + " in course id: " + courseId);
+        String sql = "INSERT INTO subject_course (subject_id, course_id, registration_date) " +
+                "VALUES (?,?,?)";
+        
+        Date date = Date.valueOf(LocalDate.now());
+        
+        Object[] args = {
+            subject.getSubjectId(),
+            courseId,
+            date
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
+
+    public void unregisterSubjectFromCourse(Subject subject, Integer courseId) {
+        log.info("Unregistering subject " + subject + " from course id: " + courseId);
+        String sql = "DELETE FROM subject_course WHERE subject_id = ? and course_id = ?";
+                
+        Object[] args = {
+            subject.getSubjectId(),
+            courseId
+        };
+        
+        jdbcTemplate.update(sql, args);
     }
     
 }

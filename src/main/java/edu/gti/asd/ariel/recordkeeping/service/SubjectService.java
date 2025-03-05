@@ -12,11 +12,15 @@ import java.util.List;
  * @author ariel
  */
 public interface SubjectService {
-    List<Subject>getAllSubjects();
-    List<Subject>searchSubjects(String filter);
+    List<Subject> getAllSubjects();
+    List<Subject> searchSubjects(String filter);
     
     void insertSubject(Subject subject);
     void updateSubject(Subject subject);
     void deleteSubject(Integer subjectId);
+    
+    List<Subject> getSubjectsByCourse(Integer courseId);
+    void registerSubjectsInCourse(List<Subject> subjectsToAdd, Integer courseId);
+    void unregisterSubjectsFromCourse(List<Subject> subjectsToUnregister, Integer courseId);
     
 }

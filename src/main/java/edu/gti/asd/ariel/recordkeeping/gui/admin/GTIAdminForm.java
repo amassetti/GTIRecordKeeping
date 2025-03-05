@@ -242,7 +242,8 @@ public class GTIAdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSubjectsActionPerformed
 
     private void jButtonSubjectsByCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubjectsByCourseActionPerformed
-        // TODO add your handling code here:
+        GTIRegisterSubjectInCourseForm subjectCourseForm = new GTIRegisterSubjectInCourseForm(ctx);
+        subjectCourseForm.setVisible(true);
     }//GEN-LAST:event_jButtonSubjectsByCourseActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

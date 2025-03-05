@@ -45,5 +45,24 @@ public class SubjectServiceImpl implements SubjectService {
     public void deleteSubject(Integer subjectId) {
         subjectDao.deleteSubject(subjectId);
     }
+
+    @Override
+    public List<Subject> getSubjectsByCourse(Integer courseId) {
+        return subjectDao.getSubjectsByCourse(courseId);
+    }
+
+    @Override
+    public void registerSubjectsInCourse(List<Subject> subjectsToAdd, Integer courseId) {
+        for (Subject subject : subjectsToAdd) {
+            subjectDao.registerSubjectInCourse(subject, courseId);
+        }        
+    }
+
+    @Override
+    public void unregisterSubjectsFromCourse(List<Subject> subjectsToUnregister, Integer courseId) {
+        for (Subject subject : subjectsToUnregister) {
+            subjectDao.unregisterSubjectFromCourse(subject, courseId);
+        }        
+    }
     
 }
