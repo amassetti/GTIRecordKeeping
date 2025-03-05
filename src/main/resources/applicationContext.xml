@@ -122,5 +122,14 @@
     <bean id="adminService" class="edu.gti.asd.ariel.recordkeeping.service.AdminServiceImpl">
         <property name="adminDao" ref="adminDao" />
     </bean>
+    
+    <!-- Subject beans -->
+    <bean id="subjectDao" class="edu.gti.asd.ariel.recordkeeping.dao.SubjectDao" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
+    <bean name="subjectService" id="subjectService" class="edu.gti.asd.ariel.recordkeeping.service.SubjectServiceImpl">
+        <property name="subjectDao" ref="subjectDao" />
+    </bean>
 
 </beans>

@@ -42,9 +42,16 @@ INSERT INTO `gti_record_keeping_v2`.`user` (`username`, `password`, `admin_id`, 
 INSERT INTO `gti_record_keeping_v2`.`user` (`username`, `password`, `admin_id`, `role_id`) VALUES ('pmantel', 'password', '2', '1');
 
 # DEPARTMENTS
-INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('1', 'IT & Computing', 'Information Technologies ....');
-INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('2', 'Sports', 'Sports ....');
-INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('3', 'Arts', 'Arts ....');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('1', 'IT & Computing', 'Information Technologies ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('2', 'Sport', 'Sport description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('3', 'Art & Design', 'Art & Design description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('4', 'Applied Health Sciences', 'Applied Health Sciences description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('5', 'Business and Law', 'Business and Law description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('6', 'Fashion', 'Fashion description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('7', 'Hairdressing & Beauty', 'Hairdressing & Beauty description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('8', 'Media', 'Media description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('9', 'Technology, Design & Engineering', 'Technology, Design & Engineering description ...');
+INSERT INTO `gti_record_keeping_v2`.`department` (`department_id`, `name`, `description`) VALUES ('10', 'Arts and Social Sciences', 'Arts and Social Sciences description ...');
 
 # COURSE TYPES
 INSERT INTO `gti_record_keeping_v2`.`course_type` (`course_type_id`, `description`) VALUES ('1', 'Full Time');
@@ -52,3 +59,4 @@ INSERT INTO `gti_record_keeping_v2`.`course_type` (`course_type_id`, `descriptio
 
 # COURSE
 INSERT INTO `gti_record_keeping_v2`.`course` (`course_id`, `department_id`, `course_type_id`, `course_code`, `name`, `description`, `certification`) VALUES ('1', '1', '1', 'ACSD', 'Advance Certificate in Software Development', 'Advance Certificate in Software Development', '6');
+INSERT INTO `gti_record_keeping_v2`.`course` (`course_id`, `department_id`, `course_type_id`, `course_code`, `name`, `description`, `certification`) VALUES ('2', '1', '1', '5M0529', 'Programming and Software Development with Cyber Security', 'Programming and Software Development with Cyber Security', '5');
