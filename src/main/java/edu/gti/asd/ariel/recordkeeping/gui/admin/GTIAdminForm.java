@@ -4,6 +4,7 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
+import edu.gti.asd.ariel.recordkeeping.model.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -13,13 +14,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class GTIAdminForm extends javax.swing.JFrame {
 
     private ClassPathXmlApplicationContext ctx;
+    private User user;
     
     /**
      * Creates new form GTIAdminForm
      */
-    public GTIAdminForm(ClassPathXmlApplicationContext ctx) {
+    public GTIAdminForm(ClassPathXmlApplicationContext ctx, User user) {
         initComponents();
         this.ctx = ctx;
+        this.user = user;
     }
 
     /**

@@ -193,11 +193,11 @@ public class GTILoginForm extends javax.swing.JFrame {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 // OK, Check role
                 if (user.isAdmin()) {
-                    GTIAdminForm adminForm = new GTIAdminForm(ctx);
+                    GTIAdminForm adminForm = new GTIAdminForm(ctx, user);
                     adminForm.setVisible(true);
                     dispose();
                 } else if (user.isTeacher()) {
-                    GTITeachersForm teacherForm = new GTITeachersForm(ctx);
+                    GTITeachersForm teacherForm = new GTITeachersForm(ctx, user);
                     teacherForm.setVisible(true);
                     dispose();
                 } else {

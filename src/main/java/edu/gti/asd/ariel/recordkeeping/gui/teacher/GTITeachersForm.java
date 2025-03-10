@@ -4,6 +4,7 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.teacher;
 
+import edu.gti.asd.ariel.recordkeeping.model.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -13,13 +14,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class GTITeachersForm extends javax.swing.JFrame {
 
     private ClassPathXmlApplicationContext ctx;
+    private User user;
     
     /**
      * Creates new form GTITeachersForm
      */
-    public GTITeachersForm(ClassPathXmlApplicationContext ctx) {
+    public GTITeachersForm(ClassPathXmlApplicationContext ctx, User user) {
         initComponents();
         this.ctx = ctx;
+        this.user = user;
+        setUserLabel();
     }
 
     /**
@@ -35,6 +39,8 @@ public class GTITeachersForm extends javax.swing.JFrame {
         jButtonSearchStudent = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
         jButtonReports = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabelUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Teachers menu");
@@ -61,34 +67,46 @@ public class GTITeachersForm extends javax.swing.JFrame {
         jButtonReports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reports2.png"))); // NOI18N
         jButtonReports.setToolTipText("Reports");
 
+        jLabel1.setText("User:");
+
+        jLabelUser.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonExit)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jButtonSearchStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(jButtonRateCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(jButtonReports, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 56, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonExit)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonSearchStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jButtonRateCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButtonReports, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addGap(58, 58, 58))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(119, 119, 119)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabelUser))
+                .addGap(74, 74, 74)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonSearchStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                    .addComponent(jButtonRateCourse, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                    .addComponent(jButtonReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonSearchStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRateCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonReports, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(jButtonExit)
-                .addGap(40, 40, 40))
+                .addGap(41, 41, 41))
         );
 
         pack();
@@ -109,5 +127,11 @@ public class GTITeachersForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRateCourse;
     private javax.swing.JButton jButtonReports;
     private javax.swing.JButton jButtonSearchStudent;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelUser;
     // End of variables declaration//GEN-END:variables
+
+    private void setUserLabel() {
+        jLabelUser.setText(user.getUsername());
+    }
 }
