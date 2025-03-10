@@ -10,6 +10,7 @@ import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
 import edu.gti.asd.ariel.recordkeeping.service.TeacherService;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -174,6 +175,11 @@ public class GTIRegisterTeacherInSubjectForm extends javax.swing.JFrame {
         });
 
         jButtonUnregister.setText("<<<");
+        jButtonUnregister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUnregisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -321,6 +327,22 @@ public class GTIRegisterTeacherInSubjectForm extends javax.swing.JFrame {
         searchTeachersBySubject();
         
     }//GEN-LAST:event_jButtonAddTeacherActionPerformed
+
+    private void jButtonUnregisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnregisterActionPerformed
+        int [] selectedTeachers = jTableTeachersBySubject.getSelectedRows();
+        
+        List teachersToUnenroll = new ArrayList();
+        for (int index : selectedTeachers) {
+            Teacher teacher = teachersBySubject.get(index);
+            teachersToUnenroll.add(teacher);
+        }
+        
+        if (!teachersToUnenroll.isEmpty()) {
+            teacherService.unregisterTeachersFromSubject(teachersToUnenroll, selectedSubject.getSubjectId());
+            searchTeachersBySubject();
+        }
+                
+    }//GEN-LAST:event_jButtonUnregisterActionPerformed
 
     private void initBeans() {
         this.subjectService = (SubjectService) ctx.getBean("subjectService");

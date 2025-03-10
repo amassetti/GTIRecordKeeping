@@ -20,4 +20,6 @@ public interface TeacherService {
     public List<Teacher> searchTeachersBySubject(Integer subjectId);
 
     public void registerTeacherInSubject(Integer teacherId, Integer subjectId);
+
+    public void unregisterTeachersFromSubject(List<Teacher> teachersToUnenroll, Integer subjectId);
 }

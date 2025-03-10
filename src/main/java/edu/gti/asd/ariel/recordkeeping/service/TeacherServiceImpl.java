@@ -69,9 +69,12 @@ public class TeacherServiceImpl implements TeacherService {
     public void registerTeacherInSubject(Integer teacherId, Integer subjectId) {
         teacherDao.registerTeacherInSubject(teacherId, subjectId);
     }
-    
-    
-    
-    
+
+    @Override
+    public void unregisterTeachersFromSubject(List<Teacher> teachersToUnenroll, Integer subjectId) {
+        for(Teacher teacher : teachersToUnenroll) {
+            teacherDao.unregisterTeacherFromSubject(teacher.getTeacherId(), subjectId);
+        }
+    }
     
 }

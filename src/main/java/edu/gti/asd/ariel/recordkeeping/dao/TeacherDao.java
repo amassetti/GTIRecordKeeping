@@ -129,6 +129,18 @@ public class TeacherDao {
         
         jdbcTemplate.update(sql, args);
     }
+
+    public void unregisterTeacherFromSubject(Integer teacherId, Integer subjectId) {
+        log.info("UNregistering teacher id: " + teacherId + " from subject id: " + subjectId);
+        String sql = "DELETE FROM teacher_subject ts WHERE ts.teacher_id = ? AND ts.subject_id = ?";
+        
+        Object[] args = {
+            teacherId,
+            subjectId
+        };
+        
+        jdbcTemplate.update(sql, args);
+    }
     
     
 }
