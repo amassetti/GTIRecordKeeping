@@ -8,7 +8,7 @@ package edu.gti.asd.ariel.recordkeeping.model;
  *
  * @author ariel
  */
-public class Teacher extends Person{
+public class Teacher extends Person implements IComboElement {
     private Integer teacherId;
 
     public Teacher() {
@@ -17,6 +17,12 @@ public class Teacher extends Person{
     public Teacher(Integer teacherId, String email) {
         this.teacherId = teacherId;
         this.email = email;
+    }
+    
+    public Teacher(Integer teacherId, String firstName, String lastName) {
+        this.teacherId = teacherId;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
     
     public Integer getTeacherId() {
@@ -29,7 +35,17 @@ public class Teacher extends Person{
 
     @Override
     public String toString() {
-        return "Teacher{" + "teacherId=" + teacherId + ", genderId=" + genderId + ", gender=" + gender + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", ppsn=" + ppsn + ", address=" + address + '}';
+        return getLastName() + ", " + getFirstName();
+    }
+
+    @Override
+    public Integer getComboElementId() {
+        return getTeacherId();
+    }
+
+    @Override
+    public String getComboElementDescription() {
+        return getLastName() + ", " + getFirstName();
     }
     
     

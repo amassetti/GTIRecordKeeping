@@ -57,6 +57,10 @@ public class Subject {
     public void setNfqLevel(Integer nfqLevel) {
         this.nfqLevel = nfqLevel;
     }
+    
+    public String getSubjectCodeAndName() {
+        return getSubjectCode() + " - " + getSubjectName();
+    }
 
     @Override
     public String toString() {

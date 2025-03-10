@@ -59,6 +59,18 @@ public class TeacherServiceImpl implements TeacherService {
         addressDao.updateAddress(address);
         teacherDao.updateTeacher(teacher);
     }
+
+    @Override
+    public List<Teacher> searchTeachersBySubject(Integer subjectId) {
+        return teacherDao.searchTeachersBySubject(subjectId);
+    }
+
+    @Override
+    public void registerTeacherInSubject(Integer teacherId, Integer subjectId) {
+        teacherDao.registerTeacherInSubject(teacherId, subjectId);
+    }
+    
+    
     
     
     

@@ -93,6 +93,7 @@ public class GTILoginForm extends javax.swing.JFrame {
         });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gti-logo.png"))); // NOI18N
+        jButton1.setFocusable(false);
 
         buttonGroupLanguage.add(jRadioButtonEnglish);
         jRadioButtonEnglish.setSelected(true);
@@ -196,7 +197,7 @@ public class GTILoginForm extends javax.swing.JFrame {
                     adminForm.setVisible(true);
                     dispose();
                 } else if (user.isTeacher()) {
-                    GTITeachersForm teacherForm = new GTITeachersForm();
+                    GTITeachersForm teacherForm = new GTITeachersForm(ctx);
                     teacherForm.setVisible(true);
                     dispose();
                 } else {

@@ -17,4 +17,7 @@ public interface TeacherService {
     void insertTeacher(Teacher teacher) throws IllegalAccessException;
     void deleteTeacher(Teacher teacher);
     void updateTeacher(Teacher teacher);
+    public List<Teacher> searchTeachersBySubject(Integer subjectId);
+
+    public void registerTeacherInSubject(Integer teacherId, Integer subjectId);
 }

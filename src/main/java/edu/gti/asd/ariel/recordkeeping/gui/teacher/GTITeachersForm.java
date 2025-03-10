@@ -4,17 +4,22 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.teacher;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 /**
  *
  * @author ariel
  */
 public class GTITeachersForm extends javax.swing.JFrame {
 
+    private ClassPathXmlApplicationContext ctx;
+    
     /**
      * Creates new form GTITeachersForm
      */
-    public GTITeachersForm() {
+    public GTITeachersForm(ClassPathXmlApplicationContext ctx) {
         initComponents();
+        this.ctx = ctx;
     }
 
     /**
@@ -40,6 +45,11 @@ public class GTITeachersForm extends javax.swing.JFrame {
 
         jButtonSearchStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/student3.png"))); // NOI18N
         jButtonSearchStudent.setToolTipText("Register Notes for Student");
+        jButtonSearchStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchStudentActionPerformed(evt);
+            }
+        });
 
         jButtonExit.setText("Exit");
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
@@ -88,40 +98,11 @@ public class GTITeachersForm extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonExitActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GTITeachersForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GTITeachersForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GTITeachersForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GTITeachersForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButtonSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchStudentActionPerformed
+        GTIRegisterStudentGradesForm studentGradesForm = new GTIRegisterStudentGradesForm(ctx);
+        studentGradesForm.setVisible(true);
+    }//GEN-LAST:event_jButtonSearchStudentActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GTITeachersForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExit;

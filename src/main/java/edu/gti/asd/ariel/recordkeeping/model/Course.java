@@ -98,6 +98,10 @@ public class Course implements IComboElement {
     public void setCertification(Integer certification) {
         this.certification = certification;
     }
+    
+    public String getCodeAndName() {
+        return getCode() + " - " + getName();
+    }
 
     @Override
     public String toString() {
