@@ -75,6 +75,10 @@ public class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
+    
+    public String getFullName() {
+        return getLastName() + ", " + getFirstName();
+    }
 
     @Override
     public String toString() {

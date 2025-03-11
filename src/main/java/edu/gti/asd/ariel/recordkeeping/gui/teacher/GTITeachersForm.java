@@ -117,7 +117,7 @@ public class GTITeachersForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExitActionPerformed
 
     private void jButtonSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchStudentActionPerformed
-        GTIRegisterStudentGradesForm studentGradesForm = new GTIRegisterStudentGradesForm(ctx);
+        GTIRegisterStudentGradesForm studentGradesForm = new GTIRegisterStudentGradesForm(ctx, user);
         studentGradesForm.setVisible(true);
     }//GEN-LAST:event_jButtonSearchStudentActionPerformed
 

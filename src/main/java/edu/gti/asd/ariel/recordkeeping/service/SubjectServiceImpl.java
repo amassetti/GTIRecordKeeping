@@ -64,5 +64,10 @@ public class SubjectServiceImpl implements SubjectService {
             subjectDao.unregisterSubjectFromCourse(subject, courseId);
         }        
     }
+
+    @Override
+    public List<Subject> getSubjectsByCourseAndTeacher(Integer courseId, Integer teacherId) {
+        return subjectDao.getSubjectsByCourseAndTeacher(courseId, teacherId);
+    }
     
 }

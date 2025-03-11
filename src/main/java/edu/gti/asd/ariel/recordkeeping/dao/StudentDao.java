@@ -41,8 +41,9 @@ public class StudentDao {
         "    g.*,\n" +
         "    a.*,\n" +
         "    c.*,\n" +
-        "    crs.course_id,\n" +
-        "    crs.course_code\n" +
+        "    crs.course_id,  \n" +
+        "    crs.course_code, \n" +
+        "    crs.name as course_name \n" +
         "FROM student s\n" +
         "INNER JOIN gender g ON s.gender_id = g.gender_id\n" +
         "INNER JOIN address a ON s.address_id = a.address_id\n" +

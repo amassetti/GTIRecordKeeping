@@ -76,7 +76,11 @@
             <version>5.3.29</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE220</version>
+        </dependency>
     </dependencies>
     
     <build>

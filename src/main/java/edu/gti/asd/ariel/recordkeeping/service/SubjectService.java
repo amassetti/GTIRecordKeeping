@@ -22,5 +22,7 @@ public interface SubjectService {
     List<Subject> getSubjectsByCourse(Integer courseId);
     void registerSubjectsInCourse(List<Subject> subjectsToAdd, Integer courseId);
     void unregisterSubjectsFromCourse(List<Subject> subjectsToUnregister, Integer courseId);
+
+    public List<Subject> getSubjectsByCourseAndTeacher(Integer courseId, Integer teacherId);
     
 }

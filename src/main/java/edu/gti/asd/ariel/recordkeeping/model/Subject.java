@@ -8,7 +8,7 @@ package edu.gti.asd.ariel.recordkeeping.model;
  *
  * @author ariel
  */
-public class Subject {
+public class Subject implements IComboElement {
     Integer subjectId;
     String subjectCode;
     String subjectName;
@@ -16,6 +16,12 @@ public class Subject {
     Integer nfqLevel;
 
     public Subject() {
+    }
+
+    public Subject(Integer subjectId, String subjectCode, String subjectName) {
+        this.subjectId = subjectId;
+        this.subjectCode = subjectCode;
+        this.subjectName = subjectName;
     }
 
     public Integer getSubjectId() {
@@ -64,7 +70,17 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "Subject{" + "subjectId=" + subjectId + ", subjectCode=" + subjectCode + ", subjectName=" + subjectName + ", subjectDescription=" + subjectDescription + '}';
+        return getSubjectCodeAndName();
+    }
+
+    @Override
+    public Integer getComboElementId() {
+        return getSubjectId();
+    }
+
+    @Override
+    public String getComboElementDescription() {
+        return getSubjectCodeAndName();
     }
     
     

@@ -87,6 +87,10 @@ public class StudentMapper implements RowMapper {
             if (rs.findColumn("course_code") >= 0) {
                 course.setCode(rs.getString("course_code"));
             }
+            
+            if (rs.findColumn("course_name") >= 0) {
+                course.setName(rs.getString("course_name"));
+            }
            
             student.setCourse(course);
         }

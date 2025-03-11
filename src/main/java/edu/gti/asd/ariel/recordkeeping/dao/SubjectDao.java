@@ -131,5 +131,20 @@ public class SubjectDao {
         
         jdbcTemplate.update(sql, args);
     }
+
+    public List<Subject> getSubjectsByCourseAndTeacher(Integer courseId, Integer teacherId) {
+        log.info("Fetching subjects by course id: " + courseId + " and teacherId: " + teacherId);
+        String sql = "SELECT * FROM subject s \n" +
+                    "INNER JOIN subject_course sc ON s.subject_id = sc.subject_id  \n" +
+                    "INNER JOIN teacher_subject ts ON s.subject_id = ts.subject_id \n" +
+                    "WHERE  sc.course_id = ? \n" +
+                    "AND ts.teacher_id = ?";
+        Object[] args = {
+            courseId,
+            teacherId
+        };
+        
+        return jdbcTemplate.query(sql, args, new SubjectMapper());
+    }
     
 }
