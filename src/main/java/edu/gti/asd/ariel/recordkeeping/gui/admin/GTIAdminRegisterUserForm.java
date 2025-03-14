@@ -13,6 +13,7 @@ import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.AdminService;
 import edu.gti.asd.ariel.recordkeeping.service.RoleService;
+import edu.gti.asd.ariel.recordkeeping.service.TeacherService;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,6 +34,7 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     private RoleService roleService;
     private UserService userService;
     private AdminService adminService;
+    private TeacherService teacherService;
     
     private List<User> users;
     private List<Role> roles;
@@ -48,9 +51,13 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         this.contextManager = contextManager;
         initBeans();
         populateUsersData();
+        populateRolesData();
+        populateTeachersData();
+        populateAdminsData();
         updateJTable();
         updateRolesCombo();
         updateAdminCombo();
+        updateTeachersCombo();
     }
 
     /**
@@ -151,6 +158,10 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         jLabel6.setText("Admin");
 
         jComboBoxStudent.setEnabled(false);
+
+        jComboBoxTeacher.setEnabled(false);
+
+        jComboBoxAdmin.setEnabled(false);
 
         jButtonUpdate.setText("Update");
         jButtonUpdate.setEnabled(false);
@@ -359,17 +370,35 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         String username = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldUsername, "username");
         String password = FieldsUtils.getMandatoryValueFromTextField(this, jTextFieldPassword, "password");
         Integer roleId = FieldsUtils.getMandatoryIdFromCombo(this, jComboBoxRole, "role");
-        Student student = (Student)jComboBoxStudent.getSelectedItem();
-        Teacher teacher = (Teacher)jComboBoxTeacher.getSelectedItem();
-        Admin admin = (Admin)jComboBoxAdmin.getSelectedItem();
+        
+        IComboElement teacherElement = (IComboElement)jComboBoxTeacher.getSelectedItem();
+        IComboElement adminElement = (IComboElement)jComboBoxAdmin.getSelectedItem();
         
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setRoleId(roleId);
-        user.setStudentId(student != null ? student.getStudentId() : null);
-        user.setTeacherId(teacher != null ? teacher.getTeacherId() : null);
-        user.setAdminId(admin != null ? admin.getAdminId() : null);
+        user.setStudentId(null);
+        
+        // 2 = teacher
+        if (roleId.equals(2)) {
+            if (teacherElement.getComboElementId().equals(-1)) {
+                JOptionPane.showMessageDialog(this, "Must select a teacher");
+                return;
+            }
+            user.setTeacherId(teacherElement.getComboElementId());
+            user.setAdminId(null);
+        }
+        
+        // 1 = admin
+        if (roleId.equals(1)) {
+            if (adminElement.getComboElementId().equals(-1)) {
+                JOptionPane.showMessageDialog(this, "Must select an admin");
+                return;
+            }
+            user.setAdminId(adminElement.getComboElementId());
+            user.setTeacherId(null);
+        }
         
         userService.registerUser(user);
         setAddMode();
@@ -382,12 +411,23 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         roleService = contextManager.getBean(RoleService.class);
         userService = contextManager.getBean(UserService.class);
         adminService = contextManager.getBean(AdminService.class);
+        teacherService = contextManager.getBean(TeacherService.class);
     }
 
     private void populateUsersData() {
-        roles = roleService.getRoles();
         users = userService.getUsers();
+    }
+    
+    private void populateRolesData() {
+        roles = roleService.getRoles();
+    }
+    
+    private void populateAdminsData() {
         admins = adminService.getAllAdmins();
+    }
+    
+    private void populateTeachersData() {
+        teachers = teacherService.getTeachers();
     }
 
     private void updateJTable() {
@@ -472,5 +512,11 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         
         if (jComboBoxAdmin.getItemCount() > 0)
             jComboBoxAdmin.setSelectedIndex(0);
+    }
+
+    private void updateTeachersCombo() {
+        DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxTeacher.getModel();
+        cbModel.addElement(new Admin(-1, "...", "Select one" ));
+        cbModel.addAll(teachers);
     }
 }
