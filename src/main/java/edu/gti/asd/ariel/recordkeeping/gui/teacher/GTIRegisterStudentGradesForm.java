@@ -11,20 +11,20 @@ import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
  * @author ariel
  */
 public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private User user;
     
     private SubjectService subjectService;
@@ -39,9 +39,9 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     /**
      * Creates new form GTIRegisterStudentInCourseForm
      */
-    public GTIRegisterStudentGradesForm(ClassPathXmlApplicationContext ctx, User user) {
+    public GTIRegisterStudentGradesForm(ContextManager contextManager, User user) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         this.user = user;
         initBeans();
         fetchDataFromDB();
@@ -83,7 +83,7 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
         jTextFieldSelectedStudent = new javax.swing.JTextField();
         jTextFieldCourse = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jLabel1.setText("Student Course:");
@@ -377,8 +377,8 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     }
     
     private void initBeans() {
-        this.studentService = (StudentService) ctx.getBean("studentService");
-        this.subjectService = (SubjectService) ctx.getBean("subjectService");
+        this.studentService = contextManager.getBean("studentService", StudentService.class);
+        this.subjectService = contextManager.getBean("subjectService", SubjectService.class);
     }
 
     private void fetchDataFromDB() {

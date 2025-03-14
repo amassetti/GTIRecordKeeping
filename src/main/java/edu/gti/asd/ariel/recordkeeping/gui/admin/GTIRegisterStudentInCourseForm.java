@@ -71,7 +71,7 @@ public class GTIRegisterStudentInCourseForm extends javax.swing.JFrame {
         jButtonClearFilter = new javax.swing.JButton();
         jButtonUnRegister = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTableStudentsByCourse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

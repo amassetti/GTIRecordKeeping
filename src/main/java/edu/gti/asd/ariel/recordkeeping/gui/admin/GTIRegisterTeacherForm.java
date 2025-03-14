@@ -95,7 +95,7 @@ public class GTIRegisterTeacherForm extends javax.swing.JFrame {
         jButtonDelete = new javax.swing.JButton();
         jButtonUpdate = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder("Address"));
 
@@ -342,8 +342,6 @@ public class GTIRegisterTeacherForm extends javax.swing.JFrame {
                 .addComponent(jButtonExit)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
-
-        jPanelTeacher.getAccessibleContext().setAccessibleName("Teacher");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

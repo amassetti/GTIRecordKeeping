@@ -6,7 +6,6 @@ package edu.gti.asd.ariel.recordkeeping.gui.teacher;
 
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -15,7 +14,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class GTITeachersForm extends javax.swing.JFrame {
 
     private ContextManager contextManager;
-    private ClassPathXmlApplicationContext ctx;
     private User user;
     
     /**
@@ -119,7 +117,7 @@ public class GTITeachersForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExitActionPerformed
 
     private void jButtonSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchStudentActionPerformed
-        GTIRegisterStudentGradesForm studentGradesForm = new GTIRegisterStudentGradesForm(ctx, user);
+        GTIRegisterStudentGradesForm studentGradesForm = new GTIRegisterStudentGradesForm(contextManager, user);
         studentGradesForm.setVisible(true);
     }//GEN-LAST:event_jButtonSearchStudentActionPerformed
 

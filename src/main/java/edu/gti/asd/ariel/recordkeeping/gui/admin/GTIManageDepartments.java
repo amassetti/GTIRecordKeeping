@@ -64,7 +64,7 @@ public class GTIManageDepartments extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldFilter = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTableDepartments.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

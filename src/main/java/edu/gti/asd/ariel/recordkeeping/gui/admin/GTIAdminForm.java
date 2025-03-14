@@ -47,7 +47,7 @@ public class GTIAdminForm extends javax.swing.JFrame {
         jButtonSubjects = new javax.swing.JButton();
         jButtonSubjectsByCourse = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrator menu");
         setResizable(false);
 
