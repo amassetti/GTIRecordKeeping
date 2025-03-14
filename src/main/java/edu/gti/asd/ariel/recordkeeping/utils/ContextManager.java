@@ -21,7 +21,7 @@ public class ContextManager {
         return context.getBean(beanClass);
     }
     
-    public <T> T getBean(String beanName, Class<T> beanClass) {
+    public <T> T getBean(String beanName, Class<T> beanClass, String pepe) {
         return (T) context.getBean(beanName);
     }
 }

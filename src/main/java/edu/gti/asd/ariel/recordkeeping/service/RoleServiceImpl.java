@@ -7,18 +7,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.RoleDao;
 import edu.gti.asd.ariel.recordkeeping.model.Role;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class RoleServiceImpl implements RoleService {
 
+    @Autowired
     private RoleDao roleDao;
 
-    public void setRoleDao(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
     
     @Override
     public List<Role> getRoles() {

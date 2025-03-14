@@ -5,10 +5,9 @@
 package edu.gti.asd.ariel.recordkeeping;
 
 import edu.gti.asd.ariel.recordkeeping.gui.GTILoginForm;
-import edu.gti.asd.ariel.recordkeeping.gui.admin.GTIRegisterStudentForm;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import java.util.logging.Logger;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  *
@@ -19,9 +18,9 @@ public class GTIRecordKeepingApp {
     static Logger log = Logger.getLogger(GTIRecordKeepingApp.class.getName());
     
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(GTIRecordKeepingConfig.class);
         
-        ContextManager contextManager = new ContextManager(ctx);
+        ContextManager contextManager = new ContextManager(context);
         
         log.info("Starting GTIRecordKeeping App");
         

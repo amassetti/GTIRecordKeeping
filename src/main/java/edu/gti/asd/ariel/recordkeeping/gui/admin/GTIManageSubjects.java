@@ -424,7 +424,7 @@ public class GTIManageSubjects extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.subjectService = contextManager.getBean("subjectService", SubjectService.class);
+        this.subjectService = contextManager.getBean(SubjectService.class);
     }
 
     private void updateJTable() {

@@ -11,23 +11,22 @@ import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.StudentByCourse;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class StudentServiceImpl implements StudentService {
     
+    @Autowired
     private StudentDao studentDao;
+    
+    @Autowired
     private AddressDao addressDao;
 
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
-
-    public void setAddressDao(AddressDao addressDao) {
-        this.addressDao = addressDao;
-    }
 
     @Override
     public List<Student> getStudents() {

@@ -377,8 +377,8 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     }
     
     private void initBeans() {
-        this.studentService = contextManager.getBean("studentService", StudentService.class);
-        this.subjectService = contextManager.getBean("subjectService", SubjectService.class);
+        this.studentService = contextManager.getBean(StudentService.class);
+        this.subjectService = contextManager.getBean(SubjectService.class);
     }
 
     private void fetchDataFromDB() {

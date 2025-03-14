@@ -379,9 +379,9 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void initBeans() {
-        roleService =  contextManager.getBean("roleService", RoleService.class);
-        userService =  contextManager.getBean("userService", UserService.class);
-        adminService = contextManager.getBean("adminService", AdminService.class);
+        roleService = contextManager.getBean(RoleService.class);
+        userService = contextManager.getBean(UserService.class);
+        adminService = contextManager.getBean(AdminService.class);
     }
 
     private void populateUsersData() {

@@ -8,22 +8,22 @@ import edu.gti.asd.ariel.recordkeeping.mappers.AdminMapper;
 import edu.gti.asd.ariel.recordkeeping.model.Admin;
 import java.util.List;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ariel
  */
+@Repository
 public class AdminDao {
     
     static Logger log = Logger.getLogger(AdminDao.class.getName());
     
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
     public List<Admin> getAllAdmins() {
         log.info("Getting all admins from db...");
         String sql = "SELECT * FROM admin";

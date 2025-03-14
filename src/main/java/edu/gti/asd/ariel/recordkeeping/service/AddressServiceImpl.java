@@ -6,18 +6,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.AddressDao;
 import edu.gti.asd.ariel.recordkeeping.model.Address;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class AddressServiceImpl implements AddressService {
     
+    @Autowired
     private AddressDao addressDao;
-
-    public void setAddressDao(AddressDao addressDao) {
-        this.addressDao = addressDao;
-    }
+    
     
     @Override
     public Integer insertAddress(Address address) {

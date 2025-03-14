@@ -7,22 +7,23 @@ package edu.gti.asd.ariel.recordkeeping.dao;
 import edu.gti.asd.ariel.recordkeeping.model.Address;
 import java.sql.PreparedStatement;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ariel
  */
+@Repository
 public class AddressDao {
     static Logger log = Logger.getLogger(AddressDao.class.getName());
     
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
     
     public Integer insertAddress(Address address) {
         String sql = "INSERT INTO address (city_id, address_line_1, address_line_2, eir_code) VALUES (?, ?, ?, ?);";

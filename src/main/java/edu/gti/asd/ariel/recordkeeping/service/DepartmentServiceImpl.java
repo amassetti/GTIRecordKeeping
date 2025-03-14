@@ -7,18 +7,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.DepartmentDao;
 import edu.gti.asd.ariel.recordkeeping.model.Department;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
     
+    @Autowired
     private DepartmentDao departmentDao;
 
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
 
     @Override
     public List<Department> getDepartments() {

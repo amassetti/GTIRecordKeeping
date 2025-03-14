@@ -14,7 +14,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -39,7 +38,7 @@ public class GTILoginForm extends javax.swing.JFrame {
     }
     
     private void initSpringBeans() {
-        userService = contextManager.getBean("userService", UserService.class);
+        userService = contextManager.getBean(UserService.class);
     }
 
     /**

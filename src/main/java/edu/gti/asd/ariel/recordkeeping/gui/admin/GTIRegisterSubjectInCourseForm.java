@@ -349,8 +349,8 @@ public class GTIRegisterSubjectInCourseForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUnRegisterActionPerformed
 
     private void initBeans() {
-        this.subjectService = contextManager.getBean("subjectService", SubjectService.class);
-        this.courseService = contextManager.getBean("courseService", CourseService.class);
+        this.subjectService = contextManager.getBean(SubjectService.class);
+        this.courseService = contextManager.getBean(CourseService.class);
     }
 
     private void fetchDataFromDB() {

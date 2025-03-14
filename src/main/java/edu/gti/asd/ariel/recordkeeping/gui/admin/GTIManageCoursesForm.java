@@ -456,9 +456,9 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.courseService = contextManager.getBean("courseService", CourseService.class);
-        this.departmentService = contextManager.getBean("departmentService", DepartmentService.class);
-        this.courseTypeService = contextManager.getBean("courseTypeService", CourseTypeService.class);
+        this.courseService = contextManager.getBean(CourseService.class);
+        this.departmentService = contextManager.getBean(DepartmentService.class);
+        this.courseTypeService = contextManager.getBean(CourseTypeService.class);
     }
 
     private void populateCoursesData() {

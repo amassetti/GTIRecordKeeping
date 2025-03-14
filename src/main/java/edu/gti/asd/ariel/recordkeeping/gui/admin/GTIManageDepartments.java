@@ -386,7 +386,7 @@ public class GTIManageDepartments extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.departmentService = contextManager.getBean("departmentService", DepartmentService.class);
+        this.departmentService = contextManager.getBean(DepartmentService.class);
     }
 
     private void updateJTable() {

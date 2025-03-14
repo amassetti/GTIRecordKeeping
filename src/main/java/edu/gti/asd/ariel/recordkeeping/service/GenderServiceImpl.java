@@ -7,18 +7,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.GenderDao;
 import edu.gti.asd.ariel.recordkeeping.model.Gender;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class GenderServiceImpl implements GenderService {
     
+    @Autowired
     private GenderDao genderDao;
 
-    public void setGenderDao(GenderDao genderDao) {
-        this.genderDao = genderDao;
-    }
 
     @Override
     public List<Gender> getGenders() {

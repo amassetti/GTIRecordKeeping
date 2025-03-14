@@ -7,19 +7,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.AdminDao;
 import edu.gti.asd.ariel.recordkeeping.model.Admin;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class AdminServiceImpl implements AdminService {
     
+    @Autowired
     private AdminDao adminDao;
 
-    public void setAdminDao(AdminDao adminDao) {
-        this.adminDao = adminDao;
-    }
-    
 
     @Override
     public List<Admin> getAllAdmins() {

@@ -7,18 +7,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.CourseTypeDao;
 import edu.gti.asd.ariel.recordkeeping.model.CourseType;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class CourseTypeServiceImpl implements CourseTypeService {
     
+    @Autowired
     private CourseTypeDao courseTypeDao;
     
-    public void setCourseTypeDao(CourseTypeDao courseTypeDao) {
-        this.courseTypeDao = courseTypeDao;
-    }
 
     @Override
     public List<CourseType> getCourseTypes() {

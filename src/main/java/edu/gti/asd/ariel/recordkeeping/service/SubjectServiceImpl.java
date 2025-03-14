@@ -7,19 +7,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.SubjectDao;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class SubjectServiceImpl implements SubjectService {
     
+    @Autowired
     private SubjectDao subjectDao;
 
-    public void setSubjectDao(SubjectDao subjectDao) {
-        this.subjectDao = subjectDao;
-    }
-    
 
     @Override
     public List<Subject> getAllSubjects() {

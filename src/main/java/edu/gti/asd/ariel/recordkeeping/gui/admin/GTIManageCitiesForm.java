@@ -385,7 +385,7 @@ public class GTIManageCitiesForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.cityService = contextManager.getBean("cityService", CityService.class);
+        this.cityService = contextManager.getBean(CityService.class);
     }
 
     private void updateJTable() {

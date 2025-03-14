@@ -8,18 +8,19 @@ import edu.gti.asd.ariel.recordkeeping.dao.CourseDao;
 import edu.gti.asd.ariel.recordkeeping.model.Course;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class CourseServiceImpl implements CourseService {
     
+    @Autowired
     private CourseDao courseDao;
 
-    public void setCourseDao(CourseDao courseDao) {
-        this.courseDao = courseDao;
-    }
 
     @Override
     public List<Course> getAllCourses() {

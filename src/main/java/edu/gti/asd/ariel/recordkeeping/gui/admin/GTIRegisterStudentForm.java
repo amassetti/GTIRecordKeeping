@@ -595,9 +595,9 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.cityService = contextManager.getBean("cityService", CityService.class);
-        this.genderService = contextManager.getBean("genderService", GenderService.class);
-        this.studentService = contextManager.getBean("studentService", StudentService.class);
+        this.cityService = contextManager.getBean(CityService.class);
+        this.genderService = contextManager.getBean(GenderService.class);
+        this.studentService = contextManager.getBean(StudentService.class);
     }
 
     private void populateStudentsData() {

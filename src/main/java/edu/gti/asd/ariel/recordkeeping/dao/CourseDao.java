@@ -9,23 +9,22 @@ import edu.gti.asd.ariel.recordkeeping.model.Course;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ariel
  */
+@Repository
 public class CourseDao {
     
     static Logger log = Logger.getLogger(CourseDao.class.getName());
     
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
-
     public List<Course> getAllCourses() {
         String sql =    "SELECT c.*,\n" +
                         "       d.name as department_name, \n" +

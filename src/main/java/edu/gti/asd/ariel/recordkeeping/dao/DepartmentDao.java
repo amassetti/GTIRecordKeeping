@@ -8,22 +8,23 @@ import edu.gti.asd.ariel.recordkeeping.mappers.DepartmentMapper;
 import edu.gti.asd.ariel.recordkeeping.model.Department;
 import java.util.List;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ariel
  */
+
+@Repository
 public class DepartmentDao {
     
     static Logger log = Logger.getLogger(DepartmentDao.class.getName());
     
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
     public List<Department> getDepartments() {
         log.info("Getting all departments from db...");
         String sql = "SELECT * FROM department ORDER BY name";

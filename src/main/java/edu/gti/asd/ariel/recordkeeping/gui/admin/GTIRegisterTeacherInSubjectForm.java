@@ -345,8 +345,8 @@ public class GTIRegisterTeacherInSubjectForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUnregisterActionPerformed
 
     private void initBeans() {
-        this.subjectService = contextManager.getBean("subjectService", SubjectService.class);
-        this.teacherService = contextManager.getBean("teacherService", TeacherService.class);
+        this.subjectService = contextManager.getBean(SubjectService.class);
+        this.teacherService = contextManager.getBean(TeacherService.class);
     }
 
     private void fetchDataFromDB() {

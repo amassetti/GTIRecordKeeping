@@ -13,23 +13,24 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ariel
  */
+
+@Repository
 public class StudentDao {
     static Logger log = Logger.getLogger(StudentDao.class.getName());
     
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     
     private static final int NOT_PAID = 0;
 
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
     public List<Student> getStudents() {
         log.info("Getting all students from DB");
         String sql = "SELECT\n" +

@@ -9,23 +9,22 @@ import edu.gti.asd.ariel.recordkeeping.dao.TeacherDao;
 import edu.gti.asd.ariel.recordkeeping.model.Address;
 import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class TeacherServiceImpl implements TeacherService {
     
+    @Autowired
     private TeacherDao teacherDao;
+    
+    @Autowired
     private AddressDao addressDao;
 
-    public void setTeacherDao(TeacherDao teacherDao) {
-        this.teacherDao = teacherDao;
-    }
-
-    public void setAddressDao(AddressDao addressDao) {
-        this.addressDao = addressDao;
-    }
 
     @Override
     public List<Teacher> getTeachers() {

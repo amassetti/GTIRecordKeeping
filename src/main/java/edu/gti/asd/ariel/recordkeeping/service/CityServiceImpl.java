@@ -7,18 +7,19 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.CityDao;
 import edu.gti.asd.ariel.recordkeeping.model.City;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class CityServiceImpl implements CityService {
     
+    @Autowired
     private CityDao cityDao;
 
-    public void setCityDao(CityDao cityDao) {
-        this.cityDao = cityDao;
-    }
     
     @Override
     public List<City> getCities() {

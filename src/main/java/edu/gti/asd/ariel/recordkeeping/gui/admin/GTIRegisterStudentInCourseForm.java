@@ -360,8 +360,8 @@ public class GTIRegisterStudentInCourseForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUnRegisterActionPerformed
 
     private void initBeans() {
-        this.studentService = contextManager.getBean("studentService", StudentService.class);
-        this.courseService = contextManager.getBean("courseService", CourseService.class);
+        this.studentService = contextManager.getBean(StudentService.class);
+        this.courseService = contextManager.getBean(CourseService.class);
     }
 
     private void fetchDataFromDB() {
