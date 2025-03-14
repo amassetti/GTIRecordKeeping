@@ -9,20 +9,20 @@ import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import edu.gti.asd.ariel.recordkeeping.model.Teacher;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
 import edu.gti.asd.ariel.recordkeeping.service.TeacherService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
  * @author ariel
  */
 public class GTIRegisterTeacherInSubjectForm extends javax.swing.JFrame {
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
 
     private TeacherService teacherService;
     private SubjectService subjectService;
@@ -37,9 +37,9 @@ public class GTIRegisterTeacherInSubjectForm extends javax.swing.JFrame {
     /**
      * Creates new form GTIRegisterTeacherInSubject
      */
-    public GTIRegisterTeacherInSubjectForm(ClassPathXmlApplicationContext ctx) {
+    public GTIRegisterTeacherInSubjectForm(ContextManager contextManager) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         initBeans();
         fetchDataFromDB();
         populateSubjectsTable();
@@ -345,8 +345,8 @@ public class GTIRegisterTeacherInSubjectForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUnregisterActionPerformed
 
     private void initBeans() {
-        this.subjectService = (SubjectService) ctx.getBean("subjectService");
-        this.teacherService = (TeacherService) ctx.getBean("teacherService");
+        this.subjectService = contextManager.getBean("subjectService", SubjectService.class);
+        this.teacherService = contextManager.getBean("teacherService", TeacherService.class);
     }
 
     private void fetchDataFromDB() {

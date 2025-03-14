@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.Department;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 /**
@@ -21,7 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author ariel
  */
 public class GTIManageDepartments extends javax.swing.JFrame {
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private DepartmentService departmentService;
     private Logger log = Logger.getLogger(GTIManageDepartments.class.getName());
     
@@ -30,9 +30,9 @@ public class GTIManageDepartments extends javax.swing.JFrame {
     /**
      * Creates new form GTIManageDepartments
      */
-    public GTIManageDepartments(ClassPathXmlApplicationContext ctx) {
+    public GTIManageDepartments(ContextManager contextManager) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         initBeans();
         populateDepartmentsData();
         updateJTable();
@@ -386,7 +386,7 @@ public class GTIManageDepartments extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.departmentService = (DepartmentService) ctx.getBean("departmentService");
+        this.departmentService = contextManager.getBean("departmentService", DepartmentService.class);
     }
 
     private void updateJTable() {

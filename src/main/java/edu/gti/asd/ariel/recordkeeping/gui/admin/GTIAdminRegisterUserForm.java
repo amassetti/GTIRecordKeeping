@@ -5,7 +5,6 @@
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.Admin;
-import edu.gti.asd.ariel.recordkeeping.model.City;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Role;
 import edu.gti.asd.ariel.recordkeeping.model.RoleTypes;
@@ -15,6 +14,7 @@ import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.AdminService;
 import edu.gti.asd.ariel.recordkeeping.service.RoleService;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -22,14 +22,13 @@ import java.util.Optional;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
  * @author ariel
  */
 public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private RoleService roleService;
     private UserService userService;
     private AdminService adminService;
@@ -44,9 +43,9 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     /**
      * Creates new form GTIAdminRegisterUserForm
      */
-    public GTIAdminRegisterUserForm(ClassPathXmlApplicationContext ctx) {
+    public GTIAdminRegisterUserForm(ContextManager contextManager) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         initBeans();
         populateUsersData();
         updateJTable();
@@ -380,9 +379,9 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void initBeans() {
-        roleService =  (RoleService) ctx.getBean("roleService");
-        userService =  (UserService) ctx.getBean("userService");
-        adminService = (AdminService) ctx.getBean("adminService");
+        roleService =  contextManager.getBean("roleService", RoleService.class);
+        userService =  contextManager.getBean("userService", UserService.class);
+        adminService = contextManager.getBean("adminService", AdminService.class);
     }
 
     private void populateUsersData() {

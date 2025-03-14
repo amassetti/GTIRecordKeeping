@@ -5,7 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.User;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 
 /**
  *
@@ -13,15 +13,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class GTIAdminForm extends javax.swing.JFrame {
 
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private User user;
     
     /**
      * Creates new form GTIAdminForm
      */
-    public GTIAdminForm(ClassPathXmlApplicationContext ctx, User user) {
+    public GTIAdminForm(ContextManager contextManager, User user) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         this.user = user;
     }
 
@@ -206,17 +206,17 @@ public class GTIAdminForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonDepartmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDepartmentsActionPerformed
-        GTIManageDepartments departmentsForm = new GTIManageDepartments(ctx);
+        GTIManageDepartments departmentsForm = new GTIManageDepartments(contextManager);
         departmentsForm.setVisible(true);
     }//GEN-LAST:event_jButtonDepartmentsActionPerformed
 
     private void jButtonRegisterCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterCourseActionPerformed
-        GTIManageCoursesForm coursesForm = new GTIManageCoursesForm(ctx);
+        GTIManageCoursesForm coursesForm = new GTIManageCoursesForm(contextManager);
         coursesForm.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterCourseActionPerformed
 
     private void jButtonRegisterStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterStudentActionPerformed
-        GTIRegisterStudentForm studentForm = new GTIRegisterStudentForm(ctx);
+        GTIRegisterStudentForm studentForm = new GTIRegisterStudentForm(contextManager);
         studentForm.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterStudentActionPerformed
 
@@ -225,37 +225,37 @@ public class GTIAdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExitActionPerformed
 
     private void jButtonCitiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCitiesActionPerformed
-        GTIManageCitiesForm citiesForm = new GTIManageCitiesForm(ctx);
+        GTIManageCitiesForm citiesForm = new GTIManageCitiesForm(contextManager);
         citiesForm.setVisible(true);
     }//GEN-LAST:event_jButtonCitiesActionPerformed
 
     private void jButtonRegisterStudentInCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterStudentInCourseActionPerformed
-        GTIRegisterStudentInCourseForm registerStudentInCourse = new GTIRegisterStudentInCourseForm(ctx);
+        GTIRegisterStudentInCourseForm registerStudentInCourse = new GTIRegisterStudentInCourseForm(contextManager);
         registerStudentInCourse.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterStudentInCourseActionPerformed
 
     private void jButtonRegisterUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterUserActionPerformed
-        GTIAdminRegisterUserForm userFrom = new GTIAdminRegisterUserForm(ctx);
+        GTIAdminRegisterUserForm userFrom = new GTIAdminRegisterUserForm(contextManager);
         userFrom.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterUserActionPerformed
 
     private void jButtonRegisterTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterTeacherActionPerformed
-        GTIRegisterTeacherForm teacherForm = new GTIRegisterTeacherForm(ctx);
+        GTIRegisterTeacherForm teacherForm = new GTIRegisterTeacherForm(contextManager);
         teacherForm.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterTeacherActionPerformed
 
     private void jButtonSubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubjectsActionPerformed
-        GTIManageSubjects subjectsForm = new GTIManageSubjects(ctx);
+        GTIManageSubjects subjectsForm = new GTIManageSubjects(contextManager);
         subjectsForm.setVisible(true);
     }//GEN-LAST:event_jButtonSubjectsActionPerformed
 
     private void jButtonSubjectsByCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubjectsByCourseActionPerformed
-        GTIRegisterSubjectInCourseForm subjectCourseForm = new GTIRegisterSubjectInCourseForm(ctx);
+        GTIRegisterSubjectInCourseForm subjectCourseForm = new GTIRegisterSubjectInCourseForm(contextManager);
         subjectCourseForm.setVisible(true);
     }//GEN-LAST:event_jButtonSubjectsByCourseActionPerformed
 
     private void jButtonRegisterTeacherInSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterTeacherInSubjectActionPerformed
-        GTIRegisterTeacherInSubjectForm teacherSubjectForm = new GTIRegisterTeacherInSubjectForm(ctx);
+        GTIRegisterTeacherInSubjectForm teacherSubjectForm = new GTIRegisterTeacherInSubjectForm(contextManager);
         teacherSubjectForm.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterTeacherInSubjectActionPerformed
 

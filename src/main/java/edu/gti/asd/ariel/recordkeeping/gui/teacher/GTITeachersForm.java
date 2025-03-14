@@ -5,6 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping.gui.teacher;
 
 import edu.gti.asd.ariel.recordkeeping.model.User;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -13,15 +14,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class GTITeachersForm extends javax.swing.JFrame {
 
+    private ContextManager contextManager;
     private ClassPathXmlApplicationContext ctx;
     private User user;
     
     /**
      * Creates new form GTITeachersForm
      */
-    public GTITeachersForm(ClassPathXmlApplicationContext ctx, User user) {
+    public GTITeachersForm(ContextManager contextManager, User user) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         this.user = user;
         setUserLabel();
     }

@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
 import edu.gti.asd.ariel.recordkeeping.model.City;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 /**
@@ -22,7 +22,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author ariel
  */
 public class GTIManageCitiesForm extends javax.swing.JFrame {
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private CityService cityService;
     private Logger log = Logger.getLogger(GTIManageCitiesForm.class.getName());
     
@@ -31,9 +31,9 @@ public class GTIManageCitiesForm extends javax.swing.JFrame {
     /**
      * Creates new form GTIManageDepartments
      */
-    public GTIManageCitiesForm(ClassPathXmlApplicationContext ctx) {
+    public GTIManageCitiesForm(ContextManager contextManager) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         initBeans();
         populateCitiesData();
         updateJTable();
@@ -385,7 +385,7 @@ public class GTIManageCitiesForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.cityService = (CityService) ctx.getBean("cityService");
+        this.cityService = contextManager.getBean("cityService", CityService.class);
     }
 
     private void updateJTable() {

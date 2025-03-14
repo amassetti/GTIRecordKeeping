@@ -8,7 +8,7 @@ import edu.gti.asd.ariel.recordkeeping.gui.teacher.GTITeachersForm;
 import edu.gti.asd.ariel.recordkeeping.gui.admin.GTIAdminForm;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.UserService;
-import edu.gti.asd.ariel.recordkeeping.service.UserServiceImpl;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -22,7 +22,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class GTILoginForm extends javax.swing.JFrame {
 
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private UserService userService;
     private Logger log = Logger.getLogger(GTILoginForm.class.getName());
     
@@ -30,8 +30,8 @@ public class GTILoginForm extends javax.swing.JFrame {
     /**
      * Creates new form GTILoginForm
      */
-    public GTILoginForm(ClassPathXmlApplicationContext ctx) {
-        this.ctx = ctx;
+    public GTILoginForm(ContextManager contextManager) {
+        this.contextManager = contextManager;
         initComponents();
         initSpringBeans();
         setLanguage();
@@ -39,7 +39,7 @@ public class GTILoginForm extends javax.swing.JFrame {
     }
     
     private void initSpringBeans() {
-        userService = ctx.getBean(UserServiceImpl.class);
+        userService = contextManager.getBean("userService", UserService.class);
     }
 
     /**
@@ -193,11 +193,11 @@ public class GTILoginForm extends javax.swing.JFrame {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 // OK, Check role
                 if (user.isAdmin()) {
-                    GTIAdminForm adminForm = new GTIAdminForm(ctx, user);
+                    GTIAdminForm adminForm = new GTIAdminForm(contextManager, user);
                     adminForm.setVisible(true);
                     dispose();
                 } else if (user.isTeacher()) {
-                    GTITeachersForm teacherForm = new GTITeachersForm(ctx, user);
+                    GTITeachersForm teacherForm = new GTITeachersForm(contextManager, user);
                     teacherForm.setVisible(true);
                     dispose();
                 } else {

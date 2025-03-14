@@ -11,6 +11,7 @@ import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.service.DepartmentService;
 import edu.gti.asd.ariel.recordkeeping.service.CourseService;
 import edu.gti.asd.ariel.recordkeeping.service.CourseTypeService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -21,7 +22,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -30,7 +30,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class GTIManageCoursesForm extends javax.swing.JFrame {
     private Logger log = Logger.getLogger(GTIManageCoursesForm.class.getName());
     
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private CourseService courseService;
     private DepartmentService departmentService;
     private CourseTypeService courseTypeService;
@@ -44,9 +44,9 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     /**
      * Creates new form GTIManageCoursesForm
      */
-    public GTIManageCoursesForm(ClassPathXmlApplicationContext ctx) {
+    public GTIManageCoursesForm(ContextManager contextManager) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         initBeans();
         populateCoursesData();
         populateCombosData();
@@ -456,9 +456,9 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.courseService = (CourseService) ctx.getBean("courseService");
-        this.departmentService = (DepartmentService) ctx.getBean("departmentService");
-        this.courseTypeService = (CourseTypeService) ctx.getBean("courseTypeService");
+        this.courseService = contextManager.getBean("courseService", CourseService.class);
+        this.departmentService = contextManager.getBean("departmentService", DepartmentService.class);
+        this.courseTypeService = contextManager.getBean("courseTypeService", CourseTypeService.class);
     }
 
     private void populateCoursesData() {

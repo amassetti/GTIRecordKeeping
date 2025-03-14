@@ -10,19 +10,19 @@ import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.StudentByCourse;
 import edu.gti.asd.ariel.recordkeeping.service.CourseService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
  * @author ariel
  */
 public class GTIRegisterStudentInCourseForm extends javax.swing.JFrame {
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     
     private CourseService courseService;
     private StudentService studentService;
@@ -36,9 +36,9 @@ public class GTIRegisterStudentInCourseForm extends javax.swing.JFrame {
     /**
      * Creates new form GTIRegisterStudentInCourseForm
      */
-    public GTIRegisterStudentInCourseForm(ClassPathXmlApplicationContext ctx) {
+    public GTIRegisterStudentInCourseForm(ContextManager contextManager) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         initBeans();
         fetchDataFromDB();
         populateStudentsTable();
@@ -360,8 +360,8 @@ public class GTIRegisterStudentInCourseForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUnRegisterActionPerformed
 
     private void initBeans() {
-        this.studentService = (StudentService) ctx.getBean("studentService");
-        this.courseService = (CourseService) ctx.getBean("courseService");
+        this.studentService = contextManager.getBean("studentService", StudentService.class);
+        this.courseService = contextManager.getBean("courseService", CourseService.class);
     }
 
     private void fetchDataFromDB() {

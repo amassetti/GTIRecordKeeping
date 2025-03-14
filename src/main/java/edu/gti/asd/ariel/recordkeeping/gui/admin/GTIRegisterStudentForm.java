@@ -12,6 +12,7 @@ import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
 import edu.gti.asd.ariel.recordkeeping.service.GenderService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
+import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
 import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -21,7 +22,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -31,7 +31,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     
     static Logger log = Logger.getLogger(GTIRegisterStudentForm.class.getName());
     
-    private ClassPathXmlApplicationContext ctx;
+    private ContextManager contextManager;
     private StudentService studentService;
     private CityService cityService;
     private GenderService genderService;
@@ -46,9 +46,9 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     /**
      * Creates new form GTIRegisterStudentForm
      */
-    public GTIRegisterStudentForm(ClassPathXmlApplicationContext ctx) {
+    public GTIRegisterStudentForm(ContextManager contextManager) {
         initComponents();
-        this.ctx = ctx;
+        this.contextManager = contextManager;
         initBeans();
         populateStudentsData();
         populateCombosData();
@@ -595,9 +595,9 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initBeans() {
-        this.cityService = (CityService) ctx.getBean("cityService");
-        this.genderService = (GenderService) ctx.getBean("genderService");
-        this.studentService = (StudentService) ctx.getBean("studentService");
+        this.cityService = contextManager.getBean("cityService", CityService.class);
+        this.genderService = contextManager.getBean("genderService", GenderService.class);
+        this.studentService = contextManager.getBean("studentService", StudentService.class);
     }
 
     private void populateStudentsData() {
