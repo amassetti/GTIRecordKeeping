@@ -100,6 +100,12 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
 
         jLabel4.setText("Select Subject:");
 
+        jComboBoxSubject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxSubjectActionPerformed(evt);
+            }
+        });
+
         jPanelGrades.setBorder(javax.swing.BorderFactory.createTitledBorder("Grades"));
 
         jLabel6.setText("Assignment 1:");
@@ -358,6 +364,15 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jTableStudentsMouseClicked
+
+    private void jComboBoxSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSubjectActionPerformed
+        JOptionPane.showMessageDialog(this, "action performed");
+        IComboElement selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
+        
+        if (!Integer.valueOf(-1).equals(selectedSubject.getComboElementId())) {
+            
+        }
+    }//GEN-LAST:event_jComboBoxSubjectActionPerformed
 
     private void fetchDataForSubjectsCombo() {
         Integer teacherId = user.getTeacherId();

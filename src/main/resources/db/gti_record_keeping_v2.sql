@@ -356,33 +356,32 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gti_record_keeping_v2`.`grades`
+-- Table `gti_record_keeping_v2`.`grade`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gti_record_keeping_v2`.`grades` ;
+DROP TABLE IF EXISTS `gti_record_keeping_v2`.`grade` ;
 
-CREATE TABLE IF NOT EXISTS `gti_record_keeping_v2`.`grades` (
-  `assesment_result_id` INT NOT NULL AUTO_INCREMENT,
-  `student_student_id` INT NOT NULL,
-  `subject_subject_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `gti_record_keeping_v2`.`grade` (
+  `student_id` INT NOT NULL,
+  `subject_id` INT NOT NULL,
   `assesment_1` DECIMAL NULL,
   `assesment_2` DECIMAL NULL,
   `assesment_3` DECIMAL NULL,
   `final_exam` DECIMAL NULL,
   `overall` VARCHAR(45) NULL,
-  PRIMARY KEY (`assesment_result_id`),
-  INDEX `fk_assesment_result_student1_idx` (`student_student_id` ASC) VISIBLE,
-  INDEX `fk_assesment_result_subject1_idx` (`subject_subject_id` ASC) VISIBLE,
+  PRIMARY KEY (`student_id`, `subject_id`),
+  INDEX `fk_assesment_result_student1_idx` (`student_id` ASC) VISIBLE,
+  INDEX `fk_assesment_result_subject1_idx` (`subject_id` ASC) VISIBLE,
   CONSTRAINT `fk_assesment_result_student1`
-    FOREIGN KEY (`student_student_id`)
+    FOREIGN KEY (`student_id`)
     REFERENCES `gti_record_keeping_v2`.`student` (`student_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_assesment_result_subject1`
-    FOREIGN KEY (`subject_subject_id`)
+    FOREIGN KEY (`subject_id`)
     REFERENCES `gti_record_keeping_v2`.`subject` (`subject_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
