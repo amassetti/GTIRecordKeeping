@@ -5,10 +5,12 @@
 package edu.gti.asd.ariel.recordkeeping.gui.teacher;
 
 import edu.gti.asd.ariel.recordkeeping.model.Course;
+import edu.gti.asd.ariel.recordkeeping.model.Grade;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import edu.gti.asd.ariel.recordkeeping.model.User;
+import edu.gti.asd.ariel.recordkeeping.service.GradeService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
@@ -29,6 +31,7 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     
     private SubjectService subjectService;
     private StudentService studentService;
+    private GradeService gradeService;
     
     private List<Student> students;
     private List<Subject> subjectsByCourseAndTeacher;
@@ -366,10 +369,17 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableStudentsMouseClicked
 
     private void jComboBoxSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSubjectActionPerformed
-        JOptionPane.showMessageDialog(this, "action performed");
         IComboElement selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
         
         if (!Integer.valueOf(-1).equals(selectedSubject.getComboElementId())) {
+            // TODO: Get grades
+            Integer studentId = null;
+            Integer subjectId = null;
+            
+            Grade grade = new Grade();
+            
+            // update grades
+            gradeService.registerGradeForStudent(studentId, subjectId, grade);
             
         }
     }//GEN-LAST:event_jComboBoxSubjectActionPerformed
@@ -394,6 +404,7 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     private void initBeans() {
         this.studentService = contextManager.getBean(StudentService.class);
         this.subjectService = contextManager.getBean(SubjectService.class);
+        this.gradeService = contextManager.getBean(GradeService.class);
     }
 
     private void fetchDataFromDB() {
