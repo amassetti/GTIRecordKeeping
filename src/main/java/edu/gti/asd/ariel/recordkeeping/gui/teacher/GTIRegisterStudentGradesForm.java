@@ -387,6 +387,7 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
                 
                 fetchDataForSubjectsCombo();
                 populateSubjectsCombo();
+                clearGradesFields();
                 
             } else {
                 jTextFieldCourse.setText("");
@@ -398,7 +399,7 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     private void jComboBoxSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSubjectActionPerformed
         IComboElement selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
         
-        if (!Integer.valueOf(-1).equals(selectedSubject.getComboElementId())) {
+        if (selectedSubject != null && !Integer.valueOf(-1).equals(selectedSubject.getComboElementId())) {
             // TODO: Get grades
             Integer studentId = selectedStudent.getStudentId();
             Integer subjectId = selectedSubject.getComboElementId();
@@ -415,6 +416,12 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         IComboElement selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
+        
+        if (selectedSubject == null || selectedSubject.getComboElementId().equals(-1)) {
+            JOptionPane.showMessageDialog(this, "Must select a subject");
+            return;
+        }
+        
         Integer subjectId = selectedSubject.getComboElementId();
         Integer studentId = selectedStudent.getStudentId();
         
@@ -531,6 +538,13 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
         jComboBoxSubject.removeAllItems();
         jComboBoxSubject.addItem(new Subject(-1, "Select a subject...", ""));
         
+    }
+
+    private void clearGradesFields() {
+        jTextFieldAssesment1.setText("0");
+        jTextFieldAssesment2.setText("0");
+        jTextFieldAssesment3.setText("0");
+        jTextFieldExam.setText("0");
     }
 
 }
