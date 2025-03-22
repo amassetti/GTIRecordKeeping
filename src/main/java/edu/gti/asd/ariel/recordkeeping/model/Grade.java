@@ -24,6 +24,22 @@ public class Grade {
 
     public Grade() {
     }
+    
+    public Grade(Double assesment1, Double assesment2, Double assesment3, Double finalExam) {
+        this.assesment1 = assesment1;
+        this.assesment2 = assesment2;
+        this.assesment3 = assesment3;
+        this.finalExam = finalExam;
+    }
+    
+    public Grade(Integer studentId, Integer subjectId, Double assesment1, Double assesment2, Double assesment3, Double finalExam) {
+        this.studentId = studentId;
+        this.subjectId = subjectId;
+        this.assesment1 = assesment1;
+        this.assesment2 = assesment2;
+        this.assesment3 = assesment3;
+        this.finalExam = finalExam;
+    }
 
     public Integer getStudentId() {
         return studentId;

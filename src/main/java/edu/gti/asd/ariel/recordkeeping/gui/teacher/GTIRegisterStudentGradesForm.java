@@ -14,6 +14,7 @@ import edu.gti.asd.ariel.recordkeeping.service.GradeService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
+import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
@@ -70,10 +71,10 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jTextFieldAssesment1 = new javax.swing.JTextField();
+        jTextFieldAssesment2 = new javax.swing.JTextField();
+        jTextFieldAssesment3 = new javax.swing.JTextField();
+        jTextFieldExam = new javax.swing.JTextField();
         jButtonSave = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButtonClearFilter = new javax.swing.JButton();
@@ -119,15 +120,40 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
 
         jLabel9.setText("Exam: ");
 
-        jTextField1.setText("0");
+        jTextFieldAssesment1.setText("0");
+        jTextFieldAssesment1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldAssesment1KeyTyped(evt);
+            }
+        });
 
-        jTextField2.setText("0");
+        jTextFieldAssesment2.setText("0");
+        jTextFieldAssesment2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldAssesment2KeyTyped(evt);
+            }
+        });
 
-        jTextField3.setText("0");
+        jTextFieldAssesment3.setText("0");
+        jTextFieldAssesment3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldAssesment3KeyTyped(evt);
+            }
+        });
 
-        jTextField4.setText("0");
+        jTextFieldExam.setText("0");
+        jTextFieldExam.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldExamKeyTyped(evt);
+            }
+        });
 
         jButtonSave.setText("Save");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelGradesLayout = new javax.swing.GroupLayout(jPanelGrades);
         jPanelGrades.setLayout(jPanelGradesLayout);
@@ -137,23 +163,24 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanelGradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonSave)
-                    .addGroup(jPanelGradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanelGradesLayout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(81, 81, 81)
-                            .addComponent(jLabel8)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelGradesLayout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanelGradesLayout.createSequentialGroup()
+                        .addGroup(jPanelGradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanelGradesLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldAssesment1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelGradesLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldAssesment3)))
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanelGradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelGradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldExam, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                            .addComponent(jTextFieldAssesment2))))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanelGradesLayout.setVerticalGroup(
@@ -162,15 +189,15 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanelGradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldAssesment1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldAssesment2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelGradesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldAssesment3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldExam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jButtonSave)
                 .addGap(52, 52, 52))
@@ -373,16 +400,51 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
         
         if (!Integer.valueOf(-1).equals(selectedSubject.getComboElementId())) {
             // TODO: Get grades
-            Integer studentId = null;
-            Integer subjectId = null;
+            Integer studentId = selectedStudent.getStudentId();
+            Integer subjectId = selectedSubject.getComboElementId();
             
-            Grade grade = new Grade();
+            Grade grade = gradeService.getGradesForStudent(studentId, subjectId);
             
-            // update grades
-            gradeService.registerGradeForStudent(studentId, subjectId, grade);
+            jTextFieldAssesment1.setText(""+grade.getAssesment1());
+            jTextFieldAssesment2.setText(""+grade.getAssesment2());
+            jTextFieldAssesment3.setText(""+grade.getAssesment3());
+            jTextFieldExam.setText(""+grade.getFinalExam());
             
         }
     }//GEN-LAST:event_jComboBoxSubjectActionPerformed
+
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        IComboElement selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
+        Integer subjectId = selectedSubject.getComboElementId();
+        Integer studentId = selectedStudent.getStudentId();
+        
+        Double assesment1 = FieldsUtils.getMandatoryDoubleValueFromTextField(this, jTextFieldAssesment1, "Assesment 1");
+        Double assesment2 = FieldsUtils.getMandatoryDoubleValueFromTextField(this, jTextFieldAssesment2, "Assesment 2");
+        Double assesment3 = FieldsUtils.getMandatoryDoubleValueFromTextField(this, jTextFieldAssesment3, "Assesment 3");
+        Double finalExam = FieldsUtils.getMandatoryDoubleValueFromTextField(this, jTextFieldExam, "Final Exam");
+        
+        Grade grade = new Grade(studentId, subjectId, assesment1, assesment2, assesment3, finalExam);
+        
+        // update grades
+        gradeService.registerGradeForStudent(studentId, subjectId, grade);
+        
+    }//GEN-LAST:event_jButtonSaveActionPerformed
+
+    private void jTextFieldAssesment1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAssesment1KeyTyped
+        FieldsUtils.allowOnlyDigitsAndDecimalPoint(evt);
+    }//GEN-LAST:event_jTextFieldAssesment1KeyTyped
+
+    private void jTextFieldAssesment2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAssesment2KeyTyped
+        FieldsUtils.allowOnlyDigitsAndDecimalPoint(evt);
+    }//GEN-LAST:event_jTextFieldAssesment2KeyTyped
+
+    private void jTextFieldAssesment3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAssesment3KeyTyped
+        FieldsUtils.allowOnlyDigitsAndDecimalPoint(evt);
+    }//GEN-LAST:event_jTextFieldAssesment3KeyTyped
+
+    private void jTextFieldExamKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldExamKeyTyped
+        FieldsUtils.allowOnlyDigitsAndDecimalPoint(evt);
+    }//GEN-LAST:event_jTextFieldExamKeyTyped
 
     private void fetchDataForSubjectsCombo() {
         Integer teacherId = user.getTeacherId();
@@ -431,11 +493,11 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelGrades;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableStudents;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextFieldAssesment1;
+    private javax.swing.JTextField jTextFieldAssesment2;
+    private javax.swing.JTextField jTextFieldAssesment3;
     private javax.swing.JTextField jTextFieldCourse;
+    private javax.swing.JTextField jTextFieldExam;
     private javax.swing.JTextField jTextFieldFilterStudent;
     private javax.swing.JTextField jTextFieldSelectedStudent;
     // End of variables declaration//GEN-END:variables

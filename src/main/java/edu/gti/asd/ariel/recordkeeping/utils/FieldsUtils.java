@@ -48,6 +48,24 @@ public class FieldsUtils {
         return text;
     }
     
+    public static Double getMandatoryDoubleValueFromTextField(JFrame parentFrame, JTextField jTextField, String name) {
+        String text = jTextField.getText().trim();
+        if (text.isEmpty()) {
+            JOptionPane.showMessageDialog(parentFrame, "Please enter a value for " + name);
+            jTextField.requestFocus();
+        }
+
+        Double value = null;
+        try {
+            value = Double.valueOf(text);
+        } catch (NumberFormatException nfEx) {
+            JOptionPane.showMessageDialog(parentFrame, "Please enter a valid decimal value for " + name);
+            jTextField.requestFocus();
+        }
+        
+        return value;
+    }
+    
     public static String getMandatoryValueFromTextArea(JFrame parentFrame, JTextArea jTextArea, String name) {
         String text = jTextArea.getText().trim();
         if (text.isEmpty()) {
@@ -66,6 +84,12 @@ public class FieldsUtils {
             jComboBox.requestFocus();
         }
         return id;
+    }
+    
+    public static void allowOnlyDigitsAndDecimalPoint(java.awt.event.KeyEvent evt) {
+        if ( !Character.isDigit(evt.getKeyChar()) ) {
+            evt.consume();
+        }
     }
     
 }

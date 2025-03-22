@@ -8,19 +8,21 @@ import edu.gti.asd.ariel.recordkeeping.dao.GradeDao;
 import edu.gti.asd.ariel.recordkeeping.model.Grade;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ariel
  */
+@Service
 public class GradeServiceImpl implements GradeService {
     
     @Autowired
     private GradeDao gradeDao;
 
     @Override
-    public Grade getGradesForStudent(Integer studentId) {
-        return gradeDao.getGradesForStudent(studentId);
+    public Grade getGradesForStudent(Integer studentId, Integer subjectId) {
+        return gradeDao.getGradesForStudent(studentId, subjectId);
     }
 
     @Override

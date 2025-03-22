@@ -12,7 +12,7 @@ import java.util.List;
  * @author ariel
  */
 public interface GradeService {
-    Grade getGradesForStudent(Integer studentId);
+    Grade getGradesForStudent(Integer studentId, Integer subjectId);
     List<Grade> getAllGradesForSubject(Integer subjectId);
     
     void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade);
