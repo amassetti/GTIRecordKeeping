@@ -3,10 +3,10 @@ DELIMITER $$
 CREATE PROCEDURE UpsertGrade(
     IN p_student_id INT,
     IN p_subject_id INT,
-    IN p_assesment_1 DECIMAL(10,0),
-    IN p_assesment_2 DECIMAL(10,0),
-    IN p_assesment_3 DECIMAL(10,0),
-    IN p_final_exam DECIMAL(10,0)
+    IN p_assesment_1 DECIMAL(4,2),
+    IN p_assesment_2 DECIMAL(4,2),
+    IN p_assesment_3 DECIMAL(4,2),
+    IN p_final_exam DECIMAL(4,2)
 )
 BEGIN
     IF EXISTS (SELECT 1 FROM grade WHERE student_id = p_student_id AND subject_id = p_subject_id) THEN

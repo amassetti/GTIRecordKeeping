@@ -87,7 +87,8 @@ public class FieldsUtils {
     }
     
     public static void allowOnlyDigitsAndDecimalPoint(java.awt.event.KeyEvent evt) {
-        if ( !Character.isDigit(evt.getKeyChar()) ) {
+        char character = evt.getKeyChar();
+        if ( ! (Character.isDigit(character) || character == '.' ) ) {
             evt.consume();
         }
     }
