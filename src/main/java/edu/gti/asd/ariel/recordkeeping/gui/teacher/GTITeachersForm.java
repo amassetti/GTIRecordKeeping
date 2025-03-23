@@ -48,6 +48,11 @@ public class GTITeachersForm extends javax.swing.JFrame {
 
         jButtonRateCourse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/students.png"))); // NOI18N
         jButtonRateCourse.setToolTipText("Register notes for class");
+        jButtonRateCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRateCourseActionPerformed(evt);
+            }
+        });
 
         jButtonSearchStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/student3.png"))); // NOI18N
         jButtonSearchStudent.setToolTipText("Register Notes for Student");
@@ -120,6 +125,11 @@ public class GTITeachersForm extends javax.swing.JFrame {
         GTIRegisterStudentGradesForm studentGradesForm = new GTIRegisterStudentGradesForm(contextManager, user);
         studentGradesForm.setVisible(true);
     }//GEN-LAST:event_jButtonSearchStudentActionPerformed
+
+    private void jButtonRateCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRateCourseActionPerformed
+        GTIRegisterSubjectGradesForm subjectGradesForm = new GTIRegisterSubjectGradesForm(contextManager, user);
+        subjectGradesForm.setVisible(true);
+    }//GEN-LAST:event_jButtonRateCourseActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
