@@ -5,7 +5,9 @@
 package edu.gti.asd.ariel.recordkeeping.dao;
 
 import edu.gti.asd.ariel.recordkeeping.mappers.GradeMapper;
+import edu.gti.asd.ariel.recordkeeping.mappers.SubjectStudentGradeMapper;
 import edu.gti.asd.ariel.recordkeeping.model.Grade;
+import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,19 +44,19 @@ public class GradeDao {
         return grade;
     }
 
-    public List<Grade> getGradesForStudentsInCourse(Integer courseId) {
-        String sql = "SELECT s.student_id, s.first_name, s.last_name, g.subject_id, g.assesment_1, g.assesment_2, g.assesment_3, g.final_exam\n" +
-                    "FROM student s\n" +
-                    "INNER JOIN student_course sc ON s.student_id = sc.student_id\n" +
-                    "LEFT JOIN grade g ON g.student_id = s.student_id\n" +
-                    "WHERE sc.course_id = ?;";
-
+    public List<SubjectStudentGrade> getGradesForStudentsInCourse(Integer courseId, Integer subjectId) {
+        String sql = "SELECT s.student_id, s.first_name, s.last_name, g.assesment_1, g.assesment_2, g.assesment_3, g.final_exam\n" +
+                        "FROM student_course sc \n" +
+                        "INNER JOIN student s ON sc.student_id = s.student_id \n" +
+                        "LEFT JOIN grade g ON sc.student_id = g.student_id AND g.subject_id = ? \n" +
+                        "WHERE sc.course_id = ? ORDER BY s.last_name, s.first_name";
 
         Object[] args = {
+            subjectId,
             courseId
         };
         
-        return jdbcTemplate.query(sql, args, new GradeMapper());
+        return jdbcTemplate.query(sql, args, new SubjectStudentGradeMapper());
         
     }
 

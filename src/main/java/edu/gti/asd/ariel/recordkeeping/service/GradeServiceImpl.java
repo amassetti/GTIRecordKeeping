@@ -6,6 +6,7 @@ package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.GradeDao;
 import edu.gti.asd.ariel.recordkeeping.model.Grade;
+import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,8 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<Grade> getGradesForStudentsInCourse(Integer courseId) {
-        return gradeDao.getGradesForStudentsInCourse(courseId);
+    public List<SubjectStudentGrade> getGradesForStudentsInCourse(Integer courseId, Integer subjectId) {
+        return gradeDao.getGradesForStudentsInCourse(courseId, subjectId);
     }
 
     @Override

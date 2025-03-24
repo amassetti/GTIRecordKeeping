@@ -9,6 +9,7 @@ import edu.gti.asd.ariel.recordkeeping.model.Grade;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
+import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.CourseService;
 import edu.gti.asd.ariel.recordkeeping.service.GradeService;
@@ -36,11 +37,11 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
     private StudentService studentService;
     private GradeService gradeService;
     
-    private List<Student> students;
+    private List<SubjectStudentGrade> subjectStudenGrades;
     private List<Course> coursesByTeacher;
     private List<Subject> subjectsByCourseAndTeacher;
     
-    private Course selectedCourse;
+    private IComboElement selectedCourse;
     private Subject selectedSubject;
 
     /**
@@ -70,7 +71,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jComboBoxSubject = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableStudents = new javax.swing.JTable();
+        jTableGrades = new javax.swing.JTable();
         jComboBoxCourse = new javax.swing.JComboBox<>();
         jButtonSave = new javax.swing.JButton();
 
@@ -97,7 +98,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
             }
         });
 
-        jTableStudents.setModel(new javax.swing.table.DefaultTableModel(
+        jTableGrades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -120,12 +121,12 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableGrades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableStudentsMouseClicked(evt);
+                jTableGradesMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTableStudents);
+        jScrollPane2.setViewportView(jTableGrades);
 
         jComboBoxCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,8 +196,8 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonExitActionPerformed
 
-    private void jTableStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableStudentsMouseClicked
-    }//GEN-LAST:event_jTableStudentsMouseClicked
+    private void jTableGradesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGradesMouseClicked
+    }//GEN-LAST:event_jTableGradesMouseClicked
 
     private void jComboBoxSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSubjectActionPerformed
         IComboElement selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
@@ -206,14 +207,14 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
             // TODO: Get grades
             Integer subjectId = selectedSubject.getComboElementId();
             
-            List<Grade> grades = gradeService.getAllGradesForSubject(subjectId);
-
+            subjectStudenGrades = gradeService.getGradesForStudentsInCourse(selectedCourse.getComboElementId(), subjectId);
+            populateGradesTable();
             
         }
     }//GEN-LAST:event_jComboBoxSubjectActionPerformed
 
     private void jComboBoxCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCourseActionPerformed
-        IComboElement selectedCourse = (IComboElement)jComboBoxCourse.getSelectedItem();
+        selectedCourse = (IComboElement)jComboBoxCourse.getSelectedItem();
         if (selectedCourse != null && !selectedCourse.getComboElementId().equals(-1)) {
             subjectsByCourseAndTeacher = subjectService.getSubjectsByCourseAndTeacher(selectedCourse.getComboElementId(), user.getTeacherId());
             populateSubjectsCombo();
@@ -227,7 +228,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "User has no teacher asociated. Please contact the admin");
             return;
         }
-        subjectsByCourseAndTeacher = subjectService.getSubjectsByCourseAndTeacher(selectedCourse.getCourseId(), teacherId);
+        subjectsByCourseAndTeacher = subjectService.getSubjectsByCourseAndTeacher(selectedCourse.getComboElementId(), teacherId);
     }
     
     private void populateSubjectsCombo() {
@@ -259,24 +260,24 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableStudents;
+    private javax.swing.JTable jTableGrades;
     // End of variables declaration//GEN-END:variables
 
-    private void populateStudentsTable() {
-        DefaultTableModel tableModel = (DefaultTableModel)jTableStudents.getModel();
+    private void populateGradesTable() {
+        DefaultTableModel tableModel = (DefaultTableModel)jTableGrades.getModel();
         
         // Clean table
         tableModel.getDataVector().removeAllElements();
         tableModel.fireTableDataChanged();
         
-        for (Student student : students) {
+        for (SubjectStudentGrade studentGrade : subjectStudenGrades) {
             Vector row = new Vector();
-            row.add(student.getStudentId());
-            row.add(student.getLastName() + ", " + student.getFirstName());
-            row.add(0);
-            row.add(0);
-            row.add(0);
-            row.add(0);
+            row.add(studentGrade.getStudentId());
+            row.add(studentGrade.getStudentLastName() + ", " + studentGrade.getStudentFirstName());
+            row.add(studentGrade.getAssesment1());
+            row.add(studentGrade.getAssesment2());
+            row.add(studentGrade.getAssesment3());
+            row.add(studentGrade.getFinalExam());
             
             tableModel.addRow(row);
         }
