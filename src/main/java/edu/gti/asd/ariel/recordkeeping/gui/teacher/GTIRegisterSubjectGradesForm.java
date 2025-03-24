@@ -5,9 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping.gui.teacher;
 
 import edu.gti.asd.ariel.recordkeeping.model.Course;
-import edu.gti.asd.ariel.recordkeeping.model.Grade;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
-import edu.gti.asd.ariel.recordkeeping.model.Student;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import edu.gti.asd.ariel.recordkeeping.model.User;
@@ -16,8 +14,7 @@ import edu.gti.asd.ariel.recordkeeping.service.GradeService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
-import edu.gti.asd.ariel.recordkeeping.utils.FieldsUtils;
-import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -42,7 +39,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
     private List<Subject> subjectsByCourseAndTeacher;
     
     private IComboElement selectedCourse;
-    private Subject selectedSubject;
+    private IComboElement selectedSubject;
 
     /**
      * Creates new form GTIRegisterStudentInCourseForm
@@ -135,6 +132,11 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
         });
 
         jButtonSave.setText("Save");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,7 +202,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableGradesMouseClicked
 
     private void jComboBoxSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSubjectActionPerformed
-        IComboElement selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
+        selectedSubject = (IComboElement)jComboBoxSubject.getSelectedItem();
         
         if (selectedSubject != null && !Integer.valueOf(-1).equals(selectedSubject.getComboElementId())) {
 
@@ -222,15 +224,20 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jComboBoxCourseActionPerformed
 
-    private void fetchDataForSubjectsCombo() {
-        Integer teacherId = user.getTeacherId();
-        if (teacherId == null) {
-            JOptionPane.showMessageDialog(this, "User has no teacher asociated. Please contact the admin");
-            return;
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        DefaultTableModel tableModel = (DefaultTableModel)jTableGrades.getModel();        
+        Vector dataVector = tableModel.getDataVector();
+        List<SubjectStudentGrade> subjectStudentGrades = new ArrayList();
+        for (int i = 0 ; i < dataVector.size() ; i++) {
+            Vector data = (Vector)dataVector.get(i);
+            SubjectStudentGrade subjectStudentGrade = new SubjectStudentGrade(data, selectedSubject.getComboElementId());
+            subjectStudentGrades.add(subjectStudentGrade);
         }
-        subjectsByCourseAndTeacher = subjectService.getSubjectsByCourseAndTeacher(selectedCourse.getComboElementId(), teacherId);
-    }
-    
+        System.out.println("subjectStudentGrades: " + subjectStudentGrades);
+        gradeService.registerGradesForSubject(subjectStudentGrades);
+        
+    }//GEN-LAST:event_jButtonSaveActionPerformed
+
     private void populateSubjectsCombo() {
         DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxSubject.getModel();
         cbModel.removeAllElements();

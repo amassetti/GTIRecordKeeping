@@ -37,8 +37,22 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public void registerGradesForSubject(List<Grade> grades) {
-        gradeDao.registerGradesForSubject(grades);
+    public void registerGradesForSubject(List<SubjectStudentGrade> subjectStudentGrades) {
+        
+        for (SubjectStudentGrade subjectStudentGrade : subjectStudentGrades) {
+            Integer studentId = subjectStudentGrade.getStudentId();
+            Integer subjectId = subjectStudentGrade.getSubjectId();
+            
+            Grade grade = new Grade(
+                    subjectStudentGrade.getAssesment1(),
+                    subjectStudentGrade.getAssesment2(),
+                    subjectStudentGrade.getAssesment3(),
+                    subjectStudentGrade.getFinalExam()
+            );
+            
+            gradeDao.registerGradeForStudent(studentId, subjectId, grade);
+        }
+        
     }
     
 }

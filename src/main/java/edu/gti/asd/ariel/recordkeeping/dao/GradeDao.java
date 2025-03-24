@@ -76,10 +76,5 @@ public class GradeDao {
         jdbcTemplate.update(sql, args);
         
     }
-
-    public void registerGradesForSubject(List<Grade> grades) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
     
 }

@@ -4,6 +4,9 @@
  */
 package edu.gti.asd.ariel.recordkeeping.model;
 
+import java.nio.file.Files;
+import java.util.Vector;
+
 /**
  *
  * @author ariel
@@ -19,6 +22,18 @@ public class SubjectStudentGrade {
     Double finalExam;
 
     public SubjectStudentGrade() {
+    }
+    
+    public SubjectStudentGrade(Vector data, Integer subjectId) {
+        // data vector: [8, Adegboruwa, Olufemi, 1.2, 2.2, 3.3, 4.7]
+        setStudentId((Integer)data.get(0));
+        setSubjectId(subjectId);
+        setStudentLastName((String)data.get(1));
+        setAssesment1((Double)data.get(2));
+        setAssesment2((Double)data.get(3));
+        setAssesment3((Double)data.get(4));
+        setFinalExam((Double)data.get(5));
+        
     }
 
     public Integer getStudentId() {

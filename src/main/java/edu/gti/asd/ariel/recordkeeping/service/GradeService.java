@@ -17,6 +17,6 @@ public interface GradeService {
     List<SubjectStudentGrade> getGradesForStudentsInCourse(Integer courseId, Integer subjectId);
     
     void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade);
-    void registerGradesForSubject(List<Grade> grades);
+    void registerGradesForSubject(List<SubjectStudentGrade> subjectStudentGrades);
     
 }
