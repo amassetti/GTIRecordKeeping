@@ -26,8 +26,8 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<Grade> getAllGradesForSubject(Integer subjectId) {
-        return gradeDao.getAllGradesForSubject(subjectId);
+    public List<Grade> getGradesForStudentsInCourse(Integer courseId) {
+        return gradeDao.getGradesForStudentsInCourse(courseId);
     }
 
     @Override

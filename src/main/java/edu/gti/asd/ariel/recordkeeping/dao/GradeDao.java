@@ -42,8 +42,20 @@ public class GradeDao {
         return grade;
     }
 
-    public List<Grade> getAllGradesForSubject(Integer subjectId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Grade> getGradesForStudentsInCourse(Integer courseId) {
+        String sql = "SELECT s.student_id, s.first_name, s.last_name, g.subject_id, g.assesment_1, g.assesment_2, g.assesment_3, g.final_exam\n" +
+                    "FROM student s\n" +
+                    "INNER JOIN student_course sc ON s.student_id = sc.student_id\n" +
+                    "LEFT JOIN grade g ON g.student_id = s.student_id\n" +
+                    "WHERE sc.course_id = ?;";
+
+
+        Object[] args = {
+            courseId
+        };
+        
+        return jdbcTemplate.query(sql, args, new GradeMapper());
+        
     }
 
     public void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade) {

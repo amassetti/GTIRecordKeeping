@@ -37,6 +37,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
     private GradeService gradeService;
     
     private List<Student> students;
+    private List<Course> coursesByTeacher;
     private List<Subject> subjectsByCourseAndTeacher;
     
     private Course selectedCourse;
@@ -51,7 +52,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
         this.user = user;
         initBeans();
         fetchDataFromDB();
-        populateStudentsTable();
+        populateCoursesCombo();
     }
 
     /**
@@ -126,6 +127,12 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTableStudents);
 
+        jComboBoxCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCourseActionPerformed(evt);
+            }
+        });
+
         jButtonSave.setText("Save");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,11 +206,20 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
             // TODO: Get grades
             Integer subjectId = selectedSubject.getComboElementId();
             
-            //List<Grade> grades = gradeService.getGradesForSubject();
-            // TODO
+            List<Grade> grades = gradeService.getAllGradesForSubject(subjectId);
+
             
         }
     }//GEN-LAST:event_jComboBoxSubjectActionPerformed
+
+    private void jComboBoxCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCourseActionPerformed
+        IComboElement selectedCourse = (IComboElement)jComboBoxCourse.getSelectedItem();
+        if (selectedCourse != null && !selectedCourse.getComboElementId().equals(-1)) {
+            subjectsByCourseAndTeacher = subjectService.getSubjectsByCourseAndTeacher(selectedCourse.getComboElementId(), user.getTeacherId());
+            populateSubjectsCombo();
+        }
+        
+    }//GEN-LAST:event_jComboBoxCourseActionPerformed
 
     private void fetchDataForSubjectsCombo() {
         Integer teacherId = user.getTeacherId();
@@ -230,14 +246,14 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
     }
 
     private void fetchDataFromDB() {
-        this.students = studentService.getStudents();
+        this.coursesByTeacher = courseService.getCoursesByTeacherId(user.getTeacherId());
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonSave;
-    private javax.swing.JComboBox<String> jComboBoxCourse;
+    private javax.swing.JComboBox<IComboElement> jComboBoxCourse;
     private javax.swing.JComboBox<IComboElement> jComboBoxSubject;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -270,6 +286,14 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
     private void emptySubjectsCombo() {
         jComboBoxSubject.removeAllItems();
         jComboBoxSubject.addItem(new Subject(-1, "Select a subject...", ""));
+        
+    }
+
+    private void populateCoursesCombo() {
+        jComboBoxCourse.addItem(new Course(-1, "Select one course..."));
+        for (Course course : coursesByTeacher) {
+            jComboBoxCourse.addItem(course);
+        }
         
     }
 

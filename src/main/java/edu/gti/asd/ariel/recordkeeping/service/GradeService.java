@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface GradeService {
     Grade getGradesForStudent(Integer studentId, Integer subjectId);
-    List<Grade> getAllGradesForSubject(Integer subjectId);
+    List<Grade> getGradesForStudentsInCourse(Integer courseId);
     
     void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade);
     void registerGradesForSubject(List<Grade> grades);

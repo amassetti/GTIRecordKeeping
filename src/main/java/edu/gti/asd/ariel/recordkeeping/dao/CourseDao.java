@@ -50,6 +50,20 @@ public class CourseDao {
         
         return jdbcTemplate.query(sql, args, new CourseMapper());
     }
+    
+    public List<Course> getCoursesByTeacherId(Integer teacherId) {
+        String sql =    "SELECT DISTINCT c.course_id, c.course_code, c.name \n" +
+                        "FROM course c, subject_course sc, teacher_subject ts \n" +
+                        "WHERE c.course_id = sc.course_id \n" +
+                        "AND   sc.subject_id = ts.subject_id \n" +
+                        "AND   ts.teacher_id = ?;";
+
+        Object[] args = {
+            teacherId
+        };
+        
+        return jdbcTemplate.query(sql, args, new CourseMapper());
+    }
 
     public void insertCourse(Course course) {
         String sql = "INSERT INTO course (department_id, course_type_id, course_code, name, description, certification)\n" +

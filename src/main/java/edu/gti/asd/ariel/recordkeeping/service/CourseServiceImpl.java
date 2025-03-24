@@ -26,6 +26,11 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getAllCourses() {
         return courseDao.getAllCourses();
     }
+   
+    @Override
+    public List<Course> getCoursesByTeacherId(Integer teacherId) {
+        return courseDao.getCoursesByTeacherId(teacherId);
+    }
     
     @Override
     public List<Course> searchByCourseName(String courseName) {
@@ -51,5 +56,6 @@ public class CourseServiceImpl implements CourseService {
     public Integer registerStudent(Course course, Student student) {
         return courseDao.registerStudent(course, student);
     }
+
     
 }

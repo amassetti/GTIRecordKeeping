@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface CourseService {
     List<Course> getAllCourses();
+    List<Course> getCoursesByTeacherId(Integer teacherId);
     List<Course> searchByCourseName(String courseName);
     void insertCourse(Course course);
     void updateCourse(Course course);
