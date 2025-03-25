@@ -71,6 +71,11 @@ public class GTITeachersForm extends javax.swing.JFrame {
 
         jButtonReports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reports2.png"))); // NOI18N
         jButtonReports.setToolTipText("Reports");
+        jButtonReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReportsActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("User:");
 
@@ -130,6 +135,11 @@ public class GTITeachersForm extends javax.swing.JFrame {
         GTIRegisterSubjectGradesForm subjectGradesForm = new GTIRegisterSubjectGradesForm(contextManager, user);
         subjectGradesForm.setVisible(true);
     }//GEN-LAST:event_jButtonRateCourseActionPerformed
+
+    private void jButtonReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportsActionPerformed
+        GTIGenerateTeacherReportsForm generateReportsForm = new GTIGenerateTeacherReportsForm(contextManager, user);
+        generateReportsForm.setVisible(true);
+    }//GEN-LAST:event_jButtonReportsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
