@@ -13,6 +13,7 @@ import java.util.List;
  * @author ariel
  */
 public interface CourseService {
+    Course getCourseById(Integer courseId);
     List<Course> getAllCourses();
     List<Course> getCoursesByTeacherId(Integer teacherId);
     List<Course> searchByCourseName(String courseName);

@@ -25,6 +25,21 @@ public class CourseDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
+    public Course getCourseById(Integer courseId) {
+        String sql =    "SELECT c.*,\n" +
+                        "       d.name as department_name, \n" +
+                        "       ct.description as course_type \n" +
+                        "FROM course c, department d, course_type ct \n" +
+                        "WHERE c.department_id = d.department_id \n" +
+                        "AND   c.course_type_id = ct.course_type_id AND c.course_id = ?  ORDER BY d.name, c.name";
+        
+        Object[] args = {
+            courseId
+        };
+        
+        return jdbcTemplate.queryForObject(sql, args, new CourseMapper());
+    }
+    
     public List<Course> getAllCourses() {
         String sql =    "SELECT c.*,\n" +
                         "       d.name as department_name, \n" +

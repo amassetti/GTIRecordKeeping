@@ -6,7 +6,6 @@ package edu.gti.asd.ariel.recordkeeping.mappers;
 
 import edu.gti.asd.ariel.recordkeeping.model.Course;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -16,10 +15,10 @@ import static edu.gti.asd.ariel.recordkeeping.utils.SqlHelper.hasColumn;
  *
  * @author ariel
  */
-public class CourseMapper implements RowMapper {
+public class CourseMapper implements RowMapper<Course> {
 
     @Override
-    public Object mapRow(ResultSet rs, int i) throws SQLException {
+    public Course mapRow(ResultSet rs, int i) throws SQLException {
         Course course = new Course();
 
         if (hasColumn(rs, "course_id")) {

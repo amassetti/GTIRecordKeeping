@@ -57,5 +57,10 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.registerStudent(course, student);
     }
 
+    @Override
+    public Course getCourseById(Integer courseId) {
+        return courseDao.getCourseById(courseId);
+    }
+
     
 }
