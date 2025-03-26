@@ -6,6 +6,8 @@ package edu.gti.asd.ariel.recordkeeping.utils;
 
 import edu.gti.asd.ariel.recordkeeping.GTIRecordKeepingConfig;
 import edu.gti.asd.ariel.recordkeeping.service.GenerateReportService;
+import edu.gti.asd.ariel.recordkeeping.service.GenerateReportServiceCSVImpl;
+import edu.gti.asd.ariel.recordkeeping.service.GenerateReportServicePDFImpl;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -19,9 +21,15 @@ public class GenerateReportMain {
         
         ContextManager contextManager = new ContextManager(context);
         
-        GenerateReportService reportService = contextManager.getBean(GenerateReportService.class);
+        GenerateReportService pdfReportService = contextManager.getBean(GenerateReportServicePDFImpl.class);
+        pdfReportService.listOfStudentsByCourse(1);
         
-        reportService.listOfStudentsByCourse(1);
+        pdfReportService.gradesByCourseAndSubject(1, 3);
+        
+        pdfReportService.studentReport(1);
+        
+        GenerateReportService csvReportService = contextManager.getBean(GenerateReportServiceCSVImpl.class);
+        csvReportService.listOfStudentsByCourse(1);
         
     }
     

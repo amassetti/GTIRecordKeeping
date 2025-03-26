@@ -43,6 +43,17 @@ public class SubjectDao {
         return jdbcTemplate.query(sql, args, new SubjectMapper());
     }
 
+    public Subject getSubjectById(Integer subjectId) {
+        log.info("Getting subject from db with id: " + subjectId);
+        String sql = "SELECT * FROM subject WHERE subject_id = ?";
+        
+        Object[] args = {
+            subjectId
+        };
+        
+        return jdbcTemplate.queryForObject(sql, args, new SubjectMapper());
+    }
+    
     public void insertSubject(Subject subject) {
         log.info("Inserting subject into db: " + subject);
         String sql = "INSERT INTO subject (subject_code, subject_name, subject_description, nfq_level) " +

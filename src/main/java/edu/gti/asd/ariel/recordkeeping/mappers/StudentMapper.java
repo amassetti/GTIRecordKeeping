@@ -15,10 +15,10 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author ariel
  */
-public class StudentMapper implements RowMapper {
+public class StudentMapper implements RowMapper<Student> {
 
     @Override
-    public Object mapRow(ResultSet rs, int i) throws SQLException {
+    public Student mapRow(ResultSet rs, int i) throws SQLException {
         Student student = new Student();
         
         if (rs.findColumn("student_id") >= 0) {

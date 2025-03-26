@@ -30,6 +30,11 @@ public class SubjectServiceImpl implements SubjectService {
     public List<Subject> searchSubjects(String filter) {
         return subjectDao.searchSubjects(filter);
     }
+    
+    @Override
+    public Subject getSubjectById(Integer subjectId) {
+        return subjectDao.getSubjectById(subjectId);
+    }
 
     @Override
     public void insertSubject(Subject subject) {

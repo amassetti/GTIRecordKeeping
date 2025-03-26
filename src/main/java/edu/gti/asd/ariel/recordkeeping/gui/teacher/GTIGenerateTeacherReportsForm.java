@@ -116,6 +116,7 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         jLabel5.setText("File:");
 
         jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
         jFileChooser1.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

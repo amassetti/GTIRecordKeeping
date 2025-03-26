@@ -11,4 +11,5 @@ package edu.gti.asd.ariel.recordkeeping.service;
 public interface GenerateReportService {
     public void listOfStudentsByCourse(Integer courseId);
     public void gradesByCourseAndSubject(Integer courseId, Integer subjectId);
+    public void studentReport(Integer studentId);
 }

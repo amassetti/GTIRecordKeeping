@@ -14,6 +14,7 @@ import java.util.List;
 public interface SubjectService {
     List<Subject> getAllSubjects();
     List<Subject> searchSubjects(String filter);
+    Subject getSubjectById(Integer subjectId);
     
     void insertSubject(Subject subject);
     void updateSubject(Subject subject);

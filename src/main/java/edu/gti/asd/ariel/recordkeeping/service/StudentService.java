@@ -15,6 +15,7 @@ import java.util.List;
 public interface StudentService {
     List<Student> getStudents();
     List<Student> searchStudents(String filter);
+    Student getStudentById(Integer studentId);
     
     void insertStudent(Student student) throws IllegalAccessException;
     void deleteStudent(Student student);

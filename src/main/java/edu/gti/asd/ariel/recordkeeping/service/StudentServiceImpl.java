@@ -42,6 +42,11 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentByCourse> getStudentsByCourse(Integer courseId) {
         return studentDao.getStudentsByCourse(courseId);
     }
+    
+    @Override
+    public Student getStudentById(Integer studentId) {
+        return studentDao.getStudentById(studentId);
+    }
 
     @Override
     public void insertStudent(Student student) throws IllegalAccessException {
@@ -90,7 +95,6 @@ public class StudentServiceImpl implements StudentService {
         }
         
     }
-
-    
+   
     
 }

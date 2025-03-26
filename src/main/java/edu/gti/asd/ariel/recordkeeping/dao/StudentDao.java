@@ -111,6 +111,34 @@ public class StudentDao {
         return jdbcTemplate.query(sql, args, new StudentsByCourseMapper());
     }
     
+    public Student getStudentById(Integer studentId) {
+        log.info("Fetching student by id " + studentId);
+        String sql = "SELECT\n" +
+        "    s.student_id,\n" +
+        "    s.first_name,\n" +
+        "    s.last_name,\n" +
+        "    s.email,\n" +
+        "    s.ppsn,\n" +
+        "    g.*,\n" +
+        "    a.*,\n" +
+        "    c.*,\n" +
+        "    crs.course_id, \n" +
+        "    crs.course_code, \n" +
+        "    crs.name as course_name \n" +
+        "FROM student s\n" +
+        "INNER JOIN gender g ON s.gender_id = g.gender_id\n" +
+        "INNER JOIN address a ON s.address_id = a.address_id\n" +
+        "INNER JOIN city c ON c.city_id = a.city_id\n" +
+        "LEFT JOIN student_course sc on sc.student_id = s.student_id\n" +
+        "LEFT JOIN course crs on sc.course_id = crs.course_id\n" +
+        "WHERE s.student_id = ?";
+        
+        Object[] args = {
+            studentId
+        };
+        return jdbcTemplate.queryForObject(sql, args, new StudentMapper());
+    }
+    
     public void insertStudent(Student student) {
         log.info("Inserting student" + student);
         String sql = "INSERT INTO student (address_id, gender_id, first_name, last_name, email, ppsn) " +
@@ -196,6 +224,6 @@ public class StudentDao {
         jdbcTemplate.update(sql, args);
         
     }
-    
+  
     
 }

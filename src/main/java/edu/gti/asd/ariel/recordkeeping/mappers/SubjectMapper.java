@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author ariel
  */
-public class SubjectMapper implements RowMapper {
+public class SubjectMapper implements RowMapper<Subject> {
 
     // column names
     private final static String SUBJECT_ID = "subject_id";
@@ -24,7 +24,7 @@ public class SubjectMapper implements RowMapper {
     
     
     @Override
-    public Object mapRow(ResultSet rs, int i) throws SQLException {
+    public Subject mapRow(ResultSet rs, int i) throws SQLException {
         Subject subject = new Subject();
 
         if (rs.findColumn(SUBJECT_ID) >= 0) {
