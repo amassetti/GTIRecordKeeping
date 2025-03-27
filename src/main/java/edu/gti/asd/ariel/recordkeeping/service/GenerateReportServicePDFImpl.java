@@ -64,16 +64,14 @@ public class GenerateReportServicePDFImpl implements GenerateReportService {
 
     
     @Override
-    public void listOfStudentsByCourse(Integer courseId) {
+    public void listOfStudentsByCourse(String fullFilename, Integer courseId) {
         log.info("Generating List of Students pdf report for courseId " + courseId);
         
-        String filePath = "/tmp/list_students_course_" + courseId + ".pdf"; // Change this path if needed
-
         List<StudentByCourse> students = studentService.getStudentsByCourse(courseId);
         Course course = courseService.getCourseById(courseId);
         
         try {
-            Document document = createPdfDocument(filePath, false);
+            Document document = createPdfDocument(fullFilename, false);
             
             addGtiLogo(document);
             
@@ -88,22 +86,20 @@ public class GenerateReportServicePDFImpl implements GenerateReportService {
             // Close the document
             document.close();
 
-            System.out.println("PDF created successfully: " + filePath);
+            System.out.println("PDF created successfully: " + fullFilename);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     @Override
-    public void gradesByCourseAndSubject(Integer courseId, Integer subjectId) {
-        String filePath = "/tmp/grades_by_subject.pdf"; // Change this path if needed
-
+    public void gradesByCourseAndSubject(String fullFilename, Integer courseId, Integer subjectId) {
         List<SubjectStudentGrade> studentsGrades = gradeService.getGradesForStudentsInCourse(courseId, subjectId);
         Course course = courseService.getCourseById(courseId);
         Subject subject = subjectService.getSubjectById(subjectId);
         
         try {
-            Document document = createPdfDocument(filePath, true);
+            Document document = createPdfDocument(fullFilename, true);
             
             addGtiLogo(document);
             
@@ -129,21 +125,19 @@ public class GenerateReportServicePDFImpl implements GenerateReportService {
             // Close the document
             document.close();
 
-            System.out.println("PDF created successfully: " + filePath);
+            System.out.println("PDF created successfully: " + fullFilename);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     @Override
-    public void studentReport(Integer studentId) {
-        String filePath = "/tmp/student.pdf"; // Change this path if needed
-
+    public void studentReport(String fullFilename, Integer studentId) {
         Student student = studentService.getStudentById(studentId);
         Course course = student.getCourse();
         
         try {
-            Document document = createPdfDocument(filePath, true);
+            Document document = createPdfDocument(fullFilename, true);
             
             addGtiLogo(document);
             
@@ -172,7 +166,7 @@ public class GenerateReportServicePDFImpl implements GenerateReportService {
             // Close the document
             document.close();
 
-            System.out.println("PDF created successfully: " + filePath);
+            System.out.println("PDF created successfully: " + fullFilename);
         } catch (Exception e) {
             e.printStackTrace();
         }

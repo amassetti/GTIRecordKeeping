@@ -30,19 +30,19 @@ public class GenerateReportServiceCSVImpl implements GenerateReportService {
     private SubjectService subjectService;
 
     @Override
-    public void listOfStudentsByCourse(Integer courseId) {
+    public void listOfStudentsByCourse(String fullFilename, Integer courseId) {
         log.info("Generating List of Students csv report for courseId " + courseId);
         List<StudentByCourse> students = studentService.getStudentsByCourse(courseId);
         Course course = courseService.getCourseById(courseId);
     }
 
     @Override
-    public void gradesByCourseAndSubject(Integer courseId, Integer subjectId) {
+    public void gradesByCourseAndSubject(String fullFilename, Integer courseId, Integer subjectId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void studentReport(Integer studentId) {
+    public void studentReport(String fullFilename, Integer studentId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

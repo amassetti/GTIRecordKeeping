@@ -17,7 +17,11 @@ import edu.gti.asd.ariel.recordkeeping.service.GradeService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -26,6 +30,13 @@ import javax.swing.JOptionPane;
  * @author ariel
  */
 public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
+    
+    
+    private static final String DATE_FORMAT = "YYYY-MM-DD";
+    private static final String REPORT_STUDENTS_BY_COURSE_FILENAME = "STUDENTS_BY_COURSE_YYYY-MM-DD.pdf";
+    private static final String REPORT_GRADES_PER_COURSE_FILENAME = "GRADES_PER_COURSE_YYYY-MM-DD.pdf";
+    private static final String REPORT_STUDENT_FILENAME = "STUDENT_REPORT_{}_YYYY-MM-DD.pdf";
+    
     private ContextManager contextManager;
     private User user;
     
@@ -78,7 +89,7 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         jLabelUser = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jComboBoxStudent = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldFilename = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextFieldDirectory = new javax.swing.JTextField();
 
@@ -136,8 +147,6 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
 
         jComboBoxStudent.setEnabled(false);
 
-        jTextField1.setEditable(false);
-
         jLabel7.setText("Directory: ");
 
         jTextFieldDirectory.setEnabled(false);
@@ -152,57 +161,45 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(317, 317, 317)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxReport, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(185, 185, 185))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(77, 77, 77)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(500, 500, 500)
                                 .addComponent(jButtonGenerate)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonExit))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jComboBoxStudent, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jComboBoxSubject, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextFieldDirectory, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldDirectory, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxStudent, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxReport, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxSubject, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldFilename)))
+                            .addComponent(jLabelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(jLabel3)))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabelUser)))
-                .addGap(75, 75, 75)
+                .addGap(14, 14, 14)
+                .addComponent(jLabelUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(68, 68, 68)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -212,27 +209,26 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                     .addComponent(jComboBoxCourse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6))
+                    .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldFilename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonExit)
                     .addComponent(jButtonGenerate))
-                .addGap(41, 41, 41))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -272,6 +268,9 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         IComboElement course = (IComboElement)jComboBoxCourse.getSelectedItem();
         IComboElement subject = (IComboElement)jComboBoxSubject.getSelectedItem();
         
+        String filename = jTextFieldFilename.getText().trim();
+        String directory = jTextFieldDirectory.getText().trim();
+        String fullFileName = null;
         switch (reportOption.getReportId()) {
             case -1:
                 JOptionPane.showMessageDialog(this, "Must select a report to generate!");
@@ -281,7 +280,9 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Must select a student for this report!");
                     return;
                 }
-                generateReportService.studentReport(student.getComboElementId());
+                fullFileName = checkFileNameAndDir(filename, directory);
+                if (fullFileName == null) return;
+                generateReportService.studentReport(fullFileName, student.getComboElementId());
                 JOptionPane.showMessageDialog(this, "Student report generated!");
                 break;
             case 2:
@@ -289,7 +290,9 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Must select a course for this report!");
                     return;
                 }
-                generateReportService.listOfStudentsByCourse(course.getComboElementId());
+                fullFileName = checkFileNameAndDir(filename, directory);
+                if (fullFileName == null) return;
+                generateReportService.listOfStudentsByCourse(fullFileName, course.getComboElementId());
                 JOptionPane.showMessageDialog(this, "Students by Course report generated!");
                 break;
             case 3:
@@ -301,7 +304,10 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Must select a subject for this report!");
                     return;
                 }
+                fullFileName = checkFileNameAndDir(filename, directory);
+                if (fullFileName == null) return;
                 generateReportService.gradesByCourseAndSubject(
+                        fullFileName,
                         course.getComboElementId(), 
                         subject.getComboElementId()
                 );
@@ -322,12 +328,15 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                 break;
             case 1:
                 enableStudentCombo();
+                jTextFieldFilename.setText(REPORT_STUDENT_FILENAME.replace(DATE_FORMAT, getYYYYMMDD()));
                 break;
             case 2:
                 enableCourseCombo();
+                jTextFieldFilename.setText(REPORT_STUDENTS_BY_COURSE_FILENAME.replace(DATE_FORMAT, getYYYYMMDD()));
                 break;
             case 3:
                 enableCourseAndSubjectCombo();
+                jTextFieldFilename.setText(REPORT_GRADES_PER_COURSE_FILENAME.replace(DATE_FORMAT, getYYYYMMDD()));
                 break;
             default:
                 throw new AssertionError();
@@ -376,8 +385,8 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelUser;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldDirectory;
+    private javax.swing.JTextField jTextFieldFilename;
     // End of variables declaration//GEN-END:variables
 
     private void emptySubjectsCombo() {
@@ -431,6 +440,24 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         jComboBoxSubject.setEnabled(true);
         
         jComboBoxStudent.setEnabled(false);
+    }
+    
+    private String getYYYYMMDD() {
+        LocalDateTime ldt = LocalDateTime.now();
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt);
+    }
+
+    private String checkFileNameAndDir(String filename, String directory) {
+        if (filename.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Must enter a filename");
+            return null;
+        } else if (directory.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Must select a directory");
+            return null;
+        }
+        
+        return directory + File.separator + filename;
+        
     }
 
 

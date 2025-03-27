@@ -22,14 +22,14 @@ public class GenerateReportMain {
         ContextManager contextManager = new ContextManager(context);
         
         GenerateReportService pdfReportService = contextManager.getBean(GenerateReportServicePDFImpl.class);
-        pdfReportService.listOfStudentsByCourse(1);
+        pdfReportService.listOfStudentsByCourse("/tmp/file1.pdf", 1);
         
-        pdfReportService.gradesByCourseAndSubject(1, 3);
+        pdfReportService.gradesByCourseAndSubject("/tmp/file2.pdf", 1, 3);
         
-        pdfReportService.studentReport(1);
+        pdfReportService.studentReport("/tmp/file3.pdf", 1);
         
         GenerateReportService csvReportService = contextManager.getBean(GenerateReportServiceCSVImpl.class);
-        csvReportService.listOfStudentsByCourse(1);
+        csvReportService.listOfStudentsByCourse("/tmp/file1.csv", 1);
         
     }
     
