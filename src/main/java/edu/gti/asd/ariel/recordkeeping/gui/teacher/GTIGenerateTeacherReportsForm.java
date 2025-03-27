@@ -12,6 +12,7 @@ import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import edu.gti.asd.ariel.recordkeeping.service.CourseService;
 import edu.gti.asd.ariel.recordkeeping.service.GenerateReportService;
+import edu.gti.asd.ariel.recordkeeping.service.GenerateReportServicePDFImpl;
 import edu.gti.asd.ariel.recordkeeping.service.GradeService;
 import edu.gti.asd.ariel.recordkeeping.service.StudentService;
 import edu.gti.asd.ariel.recordkeeping.service.SubjectService;
@@ -48,6 +49,7 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         initComponents();
         this.contextManager = contextManager;
         this.user = user;
+        setUserLabel();
         initBeans();
         fetchDataFromDB();
         populateCoursesCombo();
@@ -73,7 +75,12 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         jComboBoxReport = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jFileChooser1 = new javax.swing.JFileChooser();
+        jLabelUser = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBoxStudent = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextFieldDirectory = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -92,12 +99,14 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
 
         jLabel4.setText("Select Subject:");
 
+        jComboBoxSubject.setEnabled(false);
         jComboBoxSubject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxSubjectActionPerformed(evt);
             }
         });
 
+        jComboBoxCourse.setEnabled(false);
         jComboBoxCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCourseActionPerformed(evt);
@@ -111,55 +120,88 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
             }
         });
 
+        jComboBoxReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxReportActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Select report:");
 
-        jLabel5.setText("File:");
+        jLabel5.setText("Filename:");
 
-        jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
-        jFileChooser1.setEnabled(false);
+        jLabelUser.setText("User:");
+
+        jLabel6.setText("Select Student:");
+
+        jComboBoxStudent.setEnabled(false);
+
+        jTextField1.setEditable(false);
+
+        jLabel7.setText("Directory: ");
+
+        jTextFieldDirectory.setEnabled(false);
+        jTextFieldDirectory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldDirectoryMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(317, 317, 317)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(317, 317, 317)
-                        .addComponent(jLabel3))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxReport, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(185, 185, 185))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
+                                .addGap(500, 500, 500)
+                                .addComponent(jButtonGenerate)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonExit))
+                            .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxCourse, 0, 490, Short.MAX_VALUE)
-                                    .addComponent(jComboBoxReport, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(185, 185, 185))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButtonGenerate)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jButtonExit))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jComboBoxStudent, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jComboBoxSubject, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldDirectory, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabelUser)))
                 .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,19 +210,29 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jComboBoxCourse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonExit)
                     .addComponent(jButtonGenerate))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
 
         pack();
@@ -213,8 +265,80 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxCourseActionPerformed
 
     private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
-        generateReportService.gradesByCourseAndSubject(1, 1);
+        // Validations
+        Report reportOption = (Report)jComboBoxReport.getSelectedItem();
+        
+        IComboElement student = (IComboElement)jComboBoxStudent.getSelectedItem();
+        IComboElement course = (IComboElement)jComboBoxCourse.getSelectedItem();
+        IComboElement subject = (IComboElement)jComboBoxSubject.getSelectedItem();
+        
+        switch (reportOption.getReportId()) {
+            case -1:
+                JOptionPane.showMessageDialog(this, "Must select a report to generate!");
+                break;
+            case 1:
+                if (student == null || student.getComboElementId().equals(-1)) {
+                    JOptionPane.showMessageDialog(this, "Must select a student for this report!");
+                    return;
+                }
+                generateReportService.studentReport(student.getComboElementId());
+                JOptionPane.showMessageDialog(this, "Student report generated!");
+                break;
+            case 2:
+                if (course == null || course.getComboElementId().equals(-1)) {
+                    JOptionPane.showMessageDialog(this, "Must select a course for this report!");
+                    return;
+                }
+                generateReportService.listOfStudentsByCourse(course.getComboElementId());
+                JOptionPane.showMessageDialog(this, "Students by Course report generated!");
+                break;
+            case 3:
+                if (course == null || course.getComboElementId().equals(-1)) {
+                    JOptionPane.showMessageDialog(this, "Must select a course for this report!");
+                    return;
+                }
+                if (subject == null || subject.getComboElementId().equals(-1)) {
+                    JOptionPane.showMessageDialog(this, "Must select a subject for this report!");
+                    return;
+                }
+                generateReportService.gradesByCourseAndSubject(
+                        course.getComboElementId(), 
+                        subject.getComboElementId()
+                );
+                JOptionPane.showMessageDialog(this, "Grades by course and subject report generated!");
+                break;
+            default:
+                throw new AssertionError();
+        }
+        
     }//GEN-LAST:event_jButtonGenerateActionPerformed
+
+    private void jComboBoxReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxReportActionPerformed
+        Report reportOption = (Report)jComboBoxReport.getSelectedItem();
+        
+        switch (reportOption.getReportId()) {
+            case -1:
+                disableAllCombos();
+                break;
+            case 1:
+                enableStudentCombo();
+                break;
+            case 2:
+                enableCourseCombo();
+                break;
+            case 3:
+                enableCourseAndSubjectCombo();
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }//GEN-LAST:event_jComboBoxReportActionPerformed
+
+    private void jTextFieldDirectoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDirectoryMouseClicked
+        DirectoryChooserDialog directoryChooser = new DirectoryChooserDialog(this, jTextFieldDirectory, true);
+        directoryChooser.setVisible(true);
+        
+    }//GEN-LAST:event_jTextFieldDirectoryMouseClicked
 
     private void populateSubjectsCombo() {
         DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxSubject.getModel();
@@ -229,7 +353,7 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         this.studentService = contextManager.getBean(StudentService.class);
         this.subjectService = contextManager.getBean(SubjectService.class);
         this.gradeService = contextManager.getBean(GradeService.class);
-        this.generateReportService = contextManager.getBean(GenerateReportService.class);
+        this.generateReportService = contextManager.getBean(GenerateReportServicePDFImpl.class);
     }
 
     private void fetchDataFromDB() {
@@ -242,13 +366,18 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonGenerate;
     private javax.swing.JComboBox<IComboElement> jComboBoxCourse;
     private javax.swing.JComboBox<IComboElement> jComboBoxReport;
+    private javax.swing.JComboBox<IComboElement> jComboBoxStudent;
     private javax.swing.JComboBox<IComboElement> jComboBoxSubject;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelUser;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldDirectory;
     // End of variables declaration//GEN-END:variables
 
     private void emptySubjectsCombo() {
@@ -267,7 +396,41 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
 
     private void populateReportsCombo() {
         jComboBoxReport.addItem(new Report(-1, "Select an option"));
-        jComboBoxReport.addItem(new Report(-1, "Grades per course and subject"));
+        jComboBoxReport.addItem(new Report(1, "Student report"));
+        jComboBoxReport.addItem(new Report(2, "List of Students by Course"));
+        jComboBoxReport.addItem(new Report(3, "Grades per course and subject"));
+        
+    }
+
+    private void setUserLabel() {
+        jLabelUser.setText("User: " + user.getUsername());
+    }
+
+    private void disableAllCombos() {
+        jComboBoxCourse.setEnabled(false);
+        jComboBoxStudent.setEnabled(false);
+        jComboBoxSubject.setEnabled(false);
+    }
+
+    private void enableStudentCombo() {
+        jComboBoxStudent.setEnabled(true);
+        
+        jComboBoxCourse.setEnabled(false);
+        jComboBoxSubject.setEnabled(false);
+    }
+
+    private void enableCourseCombo() {
+        jComboBoxCourse.setEnabled(true);
+        
+        jComboBoxStudent.setEnabled(false);
+        jComboBoxSubject.setEnabled(false);
+    }
+
+    private void enableCourseAndSubjectCombo() {
+        jComboBoxCourse.setEnabled(true);
+        jComboBoxSubject.setEnabled(true);
+        
+        jComboBoxStudent.setEnabled(false);
     }
 
 
