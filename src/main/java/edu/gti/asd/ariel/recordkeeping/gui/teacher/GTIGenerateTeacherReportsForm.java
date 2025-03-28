@@ -7,6 +7,7 @@ package edu.gti.asd.ariel.recordkeeping.gui.teacher;
 import edu.gti.asd.ariel.recordkeeping.model.Course;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Report;
+import edu.gti.asd.ariel.recordkeeping.model.StudentByCourse;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import edu.gti.asd.ariel.recordkeeping.model.User;
@@ -43,10 +44,9 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
     private CourseService courseService;
     private SubjectService subjectService;
     private StudentService studentService;
-    private GradeService gradeService;
     private GenerateReportService generateReportService;
     
-    private List<SubjectStudentGrade> subjectStudenGrades;
+    private List<StudentByCourse> studentsByCourse;
     private List<Course> coursesByTeacher;
     private List<Subject> subjectsByCourseAndTeacher;
     
@@ -246,7 +246,6 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
             // TODO: Get grades
             Integer subjectId = selectedSubject.getComboElementId();
             
-            subjectStudenGrades = gradeService.getGradesForStudentsInCourse(selectedCourse.getComboElementId(), subjectId);
 
         }
     }//GEN-LAST:event_jComboBoxSubjectActionPerformed
@@ -256,6 +255,8 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         if (selectedCourse != null && !selectedCourse.getComboElementId().equals(-1)) {
             subjectsByCourseAndTeacher = subjectService.getSubjectsByCourseAndTeacher(selectedCourse.getComboElementId(), user.getTeacherId());
             populateSubjectsCombo();
+            studentsByCourse = studentService.getStudentsByCourse(selectedCourse.getComboElementId());
+            populateStudentsCombo();
         }
         
     }//GEN-LAST:event_jComboBoxCourseActionPerformed
@@ -276,6 +277,10 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Must select a report to generate!");
                 break;
             case 1:
+                if (course == null || course.getComboElementId().equals(-1)) {
+                    JOptionPane.showMessageDialog(this, "Must select a course for this report!");
+                    return;
+                }
                 if (student == null || student.getComboElementId().equals(-1)) {
                     JOptionPane.showMessageDialog(this, "Must select a student for this report!");
                     return;
@@ -327,7 +332,7 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
                 disableAllCombos();
                 break;
             case 1:
-                enableStudentCombo();
+                enableCourseAndStudentCombo();
                 jTextFieldFilename.setText(REPORT_STUDENT_FILENAME.replace(DATE_FORMAT, getYYYYMMDD()));
                 break;
             case 2:
@@ -361,12 +366,12 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         this.courseService =  contextManager.getBean(CourseService.class);
         this.studentService = contextManager.getBean(StudentService.class);
         this.subjectService = contextManager.getBean(SubjectService.class);
-        this.gradeService = contextManager.getBean(GradeService.class);
         this.generateReportService = contextManager.getBean(GenerateReportServicePDFImpl.class);
     }
 
     private void fetchDataFromDB() {
         this.coursesByTeacher = courseService.getCoursesByTeacherId(user.getTeacherId());
+
     }
 
 
@@ -421,10 +426,10 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         jComboBoxSubject.setEnabled(false);
     }
 
-    private void enableStudentCombo() {
+    private void enableCourseAndStudentCombo() {
         jComboBoxStudent.setEnabled(true);
+        jComboBoxCourse.setEnabled(true);
         
-        jComboBoxCourse.setEnabled(false);
         jComboBoxSubject.setEnabled(false);
     }
 
@@ -458,6 +463,14 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         
         return directory + File.separator + filename;
         
+    }
+
+    private void populateStudentsCombo() {
+        jComboBoxStudent.removeAllItems();
+        jComboBoxStudent.addItem(new StudentByCourse(-1, " please", "Select one"));
+        for (StudentByCourse student : studentsByCourse) {
+            jComboBoxStudent.addItem(student);
+        }
     }
 
 

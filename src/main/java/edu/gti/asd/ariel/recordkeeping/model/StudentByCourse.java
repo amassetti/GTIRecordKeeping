@@ -10,7 +10,7 @@ import java.sql.Date;
  *
  * @author ariel
  */
-public class StudentByCourse {
+public class StudentByCourse implements IComboElement {
     private Date registrationDate;
     private Integer registrationId;
     private Integer courseId;
@@ -22,6 +22,12 @@ public class StudentByCourse {
     private String courseName;
 
     public StudentByCourse() {
+    }
+
+    public StudentByCourse(Integer studentId, String firstName, String lastName) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Date getRegistrationDate() {
@@ -98,7 +104,17 @@ public class StudentByCourse {
 
     @Override
     public String toString() {
-        return "StudentByCourse{" + "registrationDate=" + registrationDate + ", registrationId=" + registrationId + ", courseId=" + courseId + ", student_id=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", courseCode=" + courseCode + ", courseName=" + courseName + '}';
+        return getLastName() + ", " + getFirstName();
+    }
+
+    @Override
+    public Integer getComboElementId() {
+        return getStudentId();
+    }
+
+    @Override
+    public String getComboElementDescription() {
+        return getLastName() + ", " + getFirstName();
     }
     
 }
