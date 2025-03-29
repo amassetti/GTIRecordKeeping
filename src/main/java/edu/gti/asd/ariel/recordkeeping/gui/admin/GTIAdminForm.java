@@ -69,6 +69,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
 
         jButtonReports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reports2.png"))); // NOI18N
         jButtonReports.setToolTipText("Reports / Export Data");
+        jButtonReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReportsActionPerformed(evt);
+            }
+        });
 
         jButtonDepartments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/department.png"))); // NOI18N
         jButtonDepartments.setToolTipText("Departments");
@@ -258,6 +263,11 @@ public class GTIAdminForm extends javax.swing.JFrame {
         GTIRegisterTeacherInSubjectForm teacherSubjectForm = new GTIRegisterTeacherInSubjectForm(contextManager);
         teacherSubjectForm.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterTeacherInSubjectActionPerformed
+
+    private void jButtonReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportsActionPerformed
+        GTIGenerateAdminReportsForm reportsForm = new GTIGenerateAdminReportsForm(contextManager);
+        reportsForm.setVisible(true);
+    }//GEN-LAST:event_jButtonReportsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCities;
