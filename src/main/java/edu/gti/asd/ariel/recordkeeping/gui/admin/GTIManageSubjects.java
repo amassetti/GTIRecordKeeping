@@ -69,6 +69,7 @@ public class GTIManageSubjects extends javax.swing.JFrame {
         jComboBoxNFQLevel = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Subjects");
 
         jTableSubjects.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

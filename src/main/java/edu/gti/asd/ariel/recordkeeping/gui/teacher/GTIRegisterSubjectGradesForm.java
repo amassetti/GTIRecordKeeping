@@ -73,6 +73,7 @@ public class GTIRegisterSubjectGradesForm extends javax.swing.JFrame {
         jButtonSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Grades for Students in Subject");
         setResizable(false);
 
         jLabel1.setText("Select Course:");

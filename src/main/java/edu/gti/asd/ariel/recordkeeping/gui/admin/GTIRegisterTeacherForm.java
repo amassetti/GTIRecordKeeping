@@ -96,6 +96,7 @@ public class GTIRegisterTeacherForm extends javax.swing.JFrame {
         jButtonUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Teachers");
 
         jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder("Address"));
 

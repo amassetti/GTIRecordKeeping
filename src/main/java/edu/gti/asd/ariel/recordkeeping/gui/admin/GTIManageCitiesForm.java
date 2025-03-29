@@ -65,6 +65,7 @@ public class GTIManageCitiesForm extends javax.swing.JFrame {
         jComboBoxCounties = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cities");
 
         jTableDepartments.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

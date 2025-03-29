@@ -88,6 +88,7 @@ public class GTIRegisterStudentGradesForm extends javax.swing.JFrame {
         jTextFieldCourse = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Register Grade for Student");
         setResizable(false);
 
         jLabel1.setText("Student Course:");

@@ -100,6 +100,7 @@ public class GTIRegisterStudentForm extends javax.swing.JFrame {
         jButtonClearFilter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Students");
 
         jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder("Address"));
 

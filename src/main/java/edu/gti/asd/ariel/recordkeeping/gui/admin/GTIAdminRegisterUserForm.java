@@ -92,6 +92,7 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         jTextFieldPassword = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Users");
         setResizable(false);
 
         jTableUsers.setModel(new javax.swing.table.DefaultTableModel(

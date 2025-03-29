@@ -91,6 +91,7 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Courses");
         setResizable(false);
 
         jTableCourses.setModel(new javax.swing.table.DefaultTableModel(

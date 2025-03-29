@@ -94,6 +94,7 @@ public class GTIGenerateTeacherReportsForm extends javax.swing.JFrame {
         jTextFieldDirectory = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reports");
         setResizable(false);
 
         jLabel1.setText("Select Course:");

@@ -73,6 +73,7 @@ public class GTIRegisterTeacherInSubjectForm extends javax.swing.JFrame {
         jButtonUnregister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Register Teacher in Subject");
 
         jTableTeachersBySubject.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
