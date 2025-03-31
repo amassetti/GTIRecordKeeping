@@ -27,6 +27,7 @@ public class UserDao {
     static Logger log = Logger.getLogger(UserDao.class.getName());
     
     public Optional<User> getUserByUsername(String username) {
+        log.info("Fetching user from database with username " + username);
         String sql = "SELECT * FROM user u, role r WHERE u.role_id = r.role_id AND username=?";
         Object[] args = new Object[]{username};
         List<User> users = jdbcTemplate.query(sql, args, new UserMapper());
@@ -36,6 +37,7 @@ public class UserDao {
     }
 
     public void registerUser(User user) {
+        log.info("Registering user " + user);
         String sql = "INSERT INTO user (role_id, username, password, teacher_id, student_id, admin_id) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
         
@@ -52,11 +54,14 @@ public class UserDao {
     }
 
     public List<User> getUsers() {
+        log.info("Fetching all users from db");
         String sql = "SELECT * FROM user u, role r WHERE u.role_id = r.role_id";
         return jdbcTemplate.query(sql, new UserMapper());
     }
     
     public void updateUser(User user) {
+        log.info("Updating user " + user);
+        
         String sql = "UPDATE user\n" +
             "SET\n" +
             "role_id = ?,\n" +
@@ -76,6 +81,9 @@ public class UserDao {
             user.getAdminId(),
             user.getUserId()
         };
+        
+//        log.info(sql);
+//        log.info("args: " + user.toString());
         
         jdbcTemplate.update(sql, args);
         

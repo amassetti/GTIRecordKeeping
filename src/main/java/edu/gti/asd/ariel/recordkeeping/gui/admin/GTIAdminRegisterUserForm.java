@@ -4,6 +4,7 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
+import edu.gti.asd.ariel.recordkeeping.exceptions.GTIRecordKeepingException;
 import edu.gti.asd.ariel.recordkeeping.model.Admin;
 import edu.gti.asd.ariel.recordkeeping.model.IComboElement;
 import edu.gti.asd.ariel.recordkeeping.model.Role;
@@ -355,9 +356,23 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
         user.setUsername(username);
         user.setPassword(password);
         user.setRoleId(roleId);
-        user.setStudentId(student != null ? student.getStudentId() : null);
-        user.setTeacherId(teacher != null ? teacher.getTeacherId() : null);
-        user.setAdminId(admin != null ? admin.getAdminId() : null);
+        user.setStudentId(
+                (student != null && !student.getStudentId().equals(-1)) 
+                        ? student.getStudentId() 
+                        : null
+        );
+        
+        user.setTeacherId(
+                (teacher != null && !teacher.getTeacherId().equals(-1)) 
+                        ? teacher.getTeacherId() 
+                        : null
+        );
+        
+        user.setAdminId(
+                (admin != null && !admin.getAdminId().equals(-1)) 
+                        ? admin.getAdminId() 
+                        : null
+        );
         
         userService.updateUser(user);
         setAddMode();
@@ -400,8 +415,15 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
             user.setAdminId(adminElement.getComboElementId());
             user.setTeacherId(null);
         }
+
+        try {
+            userService.registerUser(user);
+        } catch (GTIRecordKeepingException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+            jTextFieldUsername.requestFocus();
+            return;
+        }
         
-        userService.registerUser(user);
         setAddMode();
         clearFields();
         populateUsersData();
@@ -517,7 +539,7 @@ public class GTIAdminRegisterUserForm extends javax.swing.JFrame {
 
     private void updateTeachersCombo() {
         DefaultComboBoxModel cbModel = (DefaultComboBoxModel) jComboBoxTeacher.getModel();
-        cbModel.addElement(new Admin(-1, "...", "Select one" ));
+        cbModel.addElement(new Teacher(-1, "...", "Select one" ));
         cbModel.addAll(teachers);
     }
 }

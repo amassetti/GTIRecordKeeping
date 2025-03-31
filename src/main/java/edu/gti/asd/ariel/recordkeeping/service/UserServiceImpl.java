@@ -5,6 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.UserDao;
+import edu.gti.asd.ariel.recordkeeping.exceptions.UserAlreadyExistsException;
 import edu.gti.asd.ariel.recordkeeping.model.User;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(User user) {
+        // Check username is not already registered
+        Optional<User> userOptional = userDao.getUserByUsername(user.getUsername());
+        if (userOptional.isPresent()) {
+            throw new UserAlreadyExistsException("Username " + user.getUsername() + " already registered");
+        }
         userDao.registerUser(user);
     }
 
