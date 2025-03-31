@@ -7,7 +7,9 @@ package edu.gti.asd.ariel.recordkeeping.service;
 import edu.gti.asd.ariel.recordkeeping.dao.SubjectDao;
 import edu.gti.asd.ariel.recordkeeping.model.Subject;
 import java.util.List;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SubjectServiceImpl implements SubjectService {
+    static Logger log = Logger.getLogger(SubjectServiceImpl.class.getName());
     
     @Autowired
     private SubjectDao subjectDao;
@@ -59,7 +62,11 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public void registerSubjectsInCourse(List<Subject> subjectsToAdd, Integer courseId) {
         for (Subject subject : subjectsToAdd) {
-            subjectDao.registerSubjectInCourse(subject, courseId);
+            try {
+                subjectDao.registerSubjectInCourse(subject, courseId);
+            } catch (DuplicateKeyException dkEx) {
+                log.warning("Duplicate record: " + dkEx.getMessage());
+            }
         }        
     }
 

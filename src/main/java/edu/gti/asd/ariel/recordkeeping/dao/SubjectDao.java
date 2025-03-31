@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.dao.DuplicateKeyException;
 
 /**
  *
@@ -116,7 +117,7 @@ public class SubjectDao {
         
     }
 
-    public void registerSubjectInCourse(Subject subject, Integer courseId) {
+    public void registerSubjectInCourse(Subject subject, Integer courseId) throws DuplicateKeyException {
         log.info("Registering subject " + subject + " in course id: " + courseId);
         String sql = "INSERT INTO subject_course (subject_id, course_id, registration_date) " +
                 "VALUES (?,?,?)";
