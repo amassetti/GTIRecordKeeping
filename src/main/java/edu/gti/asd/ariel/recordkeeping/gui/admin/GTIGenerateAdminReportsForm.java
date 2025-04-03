@@ -94,7 +94,7 @@ public class GTIGenerateAdminReportsForm extends javax.swing.JFrame {
         jLabel1.setText("Select Course:");
 
         jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        jLabel3.setText("Reports Generation");
+        jLabel3.setText("Reports Generation for admin user");
 
         jButtonExit.setText("Exit");
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
@@ -361,9 +361,7 @@ public class GTIGenerateAdminReportsForm extends javax.swing.JFrame {
     }
 
     private void fetchDataFromDB() {
-        // TODO
-        this.coursesByTeacher = courseService.getCoursesByTeacherId(1);
-
+        this.coursesByTeacher = courseService.getAllCourses();
     }
 
 
