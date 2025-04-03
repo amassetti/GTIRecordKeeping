@@ -29,7 +29,7 @@ public class CityDao {
     }
 
     public List<City> searchByName(String filter) {
-        log.info("Filtering cities with name: " + filter);
+        log.info("Filtering cities with filter: " + filter);
         String sql = "SELECT * FROM city WHERE city_name LIKE ? ORDER BY county, city_name";
         Object[] args = {
             "%" + filter + "%"
@@ -64,13 +64,23 @@ public class CityDao {
 
     public void deleteCity(Integer id) {
         log.info("Deleting city with id " + id);
-        String sql = "DELETE FROM city where city_id = ?";
+        String sql = "DELETE FROM city where city_id = ? ORDER BY county, city_name";
         
         Object[] args = {
             id
         };
         
         jdbcTemplate.update(sql, args);
+    }
+
+    public List<City> findByCityNameAndCounty(String cityName, String county) {
+        log.info("Filtering cities with name: " + cityName + " and county " + county);
+        String sql = "SELECT * FROM city WHERE city_name = ? AND county = ? ORDER BY county, city_name";
+        Object[] args = {
+            cityName,
+            county
+        };
+        return jdbcTemplate.query(sql, args, new CityMapper());
     }
     
 }

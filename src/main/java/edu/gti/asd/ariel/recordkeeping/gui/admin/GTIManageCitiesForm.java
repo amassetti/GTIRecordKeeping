@@ -4,6 +4,7 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
+import edu.gti.asd.ariel.recordkeeping.exceptions.RecordAlreadyExistsException;
 import edu.gti.asd.ariel.recordkeeping.model.City;
 import edu.gti.asd.ariel.recordkeeping.service.CityService;
 import edu.gti.asd.ariel.recordkeeping.utils.ContextManager;
@@ -268,7 +269,12 @@ public class GTIManageCitiesForm extends javax.swing.JFrame {
         city.setCityName(name);
         city.setCounty(county);
 
-        cityService.insertCity(city);
+        try {
+            cityService.insertCity(city);
+        } catch (RecordAlreadyExistsException raeEx) {
+            JOptionPane.showMessageDialog(this, raeEx.getMessage());
+            return;
+        }
         
         populateCitiesData();
         updateJTable();
