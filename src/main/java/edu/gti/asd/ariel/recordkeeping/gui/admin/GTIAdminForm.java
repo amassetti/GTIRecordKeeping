@@ -83,6 +83,7 @@ public class GTIAdminForm extends javax.swing.JFrame {
         });
 
         jButtonReports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reports2.png"))); // NOI18N
+        jButtonReports.setMnemonic('r');
         jButtonReports.setToolTipText("Reports / Export Data");
         jButtonReports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
