@@ -5,9 +5,12 @@
 package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.CourseDao;
+import edu.gti.asd.ariel.recordkeeping.exceptions.RecordAlreadyExistsException;
+import edu.gti.asd.ariel.recordkeeping.exceptions.ValidationException;
 import edu.gti.asd.ariel.recordkeeping.model.Course;
 import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +36,30 @@ public class CourseServiceImpl implements CourseService {
     }
     
     @Override
+    public Optional<Course> getCoursesByCode(String courseCode) {
+        List<Course> courses = courseDao.getCoursesByCode(courseCode);
+        
+        Optional<Course> courseOpt = Optional.ofNullable(
+                (courses != null && courses.size() > 0) ? courses.get(0) : null
+        );
+        return courseOpt;
+    }
+    
+    @Override
     public List<Course> searchByCourseName(String courseName) {
         return courseDao.searchByCourseName(courseName);
     }
 
     @Override
     public void insertCourse(Course course) {
+        if (course.getCode() == null || course.getCode().trim().isEmpty()) {
+            throw new ValidationException("Course code is mandatory");
+        }
+        
+        Optional<Course> courseOpt = getCoursesByCode(course.getCode());
+        if (courseOpt.isPresent()) {
+            throw new RecordAlreadyExistsException("Course code already exists " + course.getCode());
+        }
         courseDao.insertCourse(course);
     }
 
@@ -50,11 +71,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void deleteCourse(Integer courseId) {
         courseDao.deleteCourse(courseId);
-    }
-
-    @Override
-    public Integer registerStudent(Course course, Student student) {
-        return courseDao.registerStudent(course, student);
     }
 
     @Override

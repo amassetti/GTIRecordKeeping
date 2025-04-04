@@ -6,7 +6,6 @@ package edu.gti.asd.ariel.recordkeeping.dao;
 
 import edu.gti.asd.ariel.recordkeeping.mappers.CourseMapper;
 import edu.gti.asd.ariel.recordkeeping.model.Course;
-import edu.gti.asd.ariel.recordkeeping.model.Student;
 import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ public class CourseDao {
     private JdbcTemplate jdbcTemplate;
     
     public Course getCourseById(Integer courseId) {
+        log.info("Getting course by id " + courseId);
         String sql =    "SELECT c.*,\n" +
                         "       d.name as department_name, \n" +
                         "       ct.description as course_type \n" +
@@ -41,6 +41,7 @@ public class CourseDao {
     }
     
     public List<Course> getAllCourses() {
+        log.info("Getting all courses");
         String sql =    "SELECT c.*,\n" +
                         "       d.name as department_name, \n" +
                         "       ct.description as course_type \n" +
@@ -52,6 +53,7 @@ public class CourseDao {
     }
     
     public List<Course> searchByCourseName(String courseName) {
+        log.info("Getting course by courseName " + courseName);
         String sql =    "SELECT c.*,\n" +
                         "       d.name as department_name, \n" +
                         "       ct.description as course_type \n" +
@@ -67,6 +69,7 @@ public class CourseDao {
     }
     
     public List<Course> getCoursesByTeacherId(Integer teacherId) {
+        log.info("Getting course by teacherid " + teacherId);
         String sql =    "SELECT DISTINCT c.course_id, c.course_code, c.name \n" +
                         "FROM course c, subject_course sc, teacher_subject ts \n" +
                         "WHERE c.course_id = sc.course_id \n" +
@@ -81,6 +84,7 @@ public class CourseDao {
     }
 
     public void insertCourse(Course course) {
+        log.info("Inserting course " + course);
         String sql = "INSERT INTO course (department_id, course_type_id, course_code, name, description, certification)\n" +
                      "VALUES (?,?,?,?,?,?)";
         
@@ -98,6 +102,7 @@ public class CourseDao {
     }
 
     public void updateCourse(Course course) {
+        log.info("Updating course " + course);
         String sql = "UPDATE course\n" +
                         "SET\n" +
                         "department_id = ?,\n" +
@@ -123,6 +128,7 @@ public class CourseDao {
     }
 
     public void deleteCourse(Integer courseId) {
+        log.info("Deleting course with id " + courseId);
         String sql = "DELETE FROM course WHERE course_id = ?";
         
         Object[] args = {
@@ -132,13 +138,19 @@ public class CourseDao {
         jdbcTemplate.update(sql, args);
         
     }
-    
-    public Integer registerStudent(Course course, Student student) {
-        Integer registrationId = null;
+
+    public List<Course> getCoursesByCode(String courseCode) {
+        log.info("Getting course by code " + courseCode);
         
+        String sql =    "SELECT * \n" +
+                        "FROM course c \n" +
+                        "WHERE c.course_code = ?";
+
+        Object[] args = {
+            courseCode
+        };
         
-        
-        return registrationId;
+        return jdbcTemplate.query(sql, args, new CourseMapper());
     }
     
 }

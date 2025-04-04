@@ -4,6 +4,8 @@
  */
 package edu.gti.asd.ariel.recordkeeping.gui.admin;
 
+import edu.gti.asd.ariel.recordkeeping.exceptions.RecordAlreadyExistsException;
+import edu.gti.asd.ariel.recordkeeping.exceptions.ValidationException;
 import edu.gti.asd.ariel.recordkeeping.model.Course;
 import edu.gti.asd.ariel.recordkeeping.model.CourseType;
 import edu.gti.asd.ariel.recordkeeping.model.Department;
@@ -322,7 +324,12 @@ public class GTIManageCoursesForm extends javax.swing.JFrame {
         course.setCertification(certification);
         
         // Service layer Insert
-        courseService.insertCourse(course);
+        try {
+            courseService.insertCourse(course);
+        } catch (ValidationException vEx) {
+            JOptionPane.showMessageDialog(this, vEx.getMessage());
+            return;
+        } 
         
         // Cleanup
         cleanInputs();
