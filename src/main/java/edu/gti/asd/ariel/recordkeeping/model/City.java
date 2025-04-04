@@ -21,6 +21,13 @@ public class City implements IComboElement {
         this.cityName = cityName;
     }
 
+    public City(Integer cityId, String cityName, String county) {
+        this.cityId = cityId;
+        this.cityName = cityName;
+        this.county = county;
+    }
+    
+
     public Integer getCityId() {
         return cityId;
     }
