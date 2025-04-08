@@ -60,6 +60,24 @@ public class GradeDao {
         return jdbcTemplate.query(sql, args, new SubjectStudentGradeMapper());
         
     }
+    
+    
+    public List<SubjectStudentGrade> getAllGradesForStudentsInCourse(Integer studentId) {
+        log.info("Getting all grades for student id: " + studentId );
+        
+        String sql = "SELECT s.student_id, s.first_name, s.last_name, g.assesment_1, g.assesment_2, g.assesment_3, g.final_exam, sj.subject_code, sj.subject_name \n" +
+                    "FROM grade g \n" +
+                    "INNER JOIN student s ON g.student_id = s.student_id and s.student_id = ? \n" +
+                    "INNER JOIN subject sj ON g.subject_id = sj.subject_id \n" +
+                    "order by g.subject_id";
+
+        Object[] args = {
+            studentId
+        };
+        
+        return jdbcTemplate.query(sql, args, new SubjectStudentGradeMapper());
+    }
+
 
     public void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade) {
         log.info("Calling SP  UpsertGrade for studentId: " + studentId + " - subjectId: "+ subjectId);

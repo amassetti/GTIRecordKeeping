@@ -5,6 +5,7 @@
 package edu.gti.asd.ariel.recordkeeping.service;
 
 import edu.gti.asd.ariel.recordkeeping.dao.GradeDao;
+import edu.gti.asd.ariel.recordkeeping.model.Course;
 import edu.gti.asd.ariel.recordkeeping.model.Grade;
 import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import java.util.List;
@@ -30,6 +31,11 @@ public class GradeServiceImpl implements GradeService {
     public List<SubjectStudentGrade> getGradesForStudentsInCourse(Integer courseId, Integer subjectId) {
         return gradeDao.getGradesForStudentsInCourse(courseId, subjectId);
     }
+    
+    @Override
+    public List<SubjectStudentGrade> getAllGradesForStudentsInCourse(Integer studentId) {
+        return gradeDao.getAllGradesForStudentsInCourse(studentId);
+    }
 
     @Override
     public void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade) {
@@ -54,5 +60,6 @@ public class GradeServiceImpl implements GradeService {
         }
         
     }
+
     
 }

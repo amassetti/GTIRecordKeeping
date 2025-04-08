@@ -4,6 +4,7 @@
  */
 package edu.gti.asd.ariel.recordkeeping.service;
 
+import edu.gti.asd.ariel.recordkeeping.model.Course;
 import edu.gti.asd.ariel.recordkeeping.model.Grade;
 import edu.gti.asd.ariel.recordkeeping.model.SubjectStudentGrade;
 import java.util.List;
@@ -18,5 +19,7 @@ public interface GradeService {
     
     void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade);
     void registerGradesForSubject(List<SubjectStudentGrade> subjectStudentGrades);
+
+    public List<SubjectStudentGrade> getAllGradesForStudentsInCourse(Integer studentId);
     
 }

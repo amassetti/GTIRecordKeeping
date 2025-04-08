@@ -20,6 +20,9 @@ public class SubjectStudentGrade {
     Double assesment2;
     Double assesment3;
     Double finalExam;
+    
+    String subjectCode;
+    String subjectName;
 
     public SubjectStudentGrade() {
     }
@@ -98,6 +101,22 @@ public class SubjectStudentGrade {
 
     public void setFinalExam(Double finalExam) {
         this.finalExam = finalExam;
+    }
+    
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     @Override

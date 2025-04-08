@@ -26,6 +26,9 @@ public class SubjectStudentGradeMapper implements RowMapper {
     private static final String ASSESMENT_3 = "assesment_3";
     private static final String FINAL_EXAM = "final_exam";
     
+    private static final String SUBJECT_CODE = "subject_code";
+    private static final String SUBJECT_NAME = "subject_name";
+    
     @Override
     public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
         SubjectStudentGrade subjectStudentGrade = new SubjectStudentGrade();
@@ -60,6 +63,14 @@ public class SubjectStudentGradeMapper implements RowMapper {
         
         if (hasColumn(rs, FINAL_EXAM)) {
             subjectStudentGrade.setFinalExam(rs.getDouble(FINAL_EXAM));
+        }
+        
+        if (hasColumn(rs, SUBJECT_CODE)) {
+            subjectStudentGrade.setSubjectCode(rs.getString(SUBJECT_CODE));
+        }
+        
+        if (hasColumn(rs, SUBJECT_NAME)) {
+            subjectStudentGrade.setSubjectName(rs.getString(SUBJECT_NAME));
         }
         
         return subjectStudentGrade;

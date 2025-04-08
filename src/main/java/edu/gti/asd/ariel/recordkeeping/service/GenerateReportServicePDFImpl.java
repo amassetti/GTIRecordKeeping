@@ -136,6 +136,8 @@ public class GenerateReportServicePDFImpl implements GenerateReportService {
         Student student = studentService.getStudentById(studentId);
         Course course = student.getCourse();
         
+        List<SubjectStudentGrade> studentsGrades = gradeService.getAllGradesForStudentsInCourse(studentId);
+        
         try {
             Document document = createPdfDocument(fullFilename, true);
             
@@ -162,6 +164,26 @@ public class GenerateReportServicePDFImpl implements GenerateReportService {
                 document.add(new Paragraph("City: " + address.getCity()));
                 document.add(new Paragraph("Eir Code: " + address.getEirCode()));
             }
+            
+            document.add(new Paragraph(""));
+            
+            
+            addTitle(document, "List of Grades for Course " + course.getCode() );
+
+            
+            for (SubjectStudentGrade sg : studentsGrades) {
+                document.add(
+                        new Paragraph(
+                                normalizeLength(sg.getSubjectName(), 30) 
+                                + "\t\t Subject: " + sg.getSubjectCode()
+                                + ", Assignment 1: " + sg.getAssesment1()
+                                + ", Assignment 2: " + sg.getAssesment2()
+                                + ", Assignment 3: " + sg.getAssesment3()
+                                + ", Final Exam: " + sg.getFinalExam()
+                        )
+                );
+            }
+            
 
             // Close the document
             document.close();
