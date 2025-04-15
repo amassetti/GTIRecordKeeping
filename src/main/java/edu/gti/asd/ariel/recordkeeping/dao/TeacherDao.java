@@ -30,29 +30,32 @@ public class TeacherDao {
     public List<Teacher> getTeachers() {
         log.info("Fetching all teachers from db");
         
-        String sql = "    SELECT\n" +
-                        "    t.teacher_id,\n" +
-                        "    t.first_name,\n" +
-                        "    t.last_name,\n" +
-                        "    t.email,\n" +
-                        "    t.ppsn,\n" +
-                        "    g.*,\n" +
-                        "    a.*,\n" +
-                        "    c.*\n" +
-                        "FROM teacher t,\n" +
-                        "     gender g,\n" +
-                        "     address a,\n" +
-                        "     city c\n" +
-                        "where \n" +
-                        "    t.gender_id = g.gender_id and\n" +
-                        "    t.address_id = a.address_id and\n" +
-                        "    a.city_id=c.city_id";
+        String sql = """
+            SELECT
+                   t.teacher_id,
+                   t.first_name,
+                   t.last_name,
+                   t.email,
+                   t.ppsn,
+                   g.*,
+                   a.*,
+                   c.*
+               FROM teacher t,
+                    gender g,
+                    address a,
+                    city c
+               where 
+                   t.gender_id = g.gender_id and
+                   t.address_id = a.address_id and
+                   a.city_id=c.city_id
+        """;
         
         return jdbcTemplate.query(sql, new TeacherMapper());
     }
     
     public void insertTeacher(Teacher teacher) {
         log.info("Inserting teacher into db: " + teacher);
+        
         String sql = "INSERT INTO teacher (address_id, gender_id, first_name, last_name, email, ppsn) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
         
@@ -70,6 +73,7 @@ public class TeacherDao {
 
     public void deleteTeacher(Integer teacherId) {
         log.info("Deleting teacher with id " + teacherId);
+        
         String sql = "DELETE FROM teacher " +
                      " WHERE teacher_id = ?";
         
@@ -82,14 +86,17 @@ public class TeacherDao {
 
     public void updateTeacher(Teacher teacher) {
         log.info("Updating teacher " + teacher);
-        String sql = "UPDATE teacher\n" +
-                        "SET\n" +
-                        "	gender_id = ?,\n" +
-                        "	first_name = ?,\n" +
-                        "	last_name = ?,\n" +
-                        "	email = ?,\n" +
-                        "	ppsn = ?\n" +
-                        "WHERE teacher_id = ?";
+        
+        String sql = """
+            UPDATE teacher
+            SET
+                    gender_id = ?,
+                    first_name = ?,
+                    last_name = ?,
+                    email = ?,
+                    ppsn = ?
+            WHERE teacher_id = ?
+        """;
         
         Object[] args = {
             teacher.getGenderId(),
@@ -117,7 +124,7 @@ public class TeacherDao {
     public void registerTeacherInSubject(Integer teacherId, Integer subjectId) {
         log.info("Registering teacher id: " + teacherId + " into subject id: " + subjectId);
         
-        String sql = "INSERT INTO teacher_subject (teacher_id, subject_id, registration_date ) \n" +
+        String sql = "INSERT INTO teacher_subject (teacher_id, subject_id, registration_date ) " +
                      "VALUES (?,?,?)";
         
         Date date = Date.valueOf(LocalDate.now());

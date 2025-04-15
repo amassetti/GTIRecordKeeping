@@ -81,6 +81,7 @@ public class GradeDao {
 
     public void registerGradeForStudent(Integer studentId, Integer subjectId, Grade grade) {
         log.info("Calling SP  UpsertGrade for studentId: " + studentId + " - subjectId: "+ subjectId);
+        
         String sql = "CALL UpsertGrade(?,?,?,?,?,?)";
 
         Object[] args = {

@@ -33,26 +33,27 @@ public class StudentDao {
 
     public List<Student> getStudents() {
         log.info("Getting all students from DB");
-        String sql = "SELECT\n" +
-        "    s.student_id,\n" +
-        "    s.first_name,\n" +
-        "    s.last_name,\n" +
-        "    s.email,\n" +
-        "    s.ppsn,\n" +
-        "    g.*,\n" +
-        "    a.*,\n" +
-        "    c.*,\n" +
-        "    crs.course_id,  \n" +
-        "    crs.course_code, \n" +
-        "    crs.name as course_name \n" +
-        "FROM student s\n" +
-        "INNER JOIN gender g ON s.gender_id = g.gender_id\n" +
-        "INNER JOIN address a ON s.address_id = a.address_id\n" +
-        "INNER JOIN city c ON c.city_id = a.city_id\n" +
-        "LEFT JOIN student_course sc on sc.student_id = s.student_id\n" +
-        "LEFT JOIN course crs on sc.course_id = crs.course_id";
         
-        
+        String sql = """
+            SELECT
+                s.student_id,
+                s.first_name,
+                s.last_name,
+                s.email,
+                s.ppsn,
+                g.*,
+                a.*,
+                c.*,
+                crs.course_id,
+                crs.course_code,
+                crs.name as course_name
+            FROM student s
+            INNER JOIN gender g ON s.gender_id = g.gender_id
+            INNER JOIN address a ON s.address_id = a.address_id
+            INNER JOIN city c ON c.city_id = a.city_id
+            LEFT JOIN student_course sc on sc.student_id = s.student_id
+            LEFT JOIN course crs on sc.course_id = crs.course_id
+        """;
         
         return jdbcTemplate.query(sql, new StudentMapper());
     }
@@ -60,25 +61,28 @@ public class StudentDao {
     
     public List<Student> searchStudents(String filter) {
         log.info("Searching students with filter " + filter);
-        String sql = "SELECT\n" +
-        "    s.student_id,\n" +
-        "    s.first_name,\n" +
-        "    s.last_name,\n" +
-        "    s.email,\n" +
-        "    s.ppsn,\n" +
-        "    g.*,\n" +
-        "    a.*,\n" +
-        "    c.*,\n" +
-        "    crs.course_id, \n" +
-        "    crs.course_code, \n" +
-        "    crs.name as course_name \n" +
-        "FROM student s\n" +
-        "INNER JOIN gender g ON s.gender_id = g.gender_id\n" +
-        "INNER JOIN address a ON s.address_id = a.address_id\n" +
-        "INNER JOIN city c ON c.city_id = a.city_id\n" +
-        "LEFT JOIN student_course sc on sc.student_id = s.student_id\n" +
-        "LEFT JOIN course crs on sc.course_id = crs.course_id\n" +
-        "WHERE (s.first_name LIKE ? OR s.last_name LIKE ?)";
+        
+        String sql = """
+            SELECT
+                s.student_id,
+                s.first_name,
+                s.last_name,
+                s.email,
+                s.ppsn,
+                g.*,
+                a.*,
+                c.*,
+                crs.course_id, 
+                crs.course_code, 
+                crs.name as course_name 
+            FROM student s
+            INNER JOIN gender g ON s.gender_id = g.gender_id
+            INNER JOIN address a ON s.address_id = a.address_id
+            INNER JOIN city c ON c.city_id = a.city_id
+            LEFT JOIN student_course sc on sc.student_id = s.student_id
+            LEFT JOIN course crs on sc.course_id = crs.course_id
+            WHERE (s.first_name LIKE ? OR s.last_name LIKE ?)
+        """;
         
         Object[] args = {
             "%" + filter + "%",
@@ -89,21 +93,23 @@ public class StudentDao {
     
     public List<StudentByCourse> getStudentsByCourse(Integer courseId) {
         log.info("Searching students for course id " + courseId);
-        String sql = "SELECT \n" +
-        "    sc.registration_date, \n" +
-        "    sc.registration_id, \n" +
-        "    s.student_id, \n" +
-        "    s.first_name, \n" +
-        "    s.last_name, \n" +
-        "    s.email, \n" +
-        "    c.course_id, \n" +
-        "    c.course_code, \n" +
-        "    c.name as course_name \n" +
-        "FROM \n" +
-        "	student_course sc, student s, course c \n" +
-        "WHERE sc.student_id = s.student_id \n" +
-        "AND   sc.course_id = c.course_id \n"+ 
-        "AND   c.course_id = ?";
+        String sql = """
+            SELECT 
+                sc.registration_date, 
+                sc.registration_id, 
+                s.student_id, 
+                s.first_name, 
+                s.last_name, 
+                s.email, 
+                c.course_id, 
+                c.course_code, 
+                c.name as course_name 
+            FROM 
+                    student_course sc, student s, course c 
+            WHERE sc.student_id = s.student_id 
+            AND   sc.course_id = c.course_id
+            AND   c.course_id = ?
+        """;
         
         Object[] args = {
             courseId
@@ -141,8 +147,11 @@ public class StudentDao {
     
     public void insertStudent(Student student) {
         log.info("Inserting student" + student);
-        String sql = "INSERT INTO student (address_id, gender_id, first_name, last_name, email, ppsn) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
+        
+        String sql = """
+            INSERT INTO student (address_id, gender_id, first_name, last_name, email, ppsn)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """;
         
         Object[] args = {
             student.getAddress().getAddressId(),
@@ -158,8 +167,11 @@ public class StudentDao {
 
     public void deleteStudent(Integer studentId) {
         log.info("Deleting student with id " + studentId);
-        String sql = "DELETE FROM student " +
-                     " WHERE student_id = ?";
+        
+        String sql = """
+            DELETE FROM student
+            WHERE student_id = ?
+        """;
         
         Object[] args = {
             studentId
@@ -170,14 +182,17 @@ public class StudentDao {
 
     public void updateStudent(Student student) {
         log.info("Updating student " + student);
-        String sql = "UPDATE student\n" +
-                        "SET\n" +
-                        "	gender_id = ?,\n" +
-                        "	first_name = ?,\n" +
-                        "	last_name = ?,\n" +
-                        "	email = ?,\n" +
-                        "	ppsn = ?\n" +
-                        "WHERE student_id = ?";
+        
+        String sql = """
+            UPDATE student
+            SET
+            	gender_id = ?,
+            	first_name = ?,
+            	last_name = ?,
+            	email = ?,
+            	ppsn = ?
+            WHERE student_id = ?
+        """;
         
         Object[] args = {
             student.getGenderId(),
