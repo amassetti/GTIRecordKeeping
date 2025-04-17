@@ -42,12 +42,17 @@ public class CourseDao {
     
     public List<Course> getAllCourses() {
         log.info("Getting all courses");
-        String sql =    "SELECT c.*,\n" +
-                        "       d.name as department_name, \n" +
-                        "       ct.description as course_type \n" +
-                        "FROM course c, department d, course_type ct \n" +
-                        "WHERE c.department_id = d.department_id \n" +
-                        "AND   c.course_type_id = ct.course_type_id ORDER BY d.name, c.name";
+        
+        String sql =    """
+            SELECT c.*,
+                   d.name as department_name,
+                   ct.description as course_type
+            FROM course c, 
+                 department d, 
+                 course_type ct 
+            WHERE c.department_id = d.department_id 
+            AND   c.course_type_id = ct.course_type_id ORDER BY d.name, c.name
+        """;
         
         return jdbcTemplate.query(sql, new CourseMapper());
     }

@@ -46,11 +46,20 @@ public class GradeDao {
 
     public List<SubjectStudentGrade> getGradesForStudentsInCourse(Integer courseId, Integer subjectId) {
         log.info("Getting grades for students in course: " + courseId + " and subject id:" + subjectId);
-        String sql = "SELECT s.student_id, s.first_name, s.last_name, g.assesment_1, g.assesment_2, g.assesment_3, g.final_exam\n" +
-                        "FROM student_course sc \n" +
-                        "INNER JOIN student s ON sc.student_id = s.student_id \n" +
-                        "LEFT JOIN grade g ON sc.student_id = g.student_id AND g.subject_id = ? \n" +
-                        "WHERE sc.course_id = ? ORDER BY s.last_name, s.first_name";
+        
+        String sql = """
+            SELECT   s.student_id, 
+                     s.first_name, 
+                     s.last_name, 
+                     g.assesment_1, 
+                     g.assesment_2, 
+                     g.assesment_3, 
+                     g.final_exam
+            FROM student_course sc 
+            INNER JOIN student s ON sc.student_id = s.student_id 
+            LEFT JOIN grade g ON sc.student_id = g.student_id AND g.subject_id = ? 
+            WHERE sc.course_id = ? ORDER BY s.last_name, s.first_name
+        """;
 
         Object[] args = {
             subjectId,
